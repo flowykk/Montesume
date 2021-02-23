@@ -2,7 +2,7 @@
 
 ### Группа: 10 - И - 1
 ### Электронная почта: cristgames123@gmail.com
-### VK: https://vk.com/flowykk
+### VK: https://vk.com/flowyfff
 
 **[ НАЗВАНИЕ ПРОЕКТА ]**
 
