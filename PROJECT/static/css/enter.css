@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+header{
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+	background-color: #FFDF59;
+	display: flex;
+	font-family: "Montserrat";
+}
+.signin-signup {
+	text-align: center;
+	font-family: "Montserrat";
+	font-size: 40px;
+}
+.input-field {
+	/*margin-left:3%;*/
+	margin: 0 auto;
+	margin-bottom: 10px;
+	background-color: #E8E8E8;
+	width: 25%;
+	border-radius: 55px;
+}
+.input-field:hover{
+	width: 27%;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+.fa-envelope{
+	font-size: 25px;
+	margin-bottom: 28px;
+	vertical-align: center;
+}
+.fa-lock {
+	font-size: 25px;
+	margin-bottom: 28px;
+	vertical-align: center;
+}
+.input {
+	height: 70px;
+	border: none;
+	outline: none;
+	width: 60%;
+	background-color: #E8E8E8;
+	font-size: 25px;
+	vertical-align: center;
+	align-self: center;
+	font-family: "Montserrat";
+	
+}
+.enter {
+	width: 20%;
+	height: 70px;
+	border-radius: 55px;
+	border: none;
+	outline: none;
+	font-size: 30px;
+	background-color: #FFDF59;
+	color: white;
+	font-family: "Montserrat";
+
+}
+.register_link{
+	font-family: "Montserrat";
+	padding-top: 10px;
+	font-size: 20px;
+}
