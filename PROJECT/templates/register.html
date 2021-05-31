@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Register</title>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="static/css/register.css">
+<link rel = "stylesheet" href="static/css/normalize.css">
+<link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css..">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+
+<script>
+
+class Response {
+	constructor(method, credentials, headers, data, body, url) {
+		this.method = method;
+		this.credentials = credentials;
+		this.headers = headers;
+		this.url = url;
+		this.data = data;
+		this.body = body;
+	}
+
+	async OnRegis() {
+
+		let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+		let result = await response.text();
+		if(result != 'Вы ввели невалидный пароль или пользователь с таким email уже существует') {
+			document.cookie = result
+			const resp = new Response('GET', 'include', {}, {}, null, '/lk');
+			resp.lk(result)	
+		} else {
+			document.getElementById('warning').innerHTML = "Вы ввели невалидный пароль или пользователь с таким email уже существует";
+		}	
+	}
+
+	async lk(result) {
+		this.headers = {'Authorization': 'Bearer ' + result };
+		fetch(this.url, {
+		  method: this.method,
+		  credentials: this.credentials,
+		  headers: this.headers
+		})
+		.then(res => {
+	    	return res.text();
+		})
+		.then((response) => response.json())
+		.then((json) => {
+		   // console.log('Gotcha');
+		  }).catch((err) => {
+		  //  console.log(err);
+		});
+		window.location.href = '/lk'
+	}
+}
+
+function CreateResponse() {
+	let data = {
+	  	"name": document.getElementById("nameId").value,
+		"email": document.getElementById("emailID").value,
+	  	"password":  document.getElementById("passId").value
+	}
+	const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/register');
+	resp.OnRegis();
+}
+
+</script>
+</head>
+    <body>
+    	<header>
+            <div class="SiteName"> <h1> Поиск </h1> </div>
+        </header>
+        <div class="signin-signup">
+            <h2 class="titlee">Регистрация</h2>
+
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input class = "input" type="text" name="name" placeholder="name" id = "nameId">
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input class = "input" type="email" name="email" placeholder="email" id = "emailID">
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input class = "input" type="password" name="password" placeholder="password" id = "passId">
+            </div>
+        </div>
+        <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: red; font-family: 'Montserrat'"></div>
+    	<a><input type="submit" value="Зарегистрироваться" name="btn" class="enter"  onclick="CreateResponse()" style="margin-left: 40%"></a>
+        <div style="text-align: center;"  class = "enter_link"><a href = "enter"  >Войти</a></div>
+    </body>
+</html>
