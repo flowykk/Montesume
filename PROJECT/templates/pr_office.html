@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Private Office</title>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel = "stylesheet" href="static/css/normalize.css">
+<link rel="stylesheet" href="static/css/pr_office.css">
+<link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css..">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<script>
+    async function resp() {
+        console.log(document.cookie)
+        let response=await fetch('/info-lk',{ method: "GET",headers: {'Authorization': 'Bearer ' + document.cookie}});
+        let result = await response.json();
+        document.getElementById('name').innerHTML += result['name'];
+        document.getElementById('email').innerHTML += result['email'];
+    }
+    resp()
+</script>
+ 
+</head>
+    <body>
+        <header>
+            <div class="SiteName"> <h1> Поиск </h1> </div>
+        </header>
+        <div class="signin-signup">
+            <h2 class="titlee">Личный Кабинет</h2>
+        </div>
+        <div class = "userinfo">
+            <h1 class="name" id = "name">Ваш имя: </h2>
+            <h1 class="email" id = "email">Ваш email: </h2>
+        </div>
+        <table>
+            
+            
+        </table>
+    </body>
+</html>
