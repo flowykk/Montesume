@@ -1,17 +1,17 @@
 ### Registration - Class
-![Снимок](https://user-images.githubusercontent.com/71427624/120117226-c6d37700-c194-11eb-9e88-a4dae092abdd.PNG)
+![Снимок](https://user-images.githubusercontent.com/71427624/120207916-a6a7c480-c235-11eb-8291-f3dfbda3f646.JPG)
 
 ### Enter - Class
-![Снимок1](https://user-images.githubusercontent.com/71427624/120117227-c76c0d80-c194-11eb-81d1-a6649e4c8855.PNG)
-
-### Registration - Object
-![Снимок2](https://user-images.githubusercontent.com/71427624/120117228-c76c0d80-c194-11eb-9ceb-b64f915d3495.PNG)
+![Снимок1](https://user-images.githubusercontent.com/71427624/120207947-aeffff80-c235-11eb-9225-4e95acfc5aad.JPG)
 
 ### Enter - Object
-![Снимок3](https://user-images.githubusercontent.com/71427624/120117229-c804a400-c194-11eb-8f9a-22c61d9276be.PNG)
+![Снимок2](https://user-images.githubusercontent.com/71427624/120207951-af989600-c235-11eb-8158-f153fa0a8b77.JPG)
 
-### Main Site's Page - Object
-![Снимок4](https://user-images.githubusercontent.com/71427624/120117230-c804a400-c194-11eb-8ae7-fb14bc00bc93.PNG)
+### Registration - Object
+![Снимок3](https://user-images.githubusercontent.com/71427624/120207954-af989600-c235-11eb-8a65-7c1071dc9bdb.JPG)
 
-### User's Private Office - Object
-![Снимок5](https://user-images.githubusercontent.com/71427624/120117231-c804a400-c194-11eb-8e58-57c1f262e71d.PNG)
+### Main Site's Page- Object
+![Снимок4](https://user-images.githubusercontent.com/71427624/120207955-b0312c80-c235-11eb-9b1b-4e3019dcead9.JPG)
+
+### Private Office - Object
+![Снимок5](https://user-images.githubusercontent.com/71427624/120207958-b0312c80-c235-11eb-8ab2-d7ffcbd57981.JPG)
