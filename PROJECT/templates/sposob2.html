@@ -1,0 +1,789 @@
+<link rel="icon" type="image" href="https://code.s3.yandex.net/web-code/rules-favicon.ico">
+<link rel = "stylesheet" href="static/css/normalize.css">
+<link rel = "stylesheet" href="static/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+<script src="https://api-maps.yandex.ru/2.1/?apikey=6fd23210-854a-49be-89d6-ad43db62f1e3&lang=ru_RU" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+var search_input = "";
+mas_search_name = []
+
+function multi_input_your(){
+	search_input_str = document.getElementById('input_yours_sp2').value; //считывание строки ввода
+	flag_search = 0 //переменная для подтверждения, что не нашлось одинаковых обхектов
+	flag_color = 0 //флаг для определения цвета (тип бизенеса конкурента/ваш тип бизнеса)
+	var i = 0;
+	var j = 0;
+	var buf_search = '' //текущее имя одного из объектов, разделённых запятыми
+	search_input = [] //массив введённых через запятую объектов
+
+	search_input_str = search_input_str.replace(/\s{2,}/g, ''); //удаление лишних пробелов
+
+	//цикл для отделения объектов поиска через запятую
+	while ( i < search_input_str.length) {
+		i = j+1
+
+		//находим символы до запятой, если не конец строки
+		while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
+			buf_search += search_input_str[j]
+			j += 1
+		}
+		j += 1 //перескакиваем через запятую
+
+		//кладём искомый объект, выделенный до запятой
+		if (buf_search.length) {
+			search_input.push(buf_search)
+			buf_search = ''
+		}
+
+	}
+
+	//цикл добавления поиска на карте с условием, что такого поиска не было ранее (чтобы не дублировать поиски)
+	for (let k = 0; k < search_input.length; k++) {
+
+		//условие нахождения, был ли такой поиск ранее
+		for (let i = 0; i < mas_search_name.length; i++) {
+			if (mas_search_name[i] == search_input[k]){
+				flag_search = 1;
+			}
+		}
+
+		//если такого поиска ранее не было и поиск не пустой, добавляем его на карту
+		if (flag_search == 0 && search_input[k] != '') {
+			mas_search_name.push(search_input[k]) //добавление нового названия объекта, чтобы исключить дубли
+			mas_search.push(add_search(flag_color))
+			mas_flags.push(0)
+			mas_search[mas_search.length - 1].search(search_input[k]).then(function () {}); //запуск нового добавленного пустого поиска по текущему заданному пользователем имени объекта
+			loading_dots(); //выхов функции подгрузки новых текущих точек
+		}
+		flag_search = 0;
+	}
+}
+
+function multi_input_concurent(){
+	search_input_str = document.getElementById('input_concurent_sp2').value;
+	flag_search = 0
+	flag_color = 1
+	var i = 0;
+	var j = 0;
+	var buf_search = ''
+	search_input = []
+
+	search_input_str = search_input_str.replace(/\s{2,}/g, ''); //удаление лишних пробелов
+
+	while ( i < search_input_str.length) {
+		i = j+1
+
+		while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
+			buf_search += search_input_str[j]
+			j += 1
+		}
+		j += 1
+
+		if (buf_search.length) {
+			search_input.push(buf_search)
+			buf_search = ''
+		}
+	}
+
+	for (let k = 0; k < search_input.length; k++) {
+
+		for (let i = 0; i < mas_search_name.length; i++) {
+			if (mas_search_name[i] == search_input[k]){
+				flag_search = 1;
+			}
+		}
+
+		if (flag_search == 0 && search_input[k] != '') {
+			mas_search_name.push(search_input[k])
+			mas_search.push(add_search(flag_color))
+			mas_flags.push(1)
+			mas_search[mas_search.length - 1].search(search_input[k]).then(function () {});
+			loading_dots();
+		}
+		flag_search = 0;
+	}
+}
+
+function multi_select_your(){
+	search_input = document.getElementById('select_yours_sp2');
+	flag_color = 0
+	flag_search = 0
+	var i = 0;
+	var values = [];
+	 
+	if (search_input.multiple) {
+	    for (var i = 0; i < search_input.options.length; i ++) {
+		    if (search_input.options[i].selected) 
+		       values.push(search_input.options[i].value);
+	    }
+	} else
+		values.push(search_input.value);
+	
+	for (let k = 0; k < values.length; k++) {
+
+		for (let i = 0; i < mas_search_name.length; i++) {
+			if (mas_search_name[i] == values[k]){
+				flag_search = 1;
+			}
+		}
+
+		if (flag_search == 0 && values[k] != '') {
+			mas_search_name.push(values[k])
+			mas_search.push(add_search(flag_color))
+			mas_flags.push(0);
+		    mas_search[mas_search.length - 1].search(values[k]).then(function () {});
+		    loading_dots();
+		}
+		flag_search = 0;
+	}
+}
+
+function multi_select_concurent(){
+	search_input = document.getElementById('select_concurent_sp2');
+    flag_color = 1
+	flag_search = 0
+	var i = 0;
+	//в этот массив будем отбирать выбранные значения
+	var values = [];
+	 
+	//случай мульти-режима
+	if (search_input.multiple) {
+	  //перебираем массив опций
+	  for (var i = 0; i < search_input.options.length; i ++) {
+	    //если опция выбрана - добавим её в массив
+	    if (search_input.options[i].selected) 
+	       values.push(search_input.options[i].value);
+	  }
+	//случай одиночного выбора в select
+	} else
+	  values.push(search_input.value);
+
+	for (let k = 0; k < values.length; k++) {
+
+		for (let i = 0; i < mas_search_name.length; i++) {
+			if (mas_search_name[i] == values[k]){
+				flag_search = 1;
+			}
+		}
+
+		if (flag_search == 0 && values[k] != '') {
+			mas_search_name.push(values[k])
+			mas_search.push(add_search(flag_color))
+			mas_flags.push(1);
+		    mas_search[mas_search.length - 1].search(values[k]).then(function () {});
+		    loading_dots();
+		}
+		flag_search = 0;
+	}
+}
+
+function checkKey_your(e) {
+
+	//триггер нажатия клавиши enter
+	if (event.keyCode === 13) {
+		search_input_str = document.getElementById('input_yours_sp2').value; //считывание строки ввода
+		flag_search = 0 //переменная для подтверждения, что не нашлось одинаковых обхектов
+		var i = 0;
+        var j = 0;
+        var buf_search = '' //текущее имя одного из объектов, разделённых 
+        search_input = [] //массив введённых через запятую объектов
+
+        //цикл для отделения объектов поиска через запятую
+        while ( i < search_input_str.length) {
+            i = j+1
+
+            //находим символы до запятой, если не конец строки
+            while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
+                buf_search += search_input_str[j]
+                j += 1
+            }
+            j += 1 //перескакиваем через запятую
+
+            //кладём искомый объект, выделенный до запятой
+            if (buf_search.length) {
+                search_input.push(buf_search)
+                buf_search = ''
+            }
+        }
+
+		event.preventDefault()
+        for (let k = 0; k < search_input.length; k++) {
+
+        	//условие нахождения, был ли такой поиск ранее
+            for (let i = 0; i < mas_search_name.length; i++) {
+		 		if (mas_search_name[i] == search_input[k]){
+		 			flag_search = 1
+		 		}
+		    }
+
+		    //если такого поиска ранее не было и поиск не пустой, добавляем его на карту
+		    if (flag_search == 0 && search_input[k] != '') {
+				mas_search.push(add_search()) //добавление в массив поисков нового пустого поиска 
+			    mas_search[mas_search.length - 1].search(search_input[k]).then(function () {}); //запуск нового добавленного пустого поиска по текущему заданному пользователем имени объекта
+			    loading_dots(); //выхов функции подгрузки новых текущих точек
+			}
+			flag_search = 0;
+		}
+	}
+}
+
+function checkKey_concurent(e) {
+	if (event.keyCode === 13) {
+		search_input_str = document.getElementById('input_concurent_sp2').value;
+		flag_search = 0
+		var i = 0;
+        var j = 0;
+        var buf_search = ''
+        search_input = []
+
+        while ( i < search_input_str.length) {
+            i = j+1
+
+            while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
+                buf_search += search_input_str[j]
+                j += 1
+            }
+            j += 1
+
+            if (buf_search.length) {
+                search_input.push(buf_search)
+                buf_search = ''
+            }
+
+        }
+
+        event.preventDefault()
+        for (let k = 0; k < search_input.length; k++) {
+            for (let i = 0; i < mas_search_name.length; i++) {
+		 		if (mas_search_name[i] == search_input){
+		 			flag_search =1
+		 		}
+		    }
+		    if (flag_search == 0 && search_input != '') {
+				event.preventDefault()
+				mas_search.push(add_search())
+			    mas_search[mas_search.length - 1].search(search_input).then(function () {});
+			    loading_dots();
+			}
+		}
+    }
+}
+
+//вызов всех функций multi
+function multi() {
+	multi_input_your();
+	multi_input_concurent();
+	multi_select_your();
+    multi_select_concurent();
+}
+
+function add_search(flag_color) {
+
+	//условие для проверки цвета (тип бизенеса конкурента/ваш тип бизнеса)
+	if (flag_color == 0) {
+
+		//создание объекта поиска вашего типа бизнеса 
+	    var searchControl = new ymaps.control.SearchControl({
+	        options: {
+	            provider: 'yandex#search',
+	            geoObjectStandardPreset: 'islands#greenCircleDotIcon'
+	        }
+	    });
+
+    } else {
+
+    	//создание объекта поиска конкурента
+    	var searchControl = new ymaps.control.SearchControl({
+	        options: {
+	            provider: 'yandex#search',
+	            geoObjectStandardPreset: 'islands#redCircleDotIcon'
+	        }
+	    });   
+    }
+
+   	var myCollection = new ymaps.GeoObjectCollection({}, {}); //создание коллекции для геообъектов текущего поиска
+
+   	mas_collections.push(myCollection); //добавление её в массив коллекций
+    myMap.controls.add(searchControl); //добавление нового поиска на карту
+
+    mas_flags_load_search.push(0);
+
+    return searchControl //возвращаем объект нового поиска
+}
+
+function delete_all() {
+	//цикл, осуществляющий удаление всех обектов из коллекции (всех геообъектов карты)
+	for (let i = 0; i < mas_collections.length; i++) { 
+		mas_collections[i].removeAll()
+	}
+
+	//цикл для очистки поисков с карты 
+	for (let i = 0; i < mas_search.length; i++) {
+		myMap.controls.remove(mas_search[i])
+	}
+
+	CatchCollection.removeAll() //удаление всех фиксированных благоприятных точек
+	result_collection.removeAll() //удаление всех фиксированных благоприятных точек
+
+	//обнуление переменных
+	mas_search_name = []
+}
+
+function delete_not_stopped () {
+	//цикл, осуществляющий удаление всех обектов из коллекции (всех геообъектов карты)
+	for (let i = 0; i < mas_collections.length; i++) { 
+		mas_collections[i].removeAll()
+	}
+
+	//цикл для очистки поисков с карты 
+	for (let i = 0; i < mas_search.length; i++) {
+		myMap.controls.remove(mas_search[i])
+	}
+
+	result_collection.removeAll() //удаление всех фиксированных благоприятных точек
+
+	//обнуление переменных
+	mas_search_name = []
+}
+
+function delete_stopped () {
+	CatchCollection.removeAll() //удаление всех фиксированных благоприятных точек
+}
+
+//функция для очисти всех объектов карты
+function search_clear() {
+
+	$('.overlay, .block-popup').fadeIn();
+
+	$('.block-popup span').click(function(){
+   		$('.block-popup, .overlay').fadeOut();
+ 	})
+}
+
+//функция для фиксации благоприятной точки
+function catch_point() {
+	mas_catchcollection = []
+
+	//создание зафиксированной точки
+    placemark = new ymaps.Placemark([(result_points1[0] + result_points[0]) / 2 , (result_points1[1] + result_points[1]) / 2], {
+            iconContent: "Узнать адрес",
+        }, {
+            balloonPanelMaxMapArea: 0,
+            preset: "islands#yellowStretchyIcon",
+            openEmptyBalloon: true
+        });
+
+    //создание круга вокруг зафиксированной точки
+    var myCircle_resultt = new ymaps.Circle([result_points, radius], {}, {
+        fillColor: '#FFD21E',
+        opacity: 0.3
+    });
+
+    //функция прогрузки адреса зафиксированной точки
+    placemark.events.add('balloonopen', function (e) {
+        placemark.properties.set('balloonContent', "Идет загрузка данных...");
+
+        setTimeout(function () {
+            ymaps.geocode(placemark.geometry.getCoordinates(), {
+                results: 1
+            }).then(function (res) {
+                var newContent = res.geoObjects.get(0) ?
+                    res.geoObjects.get(0).properties.get('name') :
+                    'Не удалось определить адрес.';
+                placemark.properties.set('balloonContent', newContent);
+            });
+        }, 1500);
+    });
+
+    //добавление фиксированных объектов в коллекцию
+	CatchCollection.add(placemark);
+    CatchCollection.add(myCircle_resultt);
+
+    myMap.geoObjects.add(CatchCollection); //добавление коллекции на карту
+}
+
+function loading_dots() {
+
+	//цикл запусков постоянных прогрузок новых поисковых объектов
+    for (let i = 0; i < mas_search.length; i++) {
+        mas_search[i].events.add('load', function (e) {
+        	radius = document.getElementById('input2_sp2').value;
+            var geoObjectsArray = mas_search[i].getResultsArray();
+           	mas_coords = [];
+
+           	//формирование цветов
+            if (mas_flags[i] == 0) {
+	        	random_color = '#36FC36';
+	        }
+	        if (mas_flags[i] == 1){
+	        	random_color = '#FC4F7A';
+	        }
+	        if (mas_flags[i] == 2) {
+				random_color = '#2C2CFC';
+    		} 
+
+    		//проверка наличия объектов
+            if (geoObjectsArray.length) {
+            	mas_collections[i].removeAll() //очистка коллекции от предыдущих поисков
+            	mas_flags_load_search[i] = 0;
+
+            	//цикл для нахождения координат каждого объекта из текущего поиска и отрисовки вокруг них окружностей
+                for (let j = 0; j < geoObjectsArray.length; j++) {
+                    mas_coords.push(geoObjectsArray[j].geometry.getCoordinates()); //массив координат точек
+
+                    //построение окружности вокруг точек
+                    var myCircle = new ymaps.Circle([mas_coords[j], radius], {}, {
+	                    fillColor: random_color,
+	                    opacity: 0.2
+	                });
+
+                   	mas_collections[i].add(myCircle); //добавление окружности в коллекцию  
+                }
+                myMap.geoObjects.add(mas_collections[i]); //добавление коллекции на карту
+
+                //проверка значения цвета
+                if (mas_flags[i] == 1) {
+                	global_dots_mas_conc[i] = []
+
+                	//заполнение набора текущих координат новых точек
+                	for(let k = 0; k < mas_coords.length; k++){
+                    	global_dots_mas_conc[i].push(mas_coords[k]);
+                	}
+                	k_index = 0;
+
+                	//проверка, чтобы поиск был последним
+                	for(let k = 0; k < mas_flags.length;k++) {
+                		if(mas_flags[k] == 1) {
+                			k_index =k;
+                		}
+                	}
+
+                	//если поиск последний
+                    if (i == k_index) {
+                       	mas_max = result_points
+                        result_points = search_max_distance() //координаты итоговой наиболее удалённой от конкурентов точки
+
+                        //создание итоговой наиболее удалённой от конкурентов точки
+                        var myPlacemark_result = new ymaps.Placemark(result_points, {}, {
+                            preset:'islands#orangeIcon'
+                        });
+
+                        //создание окружности вокруг итоговой точки
+                        var myCircle_result = new ymaps.Circle([result_points, radius], {}, {
+                            fillColor: '#FF931E',
+                            opacity: 0.3
+                        });
+                    }
+
+                    //добавление итоговых геообъектов в коллекцию
+                    mas_collections[i].add(myPlacemark_result);
+                    mas_collections[i].add(myCircle_result);
+
+                    myMap.geoObjects.add(mas_collections[i]); //добавление коллекции на карту
+
+                } else if (mas_flags[i] == 0) {
+                	global_dots_mas_your[i] = []
+                	for(let k = 0; k < mas_coords.length; k++){
+                    	global_dots_mas_your[i].push(mas_coords[k]);
+                	}
+                	k_index = 0;
+                	for(let k = 0; k < mas_flags.length;k++) {
+                		if(mas_flags[k] == 0) {
+                			k_index =k;
+                		}
+                	}
+                    if (i == k_index) {
+                    	mas_min = result_points1
+                        result_points1 = search_min_distance()
+
+                        var myPlacemark_result2 = new ymaps.Placemark(result_points1, {}, {
+                            preset:'islands#blueIcon'
+                        });
+                        var myCircle_result2 = new ymaps.Circle([result_points1, radius], {}, {
+                                fillColor: '#1E98FF',
+                                opacity: 0.3
+                            });
+                    }
+                    mas_collections[i].add(myPlacemark_result2);
+                    mas_collections[i].add(myCircle_result2);
+                    myMap.geoObjects.add(mas_collections[i]);
+                }
+
+                if(result_points1 && result_points) {
+
+                	result_collection.removeAll()
+	                var myPlacemark_result3 = new ymaps.Placemark([(result_points1[0] + result_points[0]) / 2 , (result_points1[1] + result_points[1]) / 2], {}, {
+	            		preset:'islands#greenIcon'
+			        });
+
+			        var myCircle_result3 = new ymaps.Circle([(result_points1[0] + result_points[0]) / 2 , (result_points1[1] + result_points[1]) / 2], {}, {
+	                    fillColor: '#1E98FF',
+	                    opacity: 0.3
+	                });
+	                result_collection.add(myPlacemark_result3);
+	                result_collection.add(myCircle_result3);
+	                myMap.geoObjects.add(result_collection);
+            	}
+            }
+        })
+    }
+}  
+
+//функция для построения сетки (потенциальные благоприятные точки)
+function map_setka(down_left, top_right, step) {
+    height = top_right[1] - down_left[1] //вычислекние высоты карты в текущей области
+    width = top_right[0] - down_left[0] //вычислекние ширины карты в текущей области
+    a = 0 //шаг по ширине сетки
+    b = 0 //шаг по высоте сетки
+
+    var mas_coords_setka = [] //массив координат сетки
+
+	//цикл для заполнения координатами массива mas_coords_setka (иницаиаизация сетки)
+    for(let i = 0; i < step; i++) {
+        mas_coords_setka.push([])
+        b = (height/step)*i
+        for(let j = 0; j < step; j++) {
+            a = (width/step)*j
+            mas_coords_setka[i].push([down_left[0]+a, down_left[1]+b])
+        }
+        a = 0
+    }
+
+    return mas_coords_setka
+}
+
+//функция для вычисления Евклидового расстояния между двумя точкми
+function Evklid_distance(x1, x2, y1 , y2){
+    var r = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2))
+    return r
+}
+
+//функция для поиска минимального расстояния между текущей точки сетки и всеми точками найденных объектов на карте
+function distance_coords(mas_dots_from_setka) {
+    for(let i = 0; i < global_dots_mas_conc.length; i++) {
+    	if(global_dots_mas_conc[i]) {
+    		min_distance = Evklid_distance(mas_dots_from_setka[0], global_dots_mas_conc[i][0][0],mas_dots_from_setka[1], global_dots_mas_conc[i][0][1]) //вычисление минимального расстояния
+    	}
+    }	
+    
+    //цикл для поиска минимального расстояния между текущей точки сетки и всеми точками найденных объектов на карте
+    for(let i = 0; i < global_dots_mas_conc.length; i++) {
+    	if(global_dots_mas_conc[i]) {
+    		for( let j = 0; j < global_dots_mas_conc[i].length; j++) {
+	            distance = Evklid_distance(mas_dots_from_setka[0], global_dots_mas_conc[i][j][0],mas_dots_from_setka[1], global_dots_mas_conc[i][j][1])
+	            if (distance < min_distance) {
+	                min_distance = distance
+	            }
+	        }
+    	}
+    }
+    return min_distance
+}
+
+function max_distance_coords(mas_dots_from_setka) {
+    for(let i = 0; i < global_dots_mas_your.length; i++) {
+    	if(global_dots_mas_your[i]) {
+    		max_distance = Evklid_distance(mas_dots_from_setka[0], global_dots_mas_your[i][0][0],mas_dots_from_setka[1], global_dots_mas_your[i][0][1]) //вычисление максимального расстояния
+    	}
+    }	
+    
+    //цикл для поиска максимального расстояния между текущей точки сетки и всеми точками найденных объектов на карте
+    for(let i = 0; i < global_dots_mas_your.length; i++) {
+    	if(global_dots_mas_your[i]) {
+    		for( let j = 0; j < global_dots_mas_your[i].length; j++) {
+	            distance = Evklid_distance(mas_dots_from_setka[0], global_dots_mas_your[i][j][0],mas_dots_from_setka[1], global_dots_mas_your[i][j][1])
+	            if (distance > max_distance) {
+	                max_distance = distance
+	            }
+	        }
+    	}
+    }
+    return max_distance
+}
+
+//функция для нахождения максимального среди минимальных расстояний от точек сетки до найденных объектов на карте 
+function search_max_distance() {
+    search_map_setka = map_setka(myMap.getBounds()[0], myMap.getBounds()[1],10) //вычисление сетки для текущей области
+    max_search_distance = distance_coords(search_map_setka[0][0]) //вычисление первого минимального расстояния с первой точкой на сетке
+    var result_dots = [] //итоговая точка
+
+    //цикл для поиска максимума среди минимумов
+    for(let i = 0; i < search_map_setka.length; i++) {
+        for( let j = 0; j < search_map_setka[i].length; j++) {
+            search_distance = distance_coords(search_map_setka[i][j]) //нахождение минимального расстояния для текущей точки сетки
+
+            //поиск максимального расстояния среди минимальных
+            if (search_distance > max_search_distance) {
+                max_search_distance = search_distance
+                result_dots = search_map_setka[i][j]
+            }
+        }
+    }
+    return result_dots
+}
+
+//функция для нахождения минимального среди максимальных расстояний от точек сетки до найденных объектов на карте 
+function search_min_distance() {
+    search_map_setka = map_setka(myMap.getBounds()[0], myMap.getBounds()[1],10) //вычисление сетки для текущей области
+    min_search_distance = max_distance_coords(search_map_setka[0][0]) //вычисление первого максимального расстояния с первой точкой на сетке
+    var result_dots = [] //итоговая точка
+
+    //цикл для поиска минимума среди минимумов
+    for(let i = 0; i < search_map_setka.length; i++) {
+        for( let j = 0; j < search_map_setka[i].length; j++) {
+            search_distance = max_distance_coords(search_map_setka[i][j]) //нахождение максимального расстояния для текущей точки сетки
+
+            //поиск минимального расстояния среди максимальных
+            if (search_distance < min_search_distance) {
+                min_search_distance = search_distance
+                result_dots = search_map_setka[i][j]
+            }
+        }
+    }
+    return result_dots
+}
+
+function init() {
+	result_points = []
+	result_points1 = []
+	mas_flags_load_search = []
+    mas_search = [] //массив искомых объектов
+    global_dots_mas_conc = []
+    global_dots_mas_your = []
+    mas_min = []
+    mas_max = []
+    myMap = new ymaps.Map('map', {
+        center: [55.74, 37.58],
+        zoom: 10,
+        controls: []
+    });
+    mas_flags = []
+    mas_collections = [] //массив наборов объектов, отображаемых на карте
+    var myCollection = new ymaps.GeoObjectCollection({}, {});
+    result_collection = new ymaps.GeoObjectCollection({}, {});
+   	mas_collections.push(myCollection)
+	CatchCollection = new ymaps.GeoObjectCollection({}, {});
+}
+
+ymaps.ready(init);
+
+</script>
+<meta charset="utf-8">
+</head>
+<body>
+	<header>
+		<p><a href="/"><img class = "logo" src="static/images/logo.png" border="0" ></a></p>
+		<div class = "menu"> </div>
+		<div class="name"> <h1> Поиск </h1> </div>
+		<div class="enter"> <h2> Вход </h2> </div>
+		</div>
+	</header>
+<div class = "spisok">
+		<div class = "spk">
+			<div class = "stroka1">
+				<div class = "select1">
+					Выберите тип вашего бизнеса:</p>
+					<form>
+				  		<p><select id = "select_yours_sp2" size = "3" name="variants1" style="width: 360px" multiple >
+							<option>Торговый Центр</option>
+							<option>Кинотеатр</option>
+							<option>Ресторан</option>
+							<option>Салон связи</option>
+							<option>Магазин косметики</option>
+							<option>Продуктовый магазин</option>
+							<option>Аптека</option>
+							<option>Салон красоты</option>
+							<option>Банк</option>
+							<option>Театр</option>
+							<option>Музей</option>
+							<option>Страховая компания</option>
+							<option>Медицинский центр</option>
+							<option>Модельное агенство</option>
+							<option>Рекламное агенство</option>
+							<option>Строительная компания</option>
+							<option>Ветеринарная клиника</option>
+							<option>Фитнесс-центр</option>
+							<option>Зоомагазин</option>
+							<option>Книжный магазин</option>
+							<option>Гостиница</option>
+							<option>Турагентство</option>
+				    	</select></p>
+				    </form>
+			  	</div>
+
+
+				<div class = "vvod1_sp2">
+					<form name="test">
+					  	<p>Введите тип вашего бизнеса: </p>
+					  	<input onkeydown="checkKey_your(event)" id = "input_yours_sp2" type="text" style="width: 300px; height: 55px;">
+					</form>
+				</div>
+			</div>
+
+			<div class = "stroka2">
+				<div class = "select2">
+					Выберите тип бизнеса конкурентов:</p>
+					<form>
+						<p><select id = "select_concurent_sp2" size = "6" multiple="multiple" name="variants2" style="width: 360px";>
+				  			<option>Торговый Центр</option>
+							<option>Кинотеатр</option>
+							<option>Ресторан</option>
+							<option>Салон связи</option>
+							<option>Магазин косметики</option>
+							<option>Продуктовый магазин</option>
+							<option>Аптека</option>
+							<option>Салон красоты</option>
+							<option>Банк</option>
+							<option>Театр</option>
+							<option>Музей</option>
+							<option>Страховая компания</option>
+							<option>Медицинский центр</option>
+							<option>Модельное агенство</option>
+							<option>Рекламное агенство</option>
+							<option>Строительная компания</option>
+							<option>Ветеринарная клиника</option>
+							<option>Фитнесс-центр</option>
+							<option>Зоомагазин</option>
+							<option>Книжный магазин</option>
+							<option>Гостиница</option>
+							<option>Турагентство</option>
+				    	</select></p>
+				    </form>
+			  	</div>
+
+			  	<div class = "vvod2_sp2">
+
+					<form name="test" method="post" action="input1.php">
+				  		<p>Введите тип бизнеса конкурентов: </p> 
+				  		<input onkeydown="checkKey_concurent(event)" id = "input_concurent_sp2" type="text" style="width: 300px; height: 55px;">
+
+				  		<p>Введите радиус окружности: </p> 
+	                   	<input id = "input2_sp2" type="text" style="width: 300px; height: 80px;">
+					</form>
+				</div>
+				
+			</div>
+			<div class = "buttons_sp2">
+				<button class="button_sp2" onclick="multi()">Найти</button>
+				<button class="button_clear_sp2" onclick="search_clear()">Очистить</button>
+				<!-- <button class="button_show_sp2" onclick="show_point()">Показать</button>-->
+				<button class="button_stop_sp2" onclick="catch_point()">Зафиксировать</button>
+
+				<div class="overlay"></div>
+
+				<div class="block-popup">
+					<h3>Что Вы хотите удалить?</h3>
+					<form>
+				    	<input type="button" class="delete_stopped" value="Зафиксированные точки" onclick="delete_stopped()"/>
+				    	<input type="button" class="delete_not_stopped" value="Всё кроме зафиксированных" onclick="delete_not_stopped()"/>
+				    	<input type="button" class="delete_all" value="Всё" onclick="delete_all()" />
+				    </form>
+				    <span>&times;</span>
+				</div>
+			</div>
+		</div>
+		<div class = "map_sp2" id="map" style="width: 1050px; height: 700px"></div>
+	</div>
