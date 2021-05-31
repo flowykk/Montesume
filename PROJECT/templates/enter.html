@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Sign In</title>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel = "stylesheet" href="static/css/normalize.css">
+<link rel="stylesheet" href="static/css/enter.css">
+<script>
+
+class Response {
+    constructor(method, credentials, headers, data, body, url) {
+        this.method = method;
+        this.credentials = credentials;
+        this.headers = headers;
+        this.url = url;
+        this.data = data;
+        this.body = body;
+    }
+
+    async OnRegis() {
+
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        console.log(this.body)
+        let result = await response.text();
+        if(result != 'Такого пользователя не существует') {
+            document.cookie = result
+            const resp = new Response('GET', 'include', {}, {}, null, '/lk');
+            resp.lk(result) 
+        } else {
+            document.getElementById('warning').innerHTML = "Такого пользователя не существует";
+        }   
+    }
+
+    async lk(result) {
+        this.headers = {'Authorization': 'Bearer ' + result };
+        fetch(this.url, {
+          method: this.method,
+          credentials: this.credentials,
+          headers: this.headers
+        })
+        .then(res => {
+            return res.text();
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log('Gotcha');
+          }).catch((err) => {
+            console.log(err);
+        });
+        console.log(this.headers)
+        window.location.href = 'http://b92599ho.beget.tech/lk'
+    }
+}
+
+function CreateResponse() {
+    let data = {
+        "email": document.getElementById("emailID").value,
+        "password":  document.getElementById("passId").value
+    }
+    console.log(data)
+    const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/enter');
+    resp.OnRegis();
+}
+</script>
+
+
+</head>
+    <body>
+        <header>
+            <div class="SiteName"> <h1> Поиск </h1> </div>
+        </header>
+        <div class="signin-signup">
+            <form action="" class="sign-in-form" method="post" >
+                <h2 class="titlee">Вход</h2>
+
+                <div class="input-field" >
+                    <i class="fas fa-envelope"></i>
+                    <input class = "input" type="email" name="email" placeholder="email" id="emailID">
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input class = "input" type="password" name="password" placeholder="password" id = "passId">
+                </div>
+            </form>
+        </div>
+        <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: red; font-family: 'Montserrat'"></div>
+        <a><input type="submit" value="Войти" name="btn" class="enter"  onclick="CreateResponse()" style="margin-left: 40%"></a>
+	    <div style="text-align: center;" class = "register_link" ><a href = "register">Регистрация</a></div>
+    </body>
+</html>
