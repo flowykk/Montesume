@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+header{
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+	background-color: #FFDF59;
+	display: flex;
+} 
+.signin-signup {
+	text-align: center;
+	font-family: "Montserrat";
+	font-size: 250%;
+}
+.SiteName {
+	font-family: "Montserrat";
+	font-size: 100%;
+}
+
+.userinfo {
+	font-family: "Montserrat";
+	font-size: 70%;
+}
+.email {
+	text-align: center;
+}
+.name {
+	text-align: center;
+}
