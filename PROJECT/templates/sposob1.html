@@ -1,73 +1,210 @@
-<link rel="icon" type="image" href="https://code.s3.yandex.net/web-code/rules-favicon.ico">
+<!DOCTYPE html>
+<head>
+<title>Montesume - Способ I</title>
+<link rel="icon" type="image" href="static/images/Montesume.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel = "stylesheet" href="static/css/normalize.css">
-<link rel = "stylesheet" href="static/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+<link rel = "stylesheet" href="static/css/sposob1.css">
+<link rel = "stylesheet" href="static/css/footer.css">
+<script src="https://use.fontawesome.com/df966d76e1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://api-maps.yandex.ru/2.1/?apikey=6fd23210-854a-49be-89d6-ad43db62f1e3&lang=ru_RU" type="text/javascript">
-</script>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=6fd23210-854a-49be-89d6-ad43db62f1e3&lang=ru_RU" type="text/javascript"></script>
 <script type="text/javascript">
 
+class Response {
+	constructor(method, credentials, headers, data, body, url) {
+		this.method = method;
+		this.credentials = credentials;
+		this.headers = headers;
+		this.url = url;
+		this.data = data;
+		this.body = body;
+	}
+	
+	async MakeHistoryRequest() {
+	    let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+	    if (result['result'] == "saved") {
+            document.getElementById('message_text').innerHTML = 'Успешно сохранено';
+            document.getElementById('message').style['background-color'] = '#00C147';
+        } else if (result['result'] == "plsenter") {
+            document.getElementById('message_text').innerHTML = 'Войдите в аккаунт,чтобы сохранить!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        }
+    }
+    
+    async SendMessage() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        console.log(result)
+        if (result["result"] == "success") {
+            document.getElementById('message_text2').innerHTML = 'Ваше сообщение успешно отправлено!';
+            document.getElementById('message2').style['background-color'] = '#00C147';
+        	//document.getElementById('warning').innerHTML = "Ваше сообщение успешно отправлено!";
+          	//document.getElementById('warning').style['color'] = "green";
+          	//document.getElementById('warning').style['marginBottom'] = "1%";
+          	document.getElementById('FBname').value = "";
+			document.getElementById('FBemail').value = "";
+			document.getElementById('FBtext').value = "";
+		}
+    }
+    
+    async UserInfo() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        if (result == 'plsenter') 
+            document.getElementById('name').innerHTML = "Вход";
+        else {
+            setCookie('montesume_access_token', result['access_token'])
+            document.getElementById('name').innerHTML = result['user_info']['name'];
+            document.getElementById('name').href = "lk";
+        }
+    }
+}
+
+async function SendMessage() {
+    if (document.getElementById('FBname').value == '' ||
+    document.getElementById('FBemail').value == '' ||
+    document.getElementById('FBtext').value == '') {
+            document.getElementById('message_text2').innerHTML = 'Нельзя оставлять поля пустыми!';
+            document.getElementById('message2').style['background-color'] = '#F86368';
+    }
+    else {
+        let data = {
+            "name": document.getElementById('FBname').value,
+            "email": document.getElementById('FBemail').value,
+            "text": document.getElementById('FBtext').value
+        }
+        const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-message');
+        resp.SendMessage();
+    }
+}
+
+async function resp() {
+    let data = {
+        "access_token": get_cookie("montesume_access_token"),
+        "refresh_token": get_cookie("montesume_refresh_token")
+    }
+    
+    const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
+    resp.UserInfo();
+    
+    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
+    let result = await response.json();
+    if (result == 'plsenter') 
+        document.getElementById('name').innerHTML = "Вход";
+    else {
+        setCookie('evrica_access_token', result['access_token'])
+        document.getElementById('name').innerHTML = result['user_info']['name'];
+        document.getElementById('name').href = "lk";
+    }*/
+    
+    /*if (get_cookie("evrica_token").length > 300) {
+        let response = await fetch('info-lk', {
+            method: "GET",
+            headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}
+        });
+        let result = await response.json();
+        document.getElementById('name').innerHTML = result['name'];
+        document.getElementById('name').href = "lk";
+    }*/
+}
+resp()
+
+function setCookie(name, value, options = {}) {
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+    document.cookie = updatedCookie;
+}
+
+function get_cookie(cookie_name) {
+    var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+    if (results) return ( unescape ( results[2] ) );
+    else return null;
+}
+
 var search_input = "";
-mas_search_name = []
+var mas_search_name = [];
+var mas_stopped_points_coords = [];
+var mas_stopped_points_adresses = [];
+var circ_radius = 0;
+
+async function CreateResponse() {
+    if (mas_search_name.length == 0) {
+        document.getElementById('message_text').innerHTML = 'Нельзя сохранять "пустой" запрос!';
+        document.getElementById('message').style['background-color'] = '#F86368';
+    } else {
+        let data = {
+        "access_token": get_cookie("montesume_access_token"),
+        "refresh_token": get_cookie("montesume_refresh_token"),
+        "md_number": 1,
+        "your_business": mas_search_name,
+        "concurent_business": [],
+        "radius": circ_radius,
+        "stopped_points_adresses": mas_stopped_points_adresses,
+        "stopped_points_coords": mas_stopped_points_coords,
+        }
+        const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), 'make-history-request');
+        resp.MakeHistoryRequest();
+    } 
+}
 
 function multi(){
-    	search_input_str = document.getElementById('input_sp1').value; //считывание строки ввода
 
-        search_input_str = search_input_str.replace(/\s{2,}/g, ''); //удаление лишних пробелов
+    search_input_str = document.getElementById('input').value; //считывание строки ввода
+    search_input_str = search_input_str.replace(/\s{2,}/g, ''); //удаление лишних пробелов
 
-        flag_search = 0; //переменная для подтверждения, что не нашлось одинаковых обхектов
-        var i = 0;
-        var j = 0;
-        var buf_search = '' //текущее имя одного из объектов, разделённых запятыми
-        search_input = [] //массив введённых через запятую объектов
+    flag_search = 0; //переменная для подтверждения, что не нашлось одинаковых обхектов
+    var i = 0;
+    var j = 0;
+    var buf_search = '' //текущее имя одного из объектов, разделённых запятыми
+    search_input = [] //массив введённых через запятую объектов
 
-        //цикл для отделения объектов поиска через запятую
-        while ( i < search_input_str.length) {
-            i = j+1
+    //цикл для отделения объектов поиска через запятую
+    while ( i < search_input_str.length) {
+        i = j+1
 
-            //находим символы до запятой, если не конец строки
-            while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
-                buf_search += search_input_str[j]
-                j += 1
-            }
-            j += 1 //перескакиваем через запятую
+        //находим символы до запятой, если не конец строки
+        while ((j < search_input_str.length) && (search_input_str[j] != ',')) {
+            buf_search += search_input_str[j]
+            j += 1
+        }
+        j += 1 //перескакиваем через запятую
 
-            //кладём искомый объект, выделенный до запятой
-            if (buf_search.length) {
-                search_input.push(buf_search)
-                buf_search = ''
+        //кладём искомый объект, выделенный до запятой
+        if (buf_search.length) {
+            search_input.push(buf_search)
+            buf_search = ''
+        }
+    }
+
+    //цикл добавления поиска на карте с условием, что такого поиска не было ранее (чтобы не дублировать поиски)
+    for (let k = 0; k < search_input.length; k++) {
+
+        //условие нахождения, был ли такой поиск ранее
+        for (let i = 0; i < mas_search_name.length; i++) {
+            //console.log(mas_search_name[i].toLowerCase(), search_input[k].toLowerCase())
+            if (mas_search_name[i] == search_input[k].toLowerCase()){
+                flag_search = 1;
             }
         }
 
-        //цикл добавления поиска на карте с условием, что такого поиска не было ранее (чтобы не дублировать поиски)
-        for (let k = 0; k < search_input.length; k++) {
-
-            //условие нахождения, был ли такой поиск ранее
-            for (let i = 0; i < mas_search_name.length; i++) {
-                if (mas_search_name[i] == search_input[k]){
-                    flag_search = 1;
-                }
-            }
-
-            //если такого поиска ранее не было и поиск не пустой, добавляем его на карту
-            if (flag_search == 0 && search_input[k] != '' && search_input[k] != ' ') {
-                mas_search_name.push(search_input[k]) //добавление нового названия объекта, чтобы исключить дубли
-                mas_search.push(add_search()) //добавление в массив поисков нового пустого поиска 
-                mas_search[mas_search.length - 1].search(search_input[k]).then(function () {}); //запуск нового добавленного пустого поиска по текущему заданному пользователем имени объекта
-                loading_dots(); //выхов функции подгрузки новых текущих точек
-            }
-        flag_search = 0;
+        //если такого поиска ранее не было и поиск не пустой, добавляем его на карту
+        if (flag_search == 0 && search_input[k] != '' && search_input[k] != ' ') {
+            mas_search_name.push(search_input[k].toLowerCase()) //добавление нового названия объекта, чтобы исключить дубли
+            mas_search.push(add_search()) //добавление в массив поисков нового пустого поиска
+            mas_search[mas_search.length - 1].search(search_input[k]).then(function () {}); //запуск нового добавленного пустого поиска по текущему заданному пользователем имени объекта
+            loading_dots(); //выхов функции подгрузки новых текущих точек
         }
-        
-    } 
+    flag_search = 0;
+    }
+}
 
 
 function checkKey(e) {
 
     //триггер нажатия клавиши enter
 	if (event.keyCode === 13) {
-    	search_input_str = document.getElementById('input_sp1').value; //считывание строки ввода
+    	search_input_str = document.getElementById('input').value; //считывание строки ввода
         flag_search = 0; //переменная для подтверждения, что не нашлось одинаковых обхектов
         var i = 0;
         var j = 0;
@@ -96,15 +233,16 @@ function checkKey(e) {
 
             //условие нахождения, был ли такой поиск ранее
             for (let i = 0; i < mas_search_name.length; i++) {
-                if (mas_search_name[i] == search_input[k]){
+                if (mas_search_name[i] == search_input[k].toLowerCase()){
+                //if (mas_search_name[i] == search_input[k]){
                     flag_search = 1;
                 }
             }
 
             //если такого поиска ранее не было и поиск не пустой, добавляем его на карту
             if (flag_search == 0 && search_input[k] != ''  && search_input[k] != ' ' ) {
-                mas_search_name.push(search_input[k]) //добавление нового названия объекта, чтобы исключить дубли
-                mas_search.push(add_search()) //добавление в массив поисков нового пустого поиска 
+                mas_search_name.push(search_input[k].toLowerCase()) //добавление нового названия объекта, чтобы исключить дубли
+                mas_search.push(add_search()) //добавление в массив поисков нового пустого поиска
                 mas_search[mas_search.length - 1].search(search_input[k]).then(function () {}); //запуск нового добавленного пустого поиска по текущему заданному пользователем имени объекта
                 loading_dots(); //выхов функции подгрузки новых текущих точек
             }
@@ -116,34 +254,40 @@ function checkKey(e) {
 function add_search() {
 
     //массив с цветами меток
-    mas_presets = ['islands#greenCircleDotIcon','islands#pinkCircleDotIcon','islands#blueCircleDotIcon','islands#redCircleDotIcon', 'islands#orangeCircleDotIcon','islands#darkblueCircleDotIcon', 'islands#darkgreenCircleDotIcon', 'islands#lightblueCircleDotIcon', 'islands#nightCircleDotIcon', 'islands#brownCircleDotIcon', 'islands#violetCircleDotIcon', 'islands#oliveCircleDotIcon'];
+    mas_presets = ['islands#greenCircleDotIcon','islands#pinkCircleDotIcon','islands#blueCircleDotIcon','islands#redCircleDotIcon', 'islands#orangeCircleDotIcon','islands#darkblueCircleDotIcon', 'islands#darkgreenCircleDotIcon', 'islands#lightblueCircleDotIcon', 'islands#nightCircleDotIcon', 'islands#brownCircleDotIcon', 'islands#oliveCircleDotIcon'];
 
     global_dots_mas.push([]) //добавление массива для новых координат нового поиска
 
-    //создание объекта поиска 
+    //создание объекта поиска
     var searchControl = new ymaps.control.SearchControl({
         options: {
-            provider: 'yandex#search',
-            geoObjectStandardPreset: mas_presets[dot_count_color]
-        }
+			provider: 'yandex#search',
+			geoObjectStandardPreset: mas_presets[dot_count_color],
+			position: {
+				bottom: -100
+			}
+		}
     });
 
     var myCollection = new ymaps.GeoObjectCollection({}, {}); //создание коллекции для геообъектов текущего поиска
 
+
     mas_collections.push(myCollection) //добавление её в массив коллекций
     myMap.controls.add(searchControl); //добавление нового поиска на карту
-
-    dot_count_color += 1 
+    
+    if (dot_count_color >= 11){
+        dot_count_color = 0
+    } else { dot_count_color += 1 }
     return searchControl //возвращаем объект нового поиска
 }
 
 function delete_all() {
     //цикл, осуществляющий удаление всех обектов из коллекции (всех геообъектов карты)
-    for (let i = 0; i < mas_collections.length; i++) { 
+    for (let i = 0; i < mas_collections.length; i++) {
         mas_collections[i].removeAll()
     }
 
-    //цикл для очистки поисков с карты 
+    //цикл для очистки поисков с карты
     for (let i = 0; i < mas_search.length; i++) {
         myMap.controls.remove(mas_search[i])
     }
@@ -156,11 +300,11 @@ function delete_all() {
 
 function delete_not_stopped () {
     //цикл, осуществляющий удаление всех обектов из коллекции (всех геообъектов карты)
-    for (let i = 0; i < mas_collections.length; i++) { 
+    for (let i = 0; i < mas_collections.length; i++) {
         mas_collections[i].removeAll()
     }
 
-    //цикл для очистки поисков с карты 
+    //цикл для очистки поисков с карты
     for (let i = 0; i < mas_search.length; i++) {
         myMap.controls.remove(mas_search[i])
     }
@@ -177,26 +321,23 @@ function delete_stopped () {
 //функция для очисти всех объектов карты
 function search_clear() {
 
-    $('.overlay, .block_popup_sp1').fadeIn();
+    $('.overlay, .block_popup').fadeIn();
 
-    $('.block_popup_sp1 span').click(function(){
-        $('.block_popup_sp1, .overlay').fadeOut();
+    $('.block_popup span').click(function(){
+        $('.block_popup, .overlay').fadeOut();
     })
 }
 
 //функция для фиксации благоприятной точки
 function catch_point() {
-
-    
-
     //создание зафиксированной точки
     placemark = new ymaps.Placemark(result_points, {
-            iconContent: "Узнать адрес",
-        }, {
-            balloonPanelMaxMapArea: 0,
-            preset: "islands#yellowStretchyIcon",
-            openEmptyBalloon: true
-        });
+        iconContent: "Узнать адрес",
+    }, {
+        balloonPanelMaxMapArea: 0,
+        preset: "islands#yellowStretchyIcon",
+        openEmptyBalloon: true
+    });
 
     //создание круга вокруг зафиксированной точки
     var myCircle_result = new ymaps.Circle([result_points, radius], {}, {
@@ -215,29 +356,43 @@ function catch_point() {
                 var newContent = res.geoObjects.get(0) ?
                         res.geoObjects.get(0).properties.get('name') :
                         'Не удалось определить адрес.';
-
                 placemark.properties.set('balloonContent', newContent);
             });
         }, 1500);
     });
-
-    //добавление фиксированных объектов в коллекцию
-    CatchCollection.add(placemark);
-    CatchCollection.add(myCircle_result);
-
-    myMap.geoObjects.add(CatchCollection); //добавление коллекции на карту
+    
+    ymaps.geocode(placemark.geometry.getCoordinates(), {
+        results: 1
+    }).then(function (res) {
+        var newContent = res.geoObjects.get(0) ?
+                res.geoObjects.get(0).properties.get('name') :
+                'Не удалось определить адрес.';
+        if (mas_stopped_points_adresses.indexOf(newContent) == -1) {
+            mas_stopped_points_adresses.push(newContent);    
+        }
+    });
+    
+    if (mas_stopped_points_coords.indexOf(result_points) == -1) {
+        //добавление фиксированных объектов в коллекцию
+        if (result_points.length != 0) mas_stopped_points_coords.push(result_points);
+        CatchCollection.add(placemark);
+        CatchCollection.add(myCircle_result);
+    
+        myMap.geoObjects.add(CatchCollection); //добавление коллекции на карту
+    }
 }
 
 function loading_dots() {
     //массив с цветами для поисков
-    mas_colors = ['#56DB40','#F371D1','#6BFFFF','#ED4543', '#FF931E', '#177BC9', '#1BAD03', '#82CDFF', '#0E4779', '#793D0E', '#B51EFF', '#97A100']; 
+    mas_colors = ['#56DB40','#F371D1','#6BFFFF','#ED4543', '#FF931E', '#177BC9', '#1BAD03', '#82CDFF', '#0E4779', '#793D0E', '#B51EFF', '#97A100'];
 
     //цикл запусков постоянных прогрузок новых поисковых объектов
     for (let i = 0; i < mas_search.length; i++) {
 
         //запуск функции прогрузок объектов для каждого поиска
         mas_search[i].events.add('load', function (e) {
-            radius = document.getElementById('input2_sp1').value; //считывание радиуса
+            radius = document.getElementById('input2').value; //считывание радиуса
+            circ_radius = radius;
             var geoObjectsArray = mas_search[i].getResultsArray(); //берём массив всех наёденных текущих объектов
             mas_coords = [];
 
@@ -251,17 +406,17 @@ function loading_dots() {
                         mas_coords.push(geoObjectsArray[j].geometry.getCoordinates()); //массив координат точек
 
                         //построение окружности вокруг точек
-                        var myCircle = new ymaps.Circle([mas_coords[j], radius], {}, { 
+                        var myCircle = new ymaps.Circle([mas_coords[j], radius], {}, {
                             fillColor: random_color,
                             opacity: 0.2
                         });
 
                         mas_collections[i].add(myCircle); //добавление окружности в коллекцию
-                        
+
                 }
                 myMap.geoObjects.add(mas_collections[i]); //добавление коллекции на карту
 
-                global_dots_mas[i] = [] //очистка набора координат предыдущих точек поиска 
+                global_dots_mas[i] = [] //очистка набора координат предыдущих точек поиска
 
                 //заполнение набора текущих координат новых точек
                 for(let k = 0; k < mas_coords.length; k++){
@@ -272,15 +427,48 @@ function loading_dots() {
                 if (i == mas_search.length - 1) {
 
                     result_points = search_max_distance() //координаты итоговой благоприятной точки
-
-                    //создание итоговой благоприятной точки
-                    var myPlacemark_result = new ymaps.Placemark(result_points, {}, {
-                        preset:'islands#blueIcon'
+                    
+                    
+                    
+                    
+                    myPlacemark_result = new ymaps.Placemark(result_points, {
+                        iconContent: "Узнать адрес",
+                    }, {
+                        balloonPanelMaxMapArea: 0,
+                        preset: "islands#violetStretchyIcon",
+                        openEmptyBalloon: true
                     });
+                
+                
+                    //функция прогрузки адреса зафиксированной точки
+                    myPlacemark_result.events.add('balloonopen', function (e) {
+                        myPlacemark_result.properties.set('balloonContent', "Идет загрузка данных...");
+                
+                        setTimeout(function () {
+                            ymaps.geocode(myPlacemark_result.geometry.getCoordinates(), {
+                                results: 1
+                            }).then(function (res) {
+                                var newContent = res.geoObjects.get(0) ?
+                                        res.geoObjects.get(0).properties.get('name') :
+                                        'Не удалось определить адрес.';
+                                myPlacemark_result.properties.set('balloonContent', newContent);
+                            });
+                        }, 1500);
+                    });
+                    
+                    
+                    
+                    
+                    
+                    
+                    //создание итоговой благоприятной точки
+                    /*var myPlacemark_result = new ymaps.Placemark(result_points, {}, {
+                        preset:'islands#violetIcon'
+                    });*/
 
                     //создание окружности вокруг итоговой точки
                     var myCircle_result = new ymaps.Circle([result_points, radius], {}, {
-                        fillColor: '#1E98FF',
+                        fillColor: '#B51EFF',
                         opacity: 0.3
                     });
                 }
@@ -288,7 +476,7 @@ function loading_dots() {
                 //добавление итоговых геообъектов в коллекцию
                 mas_collections[i].add(myPlacemark_result);
                 mas_collections[i].add(myCircle_result);
-                
+
                 myMap.geoObjects.add(mas_collections[i]); //добавление коллекции на карту
             }
         })
@@ -321,7 +509,7 @@ function map_setka(down_left, top_right, step) {
 
 //функция для вычисления Евклидового расстояния между двумя точкми
 function Evklid_distance(x1, x2, y1 , y2){
-    var r = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) 
+    var r = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2))
     return r
 }
 
@@ -341,7 +529,7 @@ function distance_coords(mas_dots_from_setka) {
     return min_distance
 }
 
-//функция для нахождения максимального среди минимальных расстояний от точек сетки до найденных объектов на карте 
+//функция для нахождения максимального среди минимальных расстояний от точек сетки до найденных объектов на карте
 function search_max_distance() {
     search_map_setka = map_setka(myMap.getBounds()[0], myMap.getBounds()[1],10) //вычисление сетки для текущей области
     max_search_distance = distance_coords(search_map_setka[0][0]) //вычисление первого минимального расстояния с первой точкой на сетке
@@ -370,14 +558,18 @@ function init() {
     global_dots_mas = [] //набор массивов координат всех найденных текущих точек
 
     //создание карты
-    myMap = new ymaps.Map('map', { 
+    myMap = new ymaps.Map('map', {
         center: [55.74, 37.58],
         zoom: 10,
         controls: []
     });
 
-    map_setka(myMap.getBounds()[0], myMap.getBounds()[1]); // построение сетки для выборки наиболее выгодной точки 
+    map_setka(myMap.getBounds()[0], myMap.getBounds()[1]); // построение сетки для выборки наиболее выгодной точки
     CatchCollection = new ymaps.GeoObjectCollection({}, {}); //создание коллекции для закреплённых благоприятных точек
+}
+
+function CheckRadius() {
+    document.getElementById('input2').value = Number(String(document.getElementById('input2').value))
 }
 
 ymaps.ready(init);
@@ -386,43 +578,84 @@ ymaps.ready(init);
 <meta charset="utf-8">
 </head>
 <body>
-<header>
-	<p><a href="/"><img class = "logo" src="static/images/logo.png" border="0" ></a></p>
-	<div class = "menu"> </div>
-	<div class="name"> <h1> Поиск </h1> </div>
-	<div class="enter"> <h2> Вход </h2> </div>
-	</div>
-</header>
-<div class = "spisok">
-	<div class = "spk_1">
-	  	<div class = "vvod_sp1">
-			<form name="test">
-			  		<p>Введите типы бизнесов конкурентов: </p> 
-			  		<input onkeydown="checkKey(event)" id = "input_sp1" type="text" style="width: 478px; height: 80px;">
 
-                    <p>Введите радиус окружности: </p> 
-                    <input onkeydown="checkKey(event)" id = "input2_sp1" type="text" style="width: 478px; height: 80px;">
-			</form>
-		</div>
+    <header>
+	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+    		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+    		<div class="name"> <h1> Montesume </h1> </div>
+    	</a>
+        <div class = "div_enter"> <a id = "name" class="enter" href="enter"></a> </div>
+    </header>
+    <div id = "message"><p id = "message_text"></p></div>
 
-        <div class = "buttons">
-    		<button class="button_sp1" onclick="multi()">Найти</button>
-            <button class="button_clear_sp1" onclick="search_clear()">Очистить</button>
-            <button class="button_stop" onclick="catch_point()">Зафиксировать</button>
+    <div class = "spisok">
+        <div>
+            <div class = "vvod">
+                <p class = "text">Введите типы бизнесов конкурентов: </p>
+                <input class = "input" onkeydown="checkKey(event)" id = "input" type="text">
 
-            <div class="overlay"></div>
-
-            <div class="block_popup_sp1">
-                <h3>Что Вы хотите удалить?</h3>
-                <form>
-                    <input type="button" class="delete_stopped" value="Зафиксированные точки" onclick="delete_stopped()"/>
-                    <input type="button" class="delete_not_stopped" value="Всё кроме зафиксированных" onclick="delete_not_stopped()"/>
-                    <input type="button" class="delete_all" value="Всё" onclick="delete_all()" />
-                </form>
-                <span>&times;</span>
+                <p class = "text">Введите радиус окружности(м.): </p>
+                <input class = "input2" type="number" min="0" max="999" oninput = "CheckRadius()" onkeydown="checkKey(event)" id = "input2">
             </div>
-        </div>
 
-	</div>
-	<div class = "map_sp1" id="map" style="width: 1250px; height: 760px"></div>
-</div>
+            <div class = "buttons">
+    <!--            <a><input type="submit" value="Найти" name="button_sp1" class="button_sp1" id="button_sp1" onclick="multi()"></a>-->
+                <button class="btn button_search" onclick="multi()">Найти</button>
+    <!--            <button class="button_clear_sp1" onclick="search_clear()">Очистить</button>-->
+                <button class="btn button_clear" onclick="search_clear()">Очистить</button>
+    <!--            <a><input type="submit" value="Зафиксировать" name="button_stop" class="button_stop" id="button_stop" onclick="catch_point()"></a>-->
+                <button class="btn button_stop" onclick="catch_point()">Зафиксировать</button>
+<!--                 <div id = "message_save" class = "message_save" style="font-size: 80%; text-align: center; font-family: 'Montserrat'"></div> -->
+                <button class="btn button_save" onclick="CreateResponse()">Сохранить</button>
+
+                <div class="overlay"></div>
+
+                <div class="block_popup">
+                    <h3>Какие точки Вы хотите удалить?</h3>
+                        <button class="btn delete_stopped" onclick="delete_stopped()">Зафиксированные</button>
+<!--                         <input type="button" class="delete_stopped" value="Зафиксированные точки" onclick="delete_stopped()"/> -->
+                        <button class="btn delete_not_stopped" onclick="delete_not_stopped()">Обычные</button>
+<!--                         <input type="button" class="delete_not_stopped" value="Все кроме зафиксированных" onclick="delete_not_stopped()"/>-->
+                        <button class="btn delete_all" onclick="delete_all()">Все</button>
+<!--                         <input type="button" class="delete_all" value="Все" onclick="delete_all()" />-->
+                    <span>&times;</span>
+                </div>
+            </div>
+
+        </div>
+        <div class = "map" id="map"></div>
+    </div>
+    
+    <div id = "message2"><p id = "message_text2"></p></div>
+	<section class = "section_futor">
+		<div class="container">
+			<section class="page_section contact" id="contact">
+				<div class="contact_section">
+					<h2>Свяжитесь с нами!</h2>
+				</div>
+					<div class="form-inner">
+						<input type="text" class = "FBname" Id = "FBname" placeholder="Username">
+						<input type="email" class = "FBemail" Id = "FBemail" placeholder="Email">
+						<textarea placeholder="Сообщение..." Id = "FBtext" class = "FBtext" rows="10"></textarea>
+					</div>
+					<button class="FBbutton" onclick="SendMessage()">Отправить</button>
+					<div class = "icon_div">
+    					<ul class="icons">
+                            <li class="icon">
+                                <a href = "https://www.facebook.com/profile.php?id=100072329714850" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li class="icon">
+                                <a href = "https://twitter.com/montesume" target="_blank"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li class="icon">
+                                <a href = "https://www.instagram.com/montesume" target="_blank"><i class="fa fa-instagram"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+			</section>
+		</div>
+		<div class="container">
+			<div class="footer_bottom"><span>IVR 2020-2021. By flowykk</span> </div>
+		</div>
+	</section>
+</body>

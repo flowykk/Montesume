@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Register</title>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<head>
+<title>Montesume</title>
+<link rel="icon" type="image" href="static/images/Montesume.png">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="static/css/message.css">
 <link rel="stylesheet" href="static/css/register.css">
 <link rel = "stylesheet" href="static/css/normalize.css">
-<link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css..">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
-
 <script>
 
 class Response {
@@ -23,16 +22,51 @@ class Response {
 	}
 
 	async OnRegis() {
-
-		let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
-		let result = await response.text();
-		if(result != 'Вы ввели невалидный пароль или пользователь с таким email уже существует') {
-			document.cookie = result
-			const resp = new Response('GET', 'include', {}, {}, null, '/lk');
-			resp.lk(result)	
-		} else {
-			document.getElementById('warning').innerHTML = "Вы ввели невалидный пароль или пользователь с таким email уже существует";
-		}	
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+		let result = await response.json();
+		console.log(result)
+        if (result["result"] == "gotolk") {
+            window.location.href = '/lk'
+        }
+		if (result["result"] == 'dublicate') {
+            //document.getElementById('warning').innerHTML = "Пользователь с таким email уже существует!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Пользователь с таким email уже существует!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == "notallowed"){
+		    //document.getElementById('warning').innerHTML = "Нельзя оставлять ячейки пустыми! Повторите попытку!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Нельзя оставлять ячейки пустыми! Повторите попытку!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == "invpassword") {
+            //document.getElementById('warning').innerHTML = "Вы неправиьно ввели пароль! Он состоять из минимум 6-ти символов, содержать латинские буквы верхнего,нижнего регистра и цифры!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Пароль должен состоять минимум из 6-ти символов, содержать латинские буквы верхнего, нижнего регистра и цифры!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == "invemail") {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваш email введён неправильно!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == "invname") {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваше ФИО введено неправильно!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        }
+        else{
+            if (document.getElementById("rememberme_checkbox").checked == true) {
+                var cookie_date = new Date();
+                cookie_date.setMonth(cookie_date.getMonth() + 1);
+                document.cookie = "montesume_access_token="+result["result"]['access_token'];
+                document.cookie = "montesume_refresh_token="+result["result"]['refresh_token'] +"; expires=" + cookie_date.toUTCString();
+            } else {
+                document.cookie = "montesume_access_token="+result["result"]['access_token'];
+                document.cookie = "montesume_refresh_token="+result["result"]['refresh_token'];
+            }
+            const resp = new Response('GET', 'include', {}, {}, null, 'http://127.0.0.1:5000/lk');
+            resp.lk(get_cookie("montesume_access_token"))
+        }
 	}
 
 	async lk(result) {
@@ -45,14 +79,42 @@ class Response {
 		.then(res => {
 	    	return res.text();
 		})
-		.then((response) => response.json())
+		/*.then((response) => response.json())
 		.then((json) => {
 		   // console.log('Gotcha');
 		  }).catch((err) => {
 		  //  console.log(err);
-		});
+		});*/
 		window.location.href = '/lk'
 	}
+	
+	async UserInfo() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+		let result = await response.json();
+        if (result != 'plsenter') window.location.href = '/lk'
+	}
+}
+
+async function resp() {
+    let data = {
+        "access_token": get_cookie("montesume_access_token"),
+        "refresh_token": get_cookie("montesume_refresh_token")
+    }
+    
+    const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
+	resp.UserInfo();
+    
+    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
+    let result = await response.json();
+    if (result != 'plsenter') window.location.href = '/lk'*/
+    
+}
+resp()
+
+function get_cookie(cookie_name) {
+    var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+    if (results) return ( unescape ( results[2] ) );
+    else return null;
 }
 
 function CreateResponse() {
@@ -65,32 +127,57 @@ function CreateResponse() {
 	resp.OnRegis();
 }
 
+let isEyed = 0;
+function passEye() {
+    isEyed = !isEyed;
+    if (isEyed == 0) {
+        document.getElementById("showPass").innerHTML = '<i class="fas fa-eye-slash"></i>'
+        document.getElementById("passId").type = 'text'        
+    }
+    else {
+        document.getElementById("showPass").innerHTML = '<i class="fas fa-eye"></i>'
+        document.getElementById("passId").type = 'password'
+    }
+}
+
 </script>
 </head>
     <body>
     	<header>
-            <div class="SiteName"> <h1> Поиск </h1> </div>
-        </header>
+            <p><a href="http://b92599ho.beget.tech/"><img class = "logo" src="static/images/Montesume.png" width="70" height="70"></a></p>
+            <div class="name"> <h1> Montesume </h1> </div>
+	    </header>
+        <div id = "message"><p id = "message_text"></p></div>
+
         <div class="signin-signup">
-            <h2 class="titlee">Регистрация</h2>
+            <h3 class="titlee">Регистрация</h3>
 
             <div class="input-field">
                 <i class="fas fa-user"></i>
-                <input class = "input" type="text" name="name" placeholder="name" id = "nameId">
+                <input class = "input" type="text" placeholder="Введите ФИО" id = "nameId">
             </div>
 
             <div class="input-field">
                 <i class="fas fa-envelope"></i>
-                <input class = "input" type="email" name="email" placeholder="email" id = "emailID">
+                <input class = "input" type="email" placeholder="Введите email" id = "emailID">
             </div>
 
             <div class="input-field">
                 <i class="fas fa-lock"></i>
-                <input class = "input" type="password" name="password" placeholder="password" id = "passId">
+                <input class = "input2" type="password" placeholder="Введите пароль" id = "passId">
+                <button id="showPass" onclick="passEye()"><i class="fas fa-eye"></i></button>
             </div>
         </div>
-        <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: red; font-family: 'Montserrat'"></div>
-    	<a><input type="submit" value="Зарегистрироваться" name="btn" class="enter"  onclick="CreateResponse()" style="margin-left: 40%"></a>
-        <div style="text-align: center;"  class = "enter_link"><a href = "enter"  >Войти</a></div>
+        
+        <div class = "checkbox_div">
+            <label class="custom-checkbox">
+                <input type="checkbox" oninput = "test()" id = "rememberme_checkbox">
+                <span>Запомнить меня при регистрации</span>
+            </label>
+        </div>
+<!--         <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: white; font-family: 'Montserrat'">.</div>
+ --><!--    	<input type="submit" value="Зарегистрироваться" name="btn" class="enter"  onclick="CreateResponse()" style="margin-left: 40%">-->
+        <button name="register" id ="register_button" class="btn register"  onclick="CreateResponse()">Зарегистрироваться</button>
+        <div style="text-align: center;"  class = "enter_link">Уже есть аккаунт? <a href = "enter">Войти</a></div>
     </body>
 </html>

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Sign In</title>
+<head>
+<title>Montesume - Вход</title>
+<link rel="icon" type="image" href="static/images/Montesume.png">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="static/css/message.css">
 <link rel = "stylesheet" href="static/css/normalize.css">
 <link rel="stylesheet" href="static/css/enter.css">
 <script>
@@ -17,18 +21,39 @@ class Response {
         this.body = body;
     }
 
-    async OnRegis() {
-
+    async OnEnter() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
-        console.log(this.body)
-        let result = await response.text();
-        if(result != 'Такого пользователя не существует') {
-            document.cookie = result
-            const resp = new Response('GET', 'include', {}, {}, null, '/lk');
-            resp.lk(result) 
-        } else {
-            document.getElementById('warning').innerHTML = "Такого пользователя не существует";
-        }   
+        let result = await response.json();
+        if (result["result"] == "gotolk") {
+            window.location.href = '/lk'
+        }
+        else if (result["result"] == 'notfound') {
+            //document.getElementById('warning').innerHTML = "Вы ввели неправильный email или пароль! Повторите попытку!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Вы ввели неправильный email или пароль! Повторите попытку!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == 'notallowed') {
+            //document.getElementById('warning').innerHTML = "Нельзя оставлять ячейки пустыми! Повторите попытку!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Нельзя оставлять ячейки пустыми! Повторите попытку!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == 'invemail') {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваш email введён неправильно';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result["result"] == "invname") {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваше ФИО введено неправильно!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        }
+        else {
+            document.cookie = "montesume_access_token="+result["result"]["access_token"];
+            document.cookie = "montesume_refresh_token="+result["result"]['refresh_token']+"; expires=Tue, 1 Sep 2031 03:14:07 GMT";
+            const resp = new Response('GET', 'include', {}, {}, null, 'http://b92599ho.beget.tech/lk');
+            resp.lk(get_cookie("montesume_access_token"))
+        } 
     }
 
     async lk(result) {
@@ -41,25 +66,62 @@ class Response {
         .then(res => {
             return res.text();
         })
-        .then((response) => response.json())
+        /*.then((response) => response.json())
         .then((json) => {
             console.log('Gotcha');
           }).catch((err) => {
             console.log(err);
-        });
-        console.log(this.headers)
-        window.location.href = 'http://b92599ho.beget.tech/lk'
+        });*/
+        window.location.href = '/lk'
     }
+    
+    async UserInfo() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        if (result != "plsenter") window.location.href = '/lk'
+    }
+}
+
+async function resp() {
+    let data = {
+        "access_token": get_cookie("montesume_access_token"),
+        "refresh_token": get_cookie("montesume_refresh_token")
+    }
+    const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
+    resp.UserInfo();
+    
+    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
+    let result = await response.json();
+    if (result != "plsenter") window.location.href = '/lk'*/
+}
+resp()
+
+function get_cookie(cookie_name) {
+    var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+    if (results) return ( unescape ( results[2] ) );
+    else return null;
 }
 
 function CreateResponse() {
     let data = {
         "email": document.getElementById("emailID").value,
-        "password":  document.getElementById("passId").value
+        "password": document.getElementById("passId").value
     }
-    console.log(data)
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/enter');
-    resp.OnRegis();
+    resp.OnEnter();
+}
+
+let isEyed = 0;
+function passEye() {
+    isEyed = !isEyed;
+    if (isEyed == 0) {
+        document.getElementById("showPass").innerHTML = '<i class="fas fa-eye-slash"></i>'
+        document.getElementById("passId").type = 'text'        
+    }
+    else {
+        document.getElementById("showPass").innerHTML = '<i class="fas fa-eye"></i>'
+        document.getElementById("passId").type = 'password'
+    }
 }
 </script>
 
@@ -67,25 +129,39 @@ function CreateResponse() {
 </head>
     <body>
         <header>
-            <div class="SiteName"> <h1> Поиск </h1> </div>
-        </header>
+    	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+        		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+        		<div class="name"> <h1> Montesume </h1> </div>
+        	</a>
+	    </header>
+        <div id = "message"><p id = "message_text"></p></div>
+        
         <div class="signin-signup">
-            <form action="" class="sign-in-form" method="post" >
-                <h2 class="titlee">Вход</h2>
+            <h3>Вход</h3>
 
-                <div class="input-field" >
-                    <i class="fas fa-envelope"></i>
-                    <input class = "input" type="email" name="email" placeholder="email" id="emailID">
-                </div>
+            <div class="input-field" >
+                <i class="fas fa-envelope"></i>
+                <input class = "input" type="email" name="email" placeholder="Введите email" id="emailID">
+            </div>
 
-                <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input class = "input" type="password" name="password" placeholder="password" id = "passId">
-                </div>
-            </form>
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input class = "input2" type="password" name="password" placeholder="Введите пароль" id = "passId">
+                <button id="showPass" onclick="passEye()"><i class="fas fa-eye"></i></button>
+            </div>
+            
+            
         </div>
-        <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: red; font-family: 'Montserrat'"></div>
-        <a><input type="submit" value="Войти" name="btn" class="enter"  onclick="CreateResponse()" style="margin-left: 40%"></a>
-	    <div style="text-align: center;" class = "register_link" ><a href = "register">Регистрация</a></div>
+        
+        <div class = "checkbox_div">
+            <label class="custom-checkbox">
+                <input type="checkbox">
+                <span>Запомнить меня при регистрации</span>
+            </label>
+        </div>
+       <!--  <div id = "warning" class = "warning" style="font-size: 80%; color: white; text-align: center; color: white; font-family: 'Montserrat'">.</div> -->
+        <button name="enter" class="btn enter"  onclick="CreateResponse()">Войти</button>
+        <div style="text-align: center;" class = "passerecover_link" >Забыли пароль? <a href = "passwordrecover">Восстановить</a></div>
+	    <div style="text-align: center;" class = "register_link" >Ещё нету аккаунта? <a href = "register">Зарегистрироваться</a></div>
     </body>
 </html>

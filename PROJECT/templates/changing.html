@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Montesume - Изменение Информации Учётной Записи</title>
+<link rel="icon" type="image" href="static/images/Montesume.png">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="static/css/message.css">
+<link rel="stylesheet" href="static/css/changing.css">
+<link rel = "stylesheet" href="static/css/normalize.css">
+<script>
+
+class Response {
+	constructor(method, credentials, headers, data, body, url) {
+		this.method = method;
+		this.credentials = credentials;
+		this.headers = headers;
+		this.url = url;
+		this.data = data;
+		this.body = body;
+	}
+
+	async SendMessage() {
+        let response = await fetch(this.url, {method: this.method, headers: this.headers, body: this.body});
+        let result = await response.text();
+        console.log(result)
+    }
+
+	async OnChanging() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        if (result['result'] == "changed") {
+            //document.getElementById('warning').innerHTML = "Информация успешно изменена. Нажмите <a href = 'lk'>сюда</a>, чтобы зайти в личный кабинет.";
+            //document.getElementById('warning').style['color'] = "green";
+            document.getElementById('message_text').innerHTML = 'Информация успешно изменена!';
+            document.getElementById('message').style['background-color'] = '#00C147';
+        } else if (result['result'] == "notchanged") {
+            //document.getElementById('warning').innerHTML = "Нельзя оставлять все ячейки пустыми! Нажмите <a href = 'lk'>сюда</a>, чтобы вернуться в личный кабинет.";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Нельзя оставлять все ячейки пустыми!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result['result'] == "sameemail") {
+            //document.getElementById('warning').innerHTML = "Пользователь с таким email уже существует! Нажмите <a href = 'lk'>сюда</a>, чтобы вернуться в личный кабинет.";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Пользователь с таким email уже существует!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result['result'] == "sameemail1") {
+            //document.getElementById('warning').innerHTML = "Ваш текущий email совпадает с тем, что Вы ввели! Нажмите <a href = 'lk'>сюда</a>, чтобы вернуться в личный кабинет.";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваш текущий email совпадает с тем, что Вы ввели!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result['result'] == "samename") {
+            //document.getElementById('warning').innerHTML = "Ваше текущее имя совпадает с тем, что Вы ввели! Нажмите <a href = 'lk'>сюда</a>, чтобы вернуться в личный кабинет.";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваше текущее имя совпадает с тем, что Вы ввели! ';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        } else if (result['result'] == "invpassword") {
+            //document.getElementById('warning').innerHTML = "Вы неправиьно ввели пароль! Он состоять из минимум 6-ти символов, содержать латинские буквы верхнего,нижнего регистра и цифры!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Вы неправильно ввели пароль! Он состоять из минимум 6-ти символов, содержать латинские буквы верхнего,нижнего регистра и цифры!';
+            document.getElementById('message').style['background-color'] = '#F86368';            
+        } else if (result['result'] == "invemail") {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваш email введён неправильно!';
+            document.getElementById('message').style['background-color'] = '#F86368';            
+        } else if (result['result'] == "samepass") {
+            //document.getElementById('warning').innerHTML = "Ваш текущий пароль совпадает с тем, что Вы ввели!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваш текущий пароль совпадает с тем, что Вы ввели!';
+            document.getElementById('message').style['background-color'] = '#F86368'; 
+        } else if (result["result"] == "invname") {
+            //document.getElementById('warning').innerHTML = "Ваш email введён неправильно!";
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Ваше ФИО введено неправильно!';
+            document.getElementById('message').style['background-color'] = '#F86368';
+        }
+	}
+	
+	async UserInfo1() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        let info = result
+        if (result['plsenter']) window.location.href = '/enter'
+        else {
+            if (result['access_token'] != 'null')
+                setCookie('montesume_access_token', result['access_token'])
+        }
+        response = await fetch('/check-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("montesume_access_token"), "refresh_token": get_cookie("montesume_refresh_token")})});
+        result = await response.json();
+        
+        
+        if (document.getElementById('codeId').value == result['result']) {
+            
+            let data = {
+                "curr_name": info['user_info']['name'],
+                "curr_email": info['user_info']['email'],
+                "curr_token": info['user_info']['token'],
+                "name": document.getElementById("nameId").value,
+                "email": document.getElementById("emailID").value,
+                "password": document.getElementById("passId").value
+            }
+            const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/changing');
+            resp.OnChanging();
+        } else {
+            //document.getElementById('warning').innerHTML = "Вы ввели неверный код! Попробуйте ещё раз!"
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Вы ввели неверный код! Попробуйте ещё раз!';
+            document.getElementById('message').style['background-color'] = '#F86368';   
+        }
+	}
+	
+	async UserInfo2() {
+        let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
+        let result = await response.json();
+        if (result == 'plsenter') window.location.href = '/enter'
+        else {
+            if (result['access_token'] != 'null')
+                setCookie('montesume_access_token', result['access_token'])
+        
+            let data = {
+                "name": result['user_info']['name'],
+                "email": result['user_info']['email'],
+                "access_token": get_cookie("montesume_access_token")
+            }
+            const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-confirm');
+            resp.SendMessage(); 
+        }
+	}
+}
+
+async function send() {
+    /*let response = await fetch('/info-lk', {
+        method: "GET",
+        headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}
+    });
+    let result = await response.json();*/
+    
+    
+    let data = {
+        "access_token": get_cookie("montesume_access_token"),
+        "refresh_token": get_cookie("montesume_refresh_token")
+    }
+    const response = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
+    response.UserInfo2();
+    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
+    let result = await response.json();
+    if (result == 'plsenter') window.location.href = '/enter'
+    else {
+        if (result['access_token'] != 'null')
+            setCookie('evrica_access_token', result['access_token'])
+    
+        data = {
+            "name": result['user_info']['name'],
+            "email": result['user_info']['email'],
+            "access_token": get_cookie("evrica_access_token")
+        }
+        const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-confirm');
+        resp.SendMessage(); 
+    }*/
+}
+send()
+
+function backtolk() {
+    window.location.href = '/lk'
+}
+
+function setCookie(name, value, options = {}) {
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+    document.cookie = updatedCookie;
+}
+
+function get_cookie(cookie_name) {
+    var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+    if (results) return ( unescape ( results[2] ) );
+    else return null;
+}
+
+async function ChangeInformation() {
+    if (document.getElementById('re-passId').value == document.getElementById('passId').value){
+        
+        let data = {
+            "access_token": get_cookie("montesume_access_token"),
+            "refresh_token": get_cookie("montesume_refresh_token")
+        }
+        
+        const response = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
+        response.UserInfo1();
+            
+        /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
+        let result = await response.json();
+        let info = result
+        if (result['plsenter']) window.location.href = '/enter'
+        else {
+            if (result['access_token'] != 'null')
+                setCookie('evrica_access_token', result['access_token'])
+        }
+        
+        response = await fetch('/check-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("evrica_access_token"), "refresh_token": get_cookie("evrica_refresh_token")})});
+        result = await response.json();
+        
+        
+        if (document.getElementById('codeId').value == result['result']) {
+            
+            data = {
+                "curr_name": info['user_info']['name'],
+                "curr_email": info['user_info']['email'],
+                "curr_token": info['user_info']['token'],
+                "name": document.getElementById("nameId").value,
+                "email": document.getElementById("emailID").value,
+                "password": document.getElementById("passId").value
+            }
+            const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/changing');
+            resp.OnChanging();
+        } else {
+            //document.getElementById('warning').innerHTML = "Вы ввели неверный код! Попробуйте ещё раз!"
+            //document.getElementById('warning').style['color'] = "red";
+            document.getElementById('message_text').innerHTML = 'Вы ввели неверный код! Попробуйте ещё раз!';
+            document.getElementById('message').style['background-color'] = '#F86368';   
+        }*/
+        
+        
+        
+    } else {
+        //document.getElementById('warning').innerHTML = "Пароли не совпадают!"
+        //document.getElementById('warning').style['color'] = "red";
+        document.getElementById('message_text').innerHTML = 'Пароли не совпадают!';
+        document.getElementById('message').style['background-color'] = '#F86368';   
+    }
+}
+
+function show(isEyed, mode) {
+    if (isEyed == 0) {
+        document.getElementById("showPass" + String(mode)).innerHTML = '<i class="fas fa-eye-slash"></i>'
+        if (mode == 1) document.getElementById("passId").type = 'text'   
+        else document.getElementById("re-passId").type = 'text'  
+    } else {
+        document.getElementById("showPass" + String(mode)).innerHTML = '<i class="fas fa-eye"></i>'
+        if (mode == 1) document.getElementById("passId").type = 'password'   
+        else document.getElementById("re-passId").type = 'password'  
+    }
+}
+
+let isEyed1 = 0;
+let isEyed2 = 0;
+function passEye(mode) {
+    if (mode == 1) {
+        isEyed1 = !isEyed1;
+        show(isEyed1, 1)
+    } else {
+        isEyed2 = !isEyed2;
+        show(isEyed2, 2)
+    }
+}
+
+</script>
+</head>
+    <body>
+    	<header>
+    	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+        		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+        		<div class="name"> <h1> Montesume </h1> </div>
+        	</a>
+	    </header>
+        <div id = "message"><p id = "message_text"></p></div>
+
+        <div class="signin-signup">
+            <h3 class="titlee">Изменение информации профиля</h3>
+
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input class = "input" type="text" placeholder="Введите новое ФИО" id = "nameId">
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input class = "input" type="email" placeholder="Введите новый email" id = "emailID">
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input class = "input2" type="password" placeholder="Введите новый пароль" id = "passId">
+                <button id="showPass1" onclick="passEye(1)"><i class="fas fa-eye"></i></button>
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input class = "input2" type="password" placeholder="Введите пароль заново" id = "re-passId">
+                <button id="showPass2" onclick="passEye(2)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="input-field"><input class = "input" type="text" name="name" placeholder="Код подтверждения" id = "codeId"></div>
+        </div>
+        <button name="back" class="btn back"  onclick="backtolk()">Вернуться в Личный Кабинет</button>
+        <button name="resend" class="btn resend"  onclick="send()">Отправить код повторно</button>
+
+<!--         <div id = "warning" class = "warning">.</div> -->
+        <button name="change" class="btn change"  onclick="ChangeInformation()">Изменить</button>
+    </body>
+</html>
