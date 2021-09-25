@@ -11,12 +11,11 @@ heatmap_points1 = [[37.5598, 55.7992], [37.5613, 55.7979], [37.5619, 55.7974], [
 function Savelovskiy_line() {
 	mas = []
 	for(let i = 0; i < lines["features"].length; i++) {
-		//for(let j = 0; j < lines["features"][i]["geometry"]["coordinates"].length; j++) {
-		mas.push(lines["features"][i]["geometry"]["coordinates"][0].reverse())
-		mas.push(lines["features"][i]["geometry"]["coordinates"][1].reverse())
-		//}
-		//mas.push(lines["features"][i]["geometry"]["coordinates"].reverse())
+        masd1 = lines["features"][i]["geometry"]["coordinates"][0].reverse()
+        masd2 = lines["features"][i]["geometry"]["coordinates"][1].reverse()
+        mas.push([masd1, masd2])
 	}
+	console.log(mas[1])
 	
 	return mas;
 }

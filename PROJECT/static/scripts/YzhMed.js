@@ -7,15 +7,13 @@ heatmap_points = [[37.651, 55.8762], [37.6508, 55.8763], [37.6508, 55.8765], [37
 
 
 function Medvedkovo_line() {
-	let mas = []
+	mas = []
 	for(let i = 0; i < lines1["features"].length; i++) {
-		//for(let j = 0; j < lines["features"][i]["geometry"]["coordinates"].length; j++) {
-		mas.push(lines1["features"][i]["geometry"]["coordinates"][0].reverse())
-		mas.push(lines1["features"][i]["geometry"]["coordinates"][1].reverse())
-		//}
-		//mas.push(lines["features"][i]["geometry"]["coordinates"].reverse())
+        masd1 = lines1["features"][i]["geometry"]["coordinates"][0].reverse()
+        masd2 = lines1["features"][i]["geometry"]["coordinates"][1].reverse()
+        mas.push([masd1, masd2])
 	}
-	
+
 	return mas;
 }
 
@@ -24,8 +22,6 @@ function HeatMapMed() {
 		heatmap_points[i].reverse()
 	}
 	return heatmap_points
-
-
 }
 
 function MonthlyMed() {
