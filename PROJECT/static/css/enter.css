@@ -2,16 +2,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 header{
-	padding-top: 10px;
-	padding-left: 20px;
-	padding-bottom: 10px;
 	background-color: #FFDF59;
 	display: flex;
-	font-family: "Montserrat";
+    font-family: "Montserrat";
+}
+.logo{ padding-left: 1em; }
+.name {
+	text-align: left;
+	margin-top:-0.2em;
+	font-size: 140%;
+	margin-left: 0.5em;
 }
 .signin-signup {
+    font-family: "Montserrat";
 	text-align: center;
-	font-family: "Montserrat";
 	font-size: 40px;
 }
 .input-field {
@@ -21,48 +25,250 @@ header{
 	background-color: #E8E8E8;
 	width: 25%;
 	border-radius: 55px;
+	transition: .4s;
 }
 .input-field:hover{
 	width: 27%;
 	margin: 0 auto;
 	margin-bottom: 10px;
+	transition: .4s;
 }
-.fa-envelope{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.checkbox_div {
+    text-align : center;
+}
+.custom-checkbox input {
+    
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  text-align : center;
+}
+
+/* для элемента label, связанного с .custom-checkbox */
+.custom-checkbox span {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+    font-family: "Montserrat";
+	font-size: 20px;
+}
+
+/* создание в label псевдоэлемента before со следующими стилями */
+.custom-checkbox span::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+/* стили при наведении курсора на checkbox */
+.custom-checkbox input:not(:disabled):not(:checked)+span:hover::before {
+  border-color: #FFAE78;
+}
+
+/* стили для активного чекбокса (при нажатии на него) */
+.custom-checkbox input:not(:disabled):active+span::before {
+  background-color: #FFAE78;
+  border-color: #FFAE78;
+}
+
+/* стили для чекбокса, находящегося в фокусе */
+.custom-checkbox input:focus+span::before {
+  box-shadow: 0 0 0 0.2rem #FFAE78;
+}
+
+/* стили для чекбокса, находящегося в состоянии checked */
+.custom-checkbox input:checked+span::before {
+  border-color: #F15A24;
+  background-color: #F15A24;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#showPass {
+    background-color: #E8E8E8;
+    outline: none;
+    border: 0;
+    margin-top: 10px;
+}
+#showPass i { font-size: 25px; }
+.fa-envelope, .fa-lock{
 	font-size: 25px;
 	margin-bottom: 28px;
 	vertical-align: center;
 }
-.fa-lock {
-	font-size: 25px;
-	margin-bottom: 28px;
-	vertical-align: center;
-}
-.input {
+.input,.input2 {
 	height: 70px;
 	border: none;
 	outline: none;
-	width: 60%;
 	background-color: #E8E8E8;
 	font-size: 25px;
-	vertical-align: center;
-	align-self: center;
 	font-family: "Montserrat";
-	
 }
-.enter {
-	width: 20%;
-	height: 70px;
-	border-radius: 55px;
-	border: none;
-	outline: none;
-	font-size: 30px;
-	background-color: #FFDF59;
-	color: white;
-	font-family: "Montserrat";
-
-}
+.input { width: 75%; }
+.input2 { width: 63.5%; }
 .register_link{
-	font-family: "Montserrat";
-	padding-top: 10px;
+    font-family: "Montserrat";
+	margin-top: 5px;
 	font-size: 20px;
+}
+.passerecover_link{
+    font-family: "Montserrat";
+	margin-top: 5px;
+	font-size: 20px;
+}
+.btn {
+  	box-sizing: border-box;
+/*       -webkit-appearance: none;
+     -moz-appearance: none;
+    appearance: none; */
+  	background-color: transparent;
+	border-radius: 1.5em;
+	cursor: pointer;
+  /*     display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox; */
+  	display: flex;
+/*       -webkit-align-self: center;
+    -ms-flex-item-align: center; */
+	align-self: center;
+  	font-size: 1.4rem;
+  	line-height: 1;
+  	margin: 20px;
+  	padding: 1em 3em;
+  	text-decoration: none;
+  	text-align: center;
+  	text-transform: uppercase;
+	font-family: "Montserrat";
+  	font-weight: 700;
+}
+.btn:hover { color: #fff; outline: 0; }
+.enter {
+	border: 2px solid #FFDF59;
+	color: #FFDF59;
+  	/* -webkit- transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;*/
+  	transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  	left:0;
+  	right:0;
+  	margin:auto;
+}
+.enter:hover { box-shadow: 0 0 40px 40px #FFDF59 inset; }
+@media (max-width: 1600px) {
+    .logo{
+    	width: 60px;
+    	height: 60px;
+    	margin-top:-0.2em;
+    	margin-bottom:-0.5em;
+    	margin-left: 0.1em;
+    }
+    .name {
+    	padding-top:0.3em;
+    	font-size: 100%;
+    	margin-left: 0.3em;
+    }
+	.input-field {
+		margin-left:35%;
+		width: 30%;
+		transition: .4s;
+	}
+	.input-field:hover{
+		width: 32%;
+		margin-left:34%;
+		transition: .4s;
+	}
+}
+@media (max-width: 1200px) {
+	.logo{
+    	width: 45px;
+    	height: 45px;
+    	margin-top:-0.2em;
+    	margin-bottom:-0.5em;
+    	margin-left: -0.3em;
+    }
+    .name {
+    	padding-top:0.4em;
+    	font-size: 80%;
+    	margin-left: 0.5em;
+    }
+    .signin-signup { font-size: 25px; }
+	.input-field {
+		margin-left:20%;
+		width: 60%;
+		transition: .4s;
+	}
+	.input-field:hover{
+		width: 65%;
+		margin-left:17.5%;
+		transition: .4s;
+	}
+}
+@media (max-width: 750px) {
+    header { line-height: 0.7em; }
+    .logo{
+    	width: 25px;
+    	height: 25px;
+    	margin-top: -0.4em;
+    	margin-bottom: -0.2em;
+    	margin-left: -0.5em;
+    }
+    .name { margin-top: 0.4em; font-size: 50%; }
+    .signin-signup { font-size: 15px; }
+    .input-field {
+    	margin-left:12.5%;
+    	width: 75%;
+    	transition: .4s;
+    }
+    .input-field:hover{
+    	width: 80%;
+    	margin-left:10%;
+    	transition: .4s;
+    }
+    .btn { font-size: 0.9rem; }
+    #showPass i, .fa-lock, .fa-envelope{ font-size: 14px; margin-bottom: 11px; }
+    .input, .input2 { height: 40px; font-size: 14px; }
+    .input2 { width: 57%; }
+    .register_link{ margin-top: 2px; font-size: 15px; }
+    .passerecover_link{font-size: 15px; }
+    .custom-checkbox span { font-size: 15px; text-align: center;}
 }
