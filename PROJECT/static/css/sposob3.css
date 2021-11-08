@@ -2,56 +2,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 .slider {
-    -webkit-appearance: none;
-    width: 320px;
-    height: 15px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    margin-top: 17px;
+	-webkit-appearance: none;
+	width: 320px;
+	height: 15px;
+	border-radius: 5px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	margin-top: 17px;
 	margin-left: 20px;
 	margin-right: 20px;
 }
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #EC6408;
-    cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: #EC6408;
+	cursor: pointer;
 }
 .slider_div { margin-left: 10px; display: flex; }
 .all_buttons { display: flex; }
 .plotnostImage { 
-    margin: 0 auto; 
-    margin-top: 80px; 
+	margin: 0 auto; 
+	margin-top: 80px; 
 }
 #block_popup {
-    font-size: 20px;
-    font-family: "Montserrat";
-    width: 45%; height: 340px;
-    margin: 0 auto;
-    padding: 18px 9px;
-    border-radius: 2%;
-    background: #fafafa;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    margin: auto;
-    display: none;
-    opacity: 0;
-    z-index: 38;
-    text-align: center;
+	font-size: 20px;
+	font-family: "Montserrat";
+	width: 45%; height: 340px;
+	margin: 0 auto;
+	padding: 18px 9px;
+	border-radius: 2%;
+	background: #fafafa;
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+	display: none;
+	opacity: 0;
+	z-index: 38;
+	text-align: center;
 }
 #overlay {
-  z-index: 37;
-  position: fixed;
-  background-color: rgba(0,0,0,.7);
-  width: 100%; height: 100%;
-  top: 0; left: 0;
-  cursor :pointer;
-  display :none;
+	z-index: 37;
+	position: fixed;
+	background-color: rgba(0,0,0,.7);
+	width: 100%; height: 100%;
+	top: 0; left: 0;
+	cursor :pointer;
+	display :none;
 }
 .btn {
   	box-sizing: border-box;
@@ -68,7 +68,7 @@
   	text-decoration: none;
   	text-align: center;
   	text-transform: uppercase;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 	font-weight: 700;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -85,17 +85,17 @@
 	transition: color 150ms ease-in-out;
 }
 .enter_button:after,.mainpage_button:after,.register_button:after,.delete_stopped:after, .delete_not_stopped:after, .delete_all:after, .button_search:after, .button_stop:after, .button_clear:after, .button_save:after {
-    content: '';
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); transform: translateX(-50%);
-    width: 0;
-    height: 100%;
-    background: #EC6408;
-    z-index: -1;
-    transition: width 150ms ease-in-out;
+	content: '';
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%); transform: translateX(-50%);
+	width: 0;
+	height: 100%;
+	background: #EC6408;
+	z-index: -1;
+	transition: width 150ms ease-in-out;
 }
 .delete_stopped { padding: 1em 3.5em; }
 .delete_not_stopped { padding: 1em 6.55em; }
@@ -105,111 +105,110 @@
 .button_clear { padding: 1em 6em; }
 .button_save { padding: 1em 5.6em; }
 .message_save {
-    font-size: 80%; 
-    text-align: center; 
-    font-family: 'Montserrat';
+	font-size: 80%; 
+	text-align: center; 
+	font-family: 'Montserrat';
 }
 .register_button:after{ background-color: #F86368; }
 .register_button {
-    border-color: #F86368;
-    color: #F86368;
-    padding: 1em 6.7em;
+	border-color: #F86368;
+	color: #F86368;
+	padding: 1em 6.7em;
 }
 .enter_button:after{ background-color: #5BEB85; }
 .enter_button{
-    border-color: #5BEB85;
-    color: #5BEB85;
-    padding: 1em 11.3em;
+	border-color: #5BEB85;
+	color: #5BEB85;
+	padding: 1em 11.3em;
 }
 .mainpage_button:after{ background-color: #FF914D }
 .mainpage_button {
-    border-color: #FF914D;
-    color: #FF914D;
-    padding: 1em 3em;
+	border-color: #FF914D;
+	color: #FF914D;
+	padding: 1em 3em;
 }
 .register_button,.enter_button,.mainpage_button{ font-size: 1.3rem; }
 .enter_button:hover,.register_button:hover,.mainpage_button:hover,.button_save:hover,.button_clear:hover,.button_stop:hover,.button_search:hover,.delete_all:hover,.delete_not_stopped:hover,.delete_stopped:hover{ color: #fff;}
 .enter_button:hover:after,.register_button:hover:after,.mainpage_button:hover:after,.button_save:hover:after,.button_clear:hover:after,.button_stop:hover:after,.button_search:hover:after,.delete_all:hover:after,.delete_not_stopped:hover:after,.delete_stopped:hover:after{ width: 110%;}
 @media (max-width: 1600px) {
-    #block_popup { font-size: 13px; height: 260px;}
-    .delete_stopped { padding: 1em 6em; }
-    .delete_not_stopped {  padding: 1em 9em; }
-    .delete_all { padding: 1em 10.9em; }
-    .button_search { padding: 1em 8em; }
-    .button_clear { padding: 1em 7em; }
-    .button_stop { padding: 1em 5em; }
-    .button_save { padding: 1em 6.6em; }
-    .buttons { width: 60%; }
-    .btn { font-size: 1rem; }
-    .slider {
-        width: 40%;
-        margin-top: 13px;
-    	margin-left: 10px;
-    	margin-right: 10px;
-    }
-    .plotnostImage { margin-left: 10px; margin-top: 30px; }
-    .slider_div { font-size: 13px; margin-left: 10px; }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.1rem; }
-    .register_button,.enter_button,.mainpage_button{ font-size: 1.1rem; }
+	#block_popup { font-size: 13px; height: 260px;}
+	.delete_stopped { padding: 1em 6em; }
+	.delete_not_stopped {  padding: 1em 9em; }
+	.delete_all { padding: 1em 10.9em; }
+	.button_search { padding: 1em 8em; }
+	.button_clear { padding: 1em 7em; }
+	.button_stop { padding: 1em 5em; }
+	.button_save { padding: 1em 6.6em; }
+	.buttons { width: 60%; }
+	.btn { font-size: 1rem; }
+	.slider {
+	width: 40%;
+	margin-top: 13px;
+	margin-left: 10px;
+	margin-right: 10px;
+	}
+	.plotnostImage { margin-left: 10px; margin-top: 30px; }
+	.slider_div { font-size: 13px; margin-left: 10px; }
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.1rem; }
+	.register_button,.enter_button,.mainpage_button{ font-size: 1.1rem; }
 }
 @media (max-width: 1200px) {
-    #block_popup { 
-        font-size: 14px; 
-        height: 300px;
-        width: 70%;
-    }
-    .button_search { padding: 1em 7em; }
-    .button_clear { padding: 1em 6em; }
-    .button_stop { padding: 1em 4em; }
-    .button_save { padding: 1em 5.6em; }
-    .buttons { width:70%; }
-    .btn {
-      	font-size: 1.4rem;
-        margin: 0 auto;
-        margin-bottom: 10px;
-    }
-    .slider {
-        width: 90%;
-        height: 20px;
-        margin-top: 0px;
-    	margin-left: 0px;
-    	margin-right: 10px;
-    }
-    .slider_div {
-        display:block;
-    	font-size: 23px;
-    	margin-left: 20px;
-    }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
-    .register_button,.enter_button,.mainpage_button{ font-size: 1.2rem; }
+	#block_popup { 
+		font-size: 14px; 
+		height: 300px;
+		width: 70%;
+	}
+	.button_search { padding: 1em 7em; }
+	.button_clear { padding: 1em 6em; }
+	.button_stop { padding: 1em 4em; }
+	.button_save { padding: 1em 5.6em; }
+	.buttons { width:70%; }
+	.btn {
+		font-size: 1.4rem;
+		margin: 0 auto;
+		margin-bottom: 10px;
+	}
+	.slider {
+		width: 90%;
+		height: 20px;
+		margin-top: 0px;
+		margin-left: 0px;
+		margin-right: 10px;
+	}
+	.slider_div {
+		display:block;
+		font-size: 23px;
+		margin-left: 20px;
+	}
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
+	.register_button,.enter_button,.mainpage_button{ font-size: 1.2rem; }
 }
 @media (max-width: 750px) {
-    #block_popup { 
-        font-size: 10px; 
-        height: 210px;
-        width: 90%;
-    }
-    .delete_stopped { padding: 1em 3.7em; }
-    .delete_not_stopped { padding: 1em 6.7em; }
-    .delete_all { padding: 1em 8.6em; }
-    .button_search { padding: 1em 7em; }
-    .button_clear { padding: 1em 5.95em; }
-    .button_stop { padding: 1em 3.95em; }
-    .button_save { padding: 1em 5.6em; }
-    .buttons{ width: 100%; margin-left: 20px;}
-    .btn {
-        margin: 0 auto;
-        font-size: 1.1rem;
-      	margin-bottom:6px;
-      	
-    }
-    .plotnostImage { display:none; }
-    .slider { width: 95%; margin-right: 10px; }
-    .slider_div {
-        display:block;
-    	font-size: 15px;
-    	margin-left: 30px;
-    }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 90%; }
-    .register_button,.enter_button,.mainpage_button{ font-size: 100%  }
+	#block_popup { 
+		font-size: 10px; 
+		height: 210px;
+		width: 90%;
+	}
+	.delete_stopped { padding: 1em 3.7em; }
+	.delete_not_stopped { padding: 1em 6.7em; }
+	.delete_all { padding: 1em 8.6em; }
+	.button_search { padding: 1em 7em; }
+	.button_clear { padding: 1em 5.95em; }
+	.button_stop { padding: 1em 3.95em; }
+	.button_save { padding: 1em 5.6em; }
+	.buttons{ width: 100%; margin-left: 20px;}
+	.btn {
+		margin: 0 auto;
+		font-size: 1.1rem;
+		margin-bottom:6px;
+	}
+	.plotnostImage { display:none; }
+	.slider { width: 95%; margin-right: 10px; }
+	.slider_div {
+		display:block;
+		font-size: 15px;
+		margin-left: 30px;
+	}
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 90%; }
+	.register_button,.enter_button,.mainpage_button{ font-size: 100%  }
 }
