@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 .all_buttons_sp4{
-    width: 95%;
+	width: 95%;
 	display: flex;
 }
 .buttons_sp4{ margin: 0 auto; }
@@ -21,7 +21,7 @@
   	text-decoration: none;
   	text-align: center;
   	text-transform: uppercase;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 	font-weight: 700;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -39,18 +39,18 @@
 	transition: color 150ms ease-in-out;
 }
 .enter_button:after,.mainpage_button:after,.lk_button:after,.register_button:after,.delete_stopped:after, .delete_not_stopped:after, .delete_all:after, .button_search:after, .button_stop:after, .button_clear:after, .button_save:after {
-    content: '';
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); transform: translateX(-50%);
-    width: 0;
-    height: 100%;
-    background: #EC6408;
-    z-index: -1;
-    transition: width 150ms ease-in-out;
-    transition: width 150ms ease-in-out;
+	content: '';
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%); transform: translateX(-50%);
+	width: 0;
+	height: 100%;
+	background: #EC6408;
+	z-index: -1;
+	transition: width 150ms ease-in-out;
+	transition: width 150ms ease-in-out;
 }
 .delete_stopped { padding: 1em 3.5em; }
 .delete_not_stopped { padding: 1em 6.55em; }
@@ -60,62 +60,62 @@
 .button_clear { padding: 1em 4.5em; }
 .button_save { padding: 1em 4.18em; }
 .message_save {
-    font-size: 80%; 
-    text-align: center; 
-    font-family: 'Montserrat';
+	font-size: 80%; 
+	text-align: center; 
+	font-family: 'Montserrat';
 }
 .register_button:after{ background-color: #F86368; }
 .register_button {
-    border-color: #F86368;
-    color: #F86368;
-    padding: 1em 6.7em;
+	border-color: #F86368;
+	color: #F86368;
+	padding: 1em 6.7em;
 }
 .enter_button:after{ background-color: #5BEB85; }
 .enter_button{
-    border-color: #5BEB85;
-    color: #5BEB85;
-    padding: 1em 11.3em;
+	border-color: #5BEB85;
+	color: #5BEB85;
+	padding: 1em 11.3em;
 }
 .mainpage_button:after{ background-color: #FF914D }
 .mainpage_button {
-    border-color: #FF914D;
-    color: #FF914D;
-    padding: 1em 3em;
+	border-color: #FF914D;
+	color: #FF914D;
+	padding: 1em 3em;
 }
 .lk_button:after{ background-color: #4157FF }
 .lk_button {
-    border-color: #4157FF;
-    color: #4157FF;
-    padding: 1em 5.2em;
+	border-color: #4157FF;
+	color: #4157FF;
+	padding: 1em 5.2em;
 }
 .register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 1.3rem; }
 .enter_button:hover,.register_button:hover,.mainpage_button:hover,.lk_button:hover,.button_save:hover,.button_clear:hover,.button_stop:hover,.button_search:hover,.delete_all:hover,.delete_not_stopped:hover,.delete_stopped:hover{ color: #fff;}
 .enter_button:hover:after,.register_button:hover:after,.mainpage_button:hover:after,.lk_button:hover:after,.button_save:hover:after,.button_clear:hover:after,.button_stop:hover:after,.button_search:hover:after,.delete_all:hover:after,.delete_not_stopped:hover:after,.delete_stopped:hover:after{ width: 110%;}
 .select_people{ font-size: 17px; margin-left: 40px; }
 #block_popup {
-    font-size: 18px;
-    font-family: "Montserrat";
-    width: 45%; height: 435px;
-    margin: 0 auto;
-    padding: 18px 9px;
-    border-radius: 2%;
-    background: #fafafa;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    margin: auto;
-    display: none;
-    opacity: 0;
-    z-index: 38;
-    text-align: center;
+	font-size: 18px;
+	font-family: "Montserrat";
+	width: 45%; height: 435px;
+	margin: 0 auto;
+	padding: 18px 9px;
+	border-radius: 2%;
+	background: #fafafa;
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+	display: none;
+	opacity: 0;
+	z-index: 38;
+	text-align: center;
 }
 #overlay {
-    z-index: 37;
-    position: fixed;
-    background-color: rgba(0,0,0,.7);
-    width: 100%; height: 100%;
-    top: 0; left: 0;
-    cursor :pointer;
-    display :none;
+	z-index: 37;
+	position: fixed;
+	background-color: rgba(0,0,0,.7);
+	width: 100%; height: 100%;
+	top: 0; left: 0;
+	cursor :pointer;
+	display :none;
 }
 @media (max-width: 1600px) {
     #block_popup { font-size: 13px; height: 340px;}
@@ -134,50 +134,50 @@
     .register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 1.1rem; }
 }
 @media (max-width: 1200px) {
-    #block_popup { 
-        font-size: 14px; 
-        height: 370px;
-        width: 70%;
-    }
-    .button_search { padding: 1em 7em; }
-    .button_clear { padding: 1em 6em; }
-    .button_stop { padding: 1em 4em; }
-    .button_save { padding: 1em 5.6em; }
-    .buttons_sp4{ width:50%; }
-    .btn { 
-        font-size: 1.2rem; 
-        margin: 0 auto;
-        margin-bottom: 10px;
-    }
-    .select_people{
-    	font-size: 18px;
-    	margin-left: 10px;
-    	margin-top:26px;
-    }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
-    .register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 1.2rem; }
+	#block_popup { 
+		font-size: 14px; 
+		height: 370px;
+		width: 70%;
+	}
+	.button_search { padding: 1em 7em; }
+	.button_clear { padding: 1em 6em; }
+	.button_stop { padding: 1em 4em; }
+	.button_save { padding: 1em 5.6em; }
+	.buttons_sp4{ width:50%; }
+	.btn { 
+		font-size: 1.2rem; 
+		margin: 0 auto;
+		margin-bottom: 10px;
+	}
+	.select_people{
+		font-size: 18px;
+		margin-left: 10px;
+		margin-top:26px;
+	}
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
+	.register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 1.2rem; }
 }
 @media (max-width: 750px) {
-    #block_popup { 
-        font-size: 10px; 
-        height: 250px;
-        width: 90%;
-    }
-    .delete_stopped { padding: 1em 3.7em; }
-    .delete_not_stopped { padding: 1em 6.7em; }
-    .delete_all { padding: 1em 8.6em; }
-    .button_search { padding: 1em 7em; }
-    .button_clear { padding: 1em 5.95em; }
-    .button_stop { padding: 1em 3.95em; }
-    .button_save { padding: 1em 5.6em; }
-    .buttons_sp4{ margin-top:20px; margin-left: 25px;}
-    .btn {
-      	font-size: 1.1rem;
-      	margin: 0 auto;
-        margin-bottom:6px;
-    }
-    .select_people{ font-size: 15px; width:70%; }
-    .all_buttons_sp4{ display: block;  }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 90%; }
-    .register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 100%; }
+	#block_popup { 
+		font-size: 10px; 
+		height: 250px;
+		width: 90%;
+	}
+	.delete_stopped { padding: 1em 3.7em; }
+	.delete_not_stopped { padding: 1em 6.7em; }
+	.delete_all { padding: 1em 8.6em; }
+	.button_search { padding: 1em 7em; }
+	.button_clear { padding: 1em 5.95em; }
+	.button_stop { padding: 1em 3.95em; }
+	.button_save { padding: 1em 5.6em; }
+	.buttons_sp4{ margin-top:20px; margin-left: 25px;}
+	.btn {
+		font-size: 1.1rem;
+		margin: 0 auto;
+		margin-bottom:6px;
+	}
+	.select_people{ font-size: 15px; width:70%; }
+	.all_buttons_sp4{ display: block;  }
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 90%; }
+	.register_button,.enter_button,.mainpage_button,.lk_button{ font-size: 100%; }
 }
