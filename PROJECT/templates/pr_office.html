@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Montesume - Личный Кабинет</title>
+<meta charset="UTF-8">
 <link rel="icon" type="image" href="static/images/Montesume.png">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel = "stylesheet" href="static/css/normalize.css">
@@ -10,25 +11,6 @@
 <script src="https://use.fontawesome.com/df966d76e1.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script>
-/* async function resp() {
-    let response=await fetch('info-lk',{ method: "GET",headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}});
-    let result = await response.json();
-    if (result['name'] == undefined && result['email'] == undefined) {
-        window.location.href = 'enter' 
-    } else {
-        if (result['isEmailConfirmed'] == 0) {
-            document.getElementById('name').innerHTML += result['name'];
-            document.getElementById('email').innerHTML += result['email'];
-            
-        } else if (result['isEmailConfirmed'] == 1){
-            document.getElementById('name').innerHTML += result['name'];
-            document.getElementById('email').innerHTML += result['email'];
-        }
-    }
-}*/
-
-document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
-console.log(get_cookie("user"))
 
 class Response {
 	constructor(method, credentials, headers, data, body, url) {
@@ -39,52 +21,61 @@ class Response {
 		this.data = data;
 		this.body = body;
 	}
+
+	//функция для создания запроса на отправку сообщения по футеру
 	async SendMessage() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
-        if (result["result"] == "success") {
+        if (result["result"] == "invname") {
+            document.getElementById('message_text2').innerHTML = 'Ваше ФИО введено неправильно!';
+            document.getElementById('message2').style['background-color'] = '#F86368';
+		} else if (result["result"] == "invemail") {
+            document.getElementById('message_text2').innerHTML = 'Ваш email введён неправильно!';
+            document.getElementById('message2').style['background-color'] = '#F86368';
+		} else if (result["result"] == "success") {
             document.getElementById('message_text2').innerHTML = 'Ваше сообщение успешно отправлено!';
             document.getElementById('message2').style['background-color'] = '#00C147';
-        	//document.getElementById('warning').innerHTML = "Ваше сообщение успешно отправлено!";
-          	//document.getElementById('warning').style['color'] = "green";
-          	//document.getElementById('warning').style['marginBottom'] = "1%";
           	document.getElementById('FBname').value = "";
 			document.getElementById('FBemail').value = "";
 			document.getElementById('FBtext').value = "";
 		}
     }
+
+    //функция для создания запроса на очищение истории запросов
 	async OnClear() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.text();
-        if (result == 'plsenter') window.location.href = '/enter'
+        if (result == 'plsenter') window.location.href = '/enter';
 	}
-	
+
+	//функция для создания запроса на заполнение истории запросов
 	async ShowHistory() {
 	    let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
-        if (result == 'plsenter') window.location.href = '/enter'
+        if (result == 'plsenter') window.location.href = '/enter';
         else {
             ShowHistory(result['result']);
         }
 	}
-	
+
+	//функция для создания запроса на получение информации профиля пользователя
 	async UserInfo() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
-        console.log("result", result)
-        if (result == 'plsenter') window.location.href = '/enter'
+        if (result == 'plsenter') window.location.href = '/enter';
         else {
-            setCookie('montesume_access_token', result['access_token'])
+            setCookie('montesume_access_token', result['access_token']);
             document.getElementById('name').innerHTML += result['user_info']['name'];
             document.getElementById('email').innerHTML += result['user_info']['email'];
             if (result['user_info']['isEmailConfirmed'] == 0) {
-                document.getElementById('email').innerHTML += "<a class='emailconfirm' id = 'emailconfirm'>(Не подтверждён. <a href = 'confirm' >Подтвердить</a>)";
+                document.getElementById('email').innerHTML += "<a class='emailconfirm' id = 'emailconfirm'>(Не подтверждён) <a href = 'confirm'>Подтвердить</a>";
                 document.getElementById('emailconfirm').style['color'] = "red";
             }
             document.getElementById('downloadhistory').setAttribute('href',"static/excel_history/RequestHistory_"+result['id']+".xlsx");
         }
-
 	}
+
+	//функция для создания запроса на скачивание истории запросов
 	async SendFile() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
@@ -102,59 +93,49 @@ async function resp() {
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
-    
+    };
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), 'info-lk');
     resp.UserInfo();
-    
-    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
-    let result = await response.json();
-    if (result == 'plsenter') window.location.href = '/enter'
-    else {
-        setCookie('evrica_access_token', result['access_token'])
-        document.getElementById('name').innerHTML += result['user_info']['name'];
-        document.getElementById('email').innerHTML += result['user_info']['email'];
-        if (result['user_info']['isEmailConfirmed'] == 0) {
-            document.getElementById('email').innerHTML += "<a class='emailconfirm' id = 'emailconfirm'>(Не подтверждён. <a href = 'confirm' >Подтвердить</a>)";
-            document.getElementById('emailconfirm').style['color'] = "red";
-        }
-    }*/
 }
-resp()
+resp();
 
+//функция для установки значения cookie по имени
 function setCookie(name, value, options = {}) {
     let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
     document.cookie = updatedCookie;
 }
 
+//функция для получения куки по имени
 function get_cookie(cookie_name) {
     var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
     if (results) return ( unescape ( results[2] ) );
     else return null;
 }
 
+//функция для удаления cookie
 function delete_cookie(cookie_name) {
     var cookie_date = new Date ();  // Текущая дата и время
     cookie_date.setTime (cookie_date.getTime() - 1);
     document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
 }
 
+//функция для осуществления выхода пользователя из аккаунта
 function Exit() {
     delete_cookie ("montesume_access_token");
     delete_cookie ("montesume_refresh_token");
-    window.location.href = 'http://b92599ho.beget.tech/'
+    window.location.href = 'http://b92599ho.beget.tech/';
 }
 
+//функция для перенаправления пользователя на страницу изменения информации
 function ChangeInformation() {
-    window.location.href = 'changing'
+    window.location.href = 'changing';
 }
 
 function DownloadHistory() {
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
-    
+    };
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), 'info-lk');
     resp.SendFile();
 }
@@ -164,40 +145,32 @@ async function WriteHistory() {
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
+    };
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), 'show-history-request');
     resp.ShowHistory();
-    /*let response = await fetch('show-history-request', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("montesume_access_token"), "refresh_token": get_cookie("montesume_refresh_token")})});
-    let result = await response.json();
-    if (result == 'plsenter') window.location.href = '/enter'
-    else {
-        ShowHistory(result['result']);
-    }*/
 }
 
 async function ClearHistory() {
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
+    };
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), 'delete-history-request');
     resp.OnClear();
 
-    if (showing) {
-        HideHistory();
-        ShowHistory();
-    }
+    location.reload();
 }
 
+//функция для скрытия истории запросов
 function HideHistory() {
     showing = false;
     document.getElementById('show_history').setAttribute('onclick','WriteHistory()');
     document.getElementById('show_history').innerHTML = 'Показать';
     var tbody = document.getElementById('table_history').getElementsByTagName("TBODY")[0];
     tbody.remove();
-
 }
 
+//функция для отображения истории запросов
 function ShowHistory(result) {
     showing = true;
     document.getElementById('show_history').setAttribute('onclick','HideHistory()');
@@ -216,8 +189,8 @@ function ShowHistory(result) {
     var td3 = document.createElement("TH");td3.appendChild(document.createTextNode("Бизнес конкурентов"));
     var td4 = document.createElement("TH");td4.appendChild(document.createTextNode("Радиус окружностией"));
     var td5 = document.createElement("TH");td5.appendChild(document.createTextNode("Адреса зафиксированных точек"));
-    var td6 = document.createElement("TH");td6.appendChild(document.createTextNode("Координаты зафиксированных точек"))
-    var td7 = document.createElement("TH");td7.appendChild(document.createTextNode("Время сделанного запроса (UTC+3:00)"))
+    var td6 = document.createElement("TH");td6.appendChild(document.createTextNode("Координаты зафиксированных точек"));
+    var td7 = document.createElement("TH");td7.appendChild(document.createTextNode("Время сделанного запроса (UTC+3:00)"));
     row.appendChild(td0);row.appendChild(td1);row.appendChild(td2);row.appendChild(td3);row.appendChild(td4);row.appendChild(td5);row.appendChild(td6);row.appendChild(td7);
     tbody.appendChild(row);
 
@@ -225,11 +198,6 @@ function ShowHistory(result) {
         for (let i = 0; i < Object.keys(result).length; i++) {
             var row = document.createElement("TR");
             row.classList.add("str");
-            // for(let j = 0; j < history_requests[i].length; j++) {
-            //     var td = document.createElement("TD")
-            //     td.appendChild(document.createTextNode(history_requests[i][j]))
-            //     row.appendChild(td);
-            // }
             var td = document.createElement("TD");
             td.appendChild(document.createTextNode(i + 1));
             row.appendChild(td);
@@ -264,31 +232,28 @@ async function SendMessage() {
     if (document.getElementById('FBname').value == '' ||
     document.getElementById('FBemail').value == '' ||
     document.getElementById('FBtext').value == '') {
-            document.getElementById('message_text2').innerHTML = 'Нельзя оставлять все поля пустыми!';
-            document.getElementById('message2').style['background-color'] = '#F86368';
+        document.getElementById('message_text2').innerHTML = 'Нельзя оставлять все поля пустыми!';
+        document.getElementById('message2').style['background-color'] = '#F86368';
     }
     else {
         let data = {
             "name": document.getElementById('FBname').value,
             "email": document.getElementById('FBemail').value,
             "text": document.getElementById('FBtext').value
-        }
+        };
         const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-message');
         resp.SendMessage();
     }
 }
 </script>
-
-
-
 </head>
     <body>
         <header>
-    	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
-        		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
-        		<div class="SiteName"> <h1> Montesume </h1> </div>
-        	</a>
-	    </header>
+            <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+                <p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+                <div class="SiteName"> <h1> Montesume </h1> </div>
+            </a>
+        </header>
         
         <div class = "full_lk">
             <div class = "lk">
@@ -314,45 +279,45 @@ async function SendMessage() {
             </div>
             <div class = "fast_menu">
                 <p class = "fast_menu_title">Быстрый переход по способам</p>
-        		<p class = "chooses_tip">Нажмите на нужную карточку</p>
-        		<div class="cards">
+                <p class = "chooses_tip">Нажмите на нужную карточку</p>
+                <div class="cards">
         
-        			<a class="wrap" href="sp1">
-        				<div class="informBlock">
-        				    <h5 class = "mainText"> СПОСОБ 1 </h5>
-        				    <div class = "line2"></div>
-        				    <h5 class = "ThirdText"> Уровень: </h5>
-        				    <img class = "levelimg" src="static/images/sp1-level.png">
-        				</div>
-        			</a>
+                    <a class="wrap" href="sp1">
+                        <div class="informBlock">
+                            <h5 class = "mainText"> СПОСОБ 1 </h5>
+                            <div class = "line2"></div>
+                            <h5 class = "ThirdText"> Уровень: </h5>
+                            <img class = "levelimg" src="static/images/sp1-level.png">
+                        </div>
+                    </a>
         
-        			<a class="wrap" href="sp2">
-        				<div class="informBlock">
-        				    <h5 class = "mainText"> СПОСОБ 2 </h5>
-        				    <div class = "line2"></div>
-        				    <h5 class = "ThirdText"> Уровень: </h5>
-        				    <img class = "levelimg" src="static/images/sp2-level.png">
-        				</div>
-        			</a>
-        
-        			<a class="wrap" href="sp3">
-        				<div class="informBlock">
-        				    <h5 class = "mainText"> СПОСОБ 3 </h5>
-        				    <div class = "line2"></div>
-        				    <h5 class = "ThirdText"> Уровень: </h5>
-        				    <img class = "levelimg" src="static/images/sp3-level.png">
-        				</div>
-        			</a>
-        
-        			<a class="wrap" href="sp4">
-        				<div class="informBlock">
-        				    <h5 class = "mainText"> СПОСОБ 4 </h5>
-        				    <div class = "line2"></div>
-        				    <h5 class = "ThirdText"> Уровень: </h5>
-        				    <img class = "levelimg" src="static/images/sp4-level.png">
-        				</div>
-        			</a>
-        		</div>
+                    <a class="wrap" href="sp2">
+                        <div class="informBlock">
+                            <h5 class = "mainText"> СПОСОБ 2 </h5>
+                            <div class = "line2"></div>
+                            <h5 class = "ThirdText"> Уровень: </h5>
+                            <img class = "levelimg" src="static/images/sp2-level.png">
+                        </div>
+                    </a>
+                    
+                    <a class="wrap" href="sp3">
+                        <div class="informBlock">
+                            <h5 class = "mainText"> СПОСОБ 3 </h5>
+                            <div class = "line2"></div>
+                            <h5 class = "ThirdText"> Уровень: </h5>
+                            <img class = "levelimg" src="static/images/sp3-level.png">
+                        </div>
+                    </a>
+                    
+                    <a class="wrap" href="sp4">
+                        <div class="informBlock">
+                            <h5 class = "mainText"> СПОСОБ 4 </h5>
+                            <div class = "line2"></div>
+                            <h5 class = "ThirdText"> Уровень: </h5>
+                            <img class = "levelimg" src="static/images/sp4-level.png">
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
         
@@ -361,60 +326,41 @@ async function SendMessage() {
         
         <div id = "message2"><p id = "message_text2"></p></div>
         <section class = "section_futor">
-        	<div class="container">
-        		<section class="page_section contact" id="contact">
-        			<div class="contact_section">
-        				<h2>Свяжитесь с нами!</h2>
-        			</div>
-        				<div class="form-inner">
-        					<input type="text" class = "FBname" Id = "FBname" placeholder="Username">
-        					<input type="email" class = "FBemail" Id = "FBemail" placeholder="Email">
-        					<textarea placeholder="Сообщение..." Id = "FBtext" class = "FBtext" rows="10"></textarea>
-        				</div>
-        				<button class="FBbutton" onclick="SendMessage()">Отправить</button>
-        				<div class = "icon_div">
-        					<ul class="icons">
+            <div class="container">
+                <section class="page_section contact" id="contact">
+                    <div class="contact_section">
+                        <h2>Свяжитесь с нами!</h2>
+                    </div>
+                    <div class="form-inner">
+                        <input type="text" class = "FBname" Id = "FBname" placeholder="ФИО">
+                        <input type="email" class = "FBemail" Id = "FBemail" placeholder="Email">
+                        <textarea placeholder="Сообщение..." Id = "FBtext" class = "FBtext" rows="10"></textarea>
+                    </div>
+                    <button class="FBbutton" onclick="SendMessage()">Отправить</button>
+                    <div class = "icon_div">
+                    	<ul class="icons">
+                            <a href = "https://www.facebook.com/profile.php?id=100072329714850" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://www.facebook.com/profile.php?id=100072329714850" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    <i class="fa fa-facebook"></i>
                                 </li>
+                            </a>
+                            <a href = "https://www.twitter.com/montesume" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://twitter.com/montesume" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    <i class="fa fa-twitter"></i>
                                 </li>
+                            </a>
+                            <a href = "https://www.instagram.com/montesume" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://www.instagram.com/montesume" target="_blank"><i class="fa fa-instagram"></i></a>
+                                    <i class="fa fa-instagram"></i>
                                 </li>
-                            </ul>
-                        </div>
-        		</section>
-        	</div>
-        	<div class="container">
-        		<div class="footer_bottom"><span>IVR 2020-2021. By flowykk</span> </div>
-        	</div>
+                            </a>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div class="container">
+                <div class="footer_bottom"><span>IVR 2020-2022. Rakhmanov Danila</span> </div>
+            </div>
         </section>
-    
-            
-        <!-- <div class="signin-signup">
-            <h2 class="titlee">Личный Кабинет</h2>
-        </div>
-        
-        <div class = "userinfo">
-            <h1 class="name" id = "name">Ваше имя: </h1>
-            <h1 class="email" id = "email">Ваш email: </h1>
-            <h1 class="emailconfirm" id = "emailconfirm" style = "text-align: center;"></h1>
-        </div>
-        
-        <input type="submit" value="Изменить информацию" name="change" class="change"  onclick="ChangeInformation()">
-        <button name="change" class="btn change"  onclick="ChangeInformation()">Изменить информацию</button>
-        
-        <div class = "history_buttons">
-            <button name="show_history" id="show_history" class="btn show_history"  onclick="WriteHistory()">Показать историю запросов</button>
-            <button name="clear_history" id="clear_history" class="btn clear_history"  onclick="ClearHistory()">Очистить историю запросов</button>
-        </div>
-        
-        <table id="table_history">
-        </table>
-        <a style = "text-decoration: none;" href="static/excel_history/history_request.xlsx" download=""><button class="btn download">Скачать историю запросов</button></a>
-        <input type="submit" value="Выход" name="exit" class="exit"  onclick="Exit()">
-        <button name="exit" class="btn exit"  onclick="Exit()">Выход</button> -->
     </body>
 </html>
