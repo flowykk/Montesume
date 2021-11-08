@@ -7,11 +7,11 @@ heatmap_points = [[37.651, 55.8762], [37.6508, 55.8763], [37.6508, 55.8765], [37
 
 
 function Medvedkovo_line() {
-	mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-        masd1 = lines1["features"][i]["geometry"]["coordinates"][0].reverse()
-        masd2 = lines1["features"][i]["geometry"]["coordinates"][1].reverse()
-        mas.push([masd1, masd2])
+        masd1 = lines1["features"][i]["geometry"]["coordinates"][0].reverse();
+        masd2 = lines1["features"][i]["geometry"]["coordinates"][1].reverse();
+        mas.push([masd1, masd2]);
 	}
 
 	return mas;
@@ -19,56 +19,56 @@ function Medvedkovo_line() {
 
 function HeatMapMed() {
 	for(let i = 0; i < heatmap_points.length; i++) {
-		heatmap_points[i].reverse()
+		heatmap_points[i].reverse();
 	}
-	return heatmap_points
+	return heatmap_points;
 }
 
 function MonthlyMed() {
-	let mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["MonthlyPeoples"])
+		mas.push(lines1["features"][i]["properties"]["MonthlyPeoples"]);
 	}
-	return mas
+	return mas;
 }
 
 function DailyMed() {
-	let mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["DailyPeoples"])
+		mas.push(lines1["features"][i]["properties"]["DailyPeoples"]);
 	}
-	return mas
+	return mas;
 }
 
 function HourlyPeoples8_22Med() {
-	let mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_08_22"])
+		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_08_22"]);
 	}
-	return mas
+	return mas;
 }
 
 function HourlyPeoples8_10Med() {
-	let mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_08_10"])
+		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_08_10"]);
 	}
-	return mas
+	return mas;
 }
 
 function HourlyPeoples17_19Med() {
-	let mas = []
+    mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_17_19"])
+		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_17_19"]);
 	}
-	return mas
+	return mas;
 }
 
 function HourlyPeoples22_08Med() {
-	let mas = []
+	mas = [];
 	for(let i = 0; i < lines1["features"].length; i++) {
-		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_22_08"])
+		mas.push(lines1["features"][i]["properties"]["HourlyPeoples_22_08"]);
 	}
-	return mas
+	return mas;
 }
 
