@@ -88,7 +88,6 @@ header{
 }
 .btn:hover { color: #fff; outline: 0; }
 .change, .resend, .back {
-  	/* -webkit- transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;*/
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
     left:0;
   	right:0;
