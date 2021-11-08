@@ -83,14 +83,14 @@ header{
     cursor: pointer;
 }
 .overlay_clear {
-    background-color: #000; /* Чёрный фон */
-    height: 100%; /* Высота максимальна */
-    left: 0; /* Нулевой отступ слева */
-    opacity: 0.50; /* Степень прозрачности */
-    position: fixed; /* Фиксированное положение */
-    top: 0; /* Нулевой отступ сверху */
-    width: 100%; /* Ширина максимальна */
-    z-index: 0; /* Заведомо быть НАД другими элементами */
+    background-color: #000;
+    height: 100%;
+    left: 0;
+    opacity: 0.50;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
     display: none;
 }
 .fa-info-circle {
@@ -98,7 +98,6 @@ header{
     position: relative;
     display: inline-block;
 }
-
 .tooltiptext {
     font-family: 'Montserrat';
     font-size: 16px;
@@ -118,7 +117,6 @@ header{
     opacity: 0;
     transition: opacity 0.3s;
 }
-
 .fa-info-circle .tooltiptext::after {
     content: "";
     position: absolute;
@@ -129,7 +127,6 @@ header{
     border-style: solid;
     border-color: #555 transparent transparent transparent;
 }
-
 .fa-info-circle:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
@@ -192,11 +189,6 @@ header{
     }
     .enter{ font-size: 120%; }
     .div_enter{	margin-top: 1.5em; }
-/*     #block_popup { 
-    font-size: 14px; 
-    height: 300px;
-    width: 70%;
-} */
     .map {
         width: 89%;
         height: 350px;
