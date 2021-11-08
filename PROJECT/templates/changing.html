@@ -46,7 +46,7 @@ class Response {
             document.getElementById('message_text').innerHTML = 'Ваш текущий email совпадает с тем, что Вы ввели!';
             document.getElementById('message').style['background-color'] = '#F86368';
         } else if (result['result'] == "samename") {
-            document.getElementById('message_text').innerHTML = 'Ваше текущее имя совпадает с тем, что Вы ввели! ';
+            document.getElementById('message_text').innerHTML = 'Ваше текущее ФИО совпадает с тем, что Вы ввели! ';
             document.getElementById('message').style['background-color'] = '#F86368';
         } else if (result['result'] == "invpassword") {
             document.getElementById('message_text').innerHTML = 'Вы неправильно ввели пароль! Он должен состоять минимум из 6-ти символов, содержать латинские буквы верхнего, нижнего регистра и цифры!';
