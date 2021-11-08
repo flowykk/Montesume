@@ -4,7 +4,7 @@
 header{
 	background-color: #FFDF59;
 	display: flex;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 }
 .logo{ padding-left: 1em; }
 .name {
@@ -43,20 +43,20 @@ header{
 }
 .message { font-family: "Montserrat"; }
 .btn {
-    box-sizing: border-box;
-    background-color: transparent;
-    border-radius: 1.5em;
-    cursor: pointer;
-    display: flex;
-    font-size: 1.4rem;
-    line-height: 1;
+	box-sizing: border-box;
+	background-color: transparent;
+	border-radius: 1.5em;
+	cursor: pointer;
+	display: flex;
+	font-size: 1.4rem;
+	line-height: 1;
 
-    padding: 1em 3em;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
+	padding: 1em 3em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
 	font-family: "Montserrat";
-    font-weight: 700;
+    	font-weight: 700;
 }
 .btn:hover { color: #fff; outline: 0; }
 .change { border: 2px solid #FFDF59; color: #FFDF59; }
@@ -71,18 +71,18 @@ header{
   	margin-top: 10px;
 }
 @media (max-width: 1600px) {
-    .logo{
-    	width: 60px;
-    	height: 60px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: 0.1em;
-    }
-    .name {
-    	padding-top:0.3em;
-    	font-size: 100%;
-    	margin-left: 0.3em;
-    }
+	.logo{
+		width: 60px;
+		height: 60px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: 0.1em;
+	}
+	.name {
+		padding-top:0.3em;
+		font-size: 100%;
+		margin-left: 0.3em;
+	}
 	.input-field {
 		margin-left:30%;
 		width: 40%;
@@ -97,19 +97,19 @@ header{
 }
 @media (max-width: 1200px) {
 	.logo{
-    	width: 45px;
-    	height: 45px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: -0.3em;
-    }
-    .name {
-    	padding-top:0.4em;
-    	font-size: 80%;
-    	margin-left: 0.5em;
-    }
-    .signin-signup { font-size: 25px; }
-    .input { width: 75%; }
+		width: 45px;
+		height: 45px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: -0.3em;
+	}
+	.name {
+		padding-top:0.4em;
+		font-size: 80%;
+		margin-left: 0.5em;
+	}
+	.signin-signup { font-size: 25px; }
+	.input { width: 75%; }
 	.input-field {
 		margin-left:20%;
 		width: 60%;
@@ -122,31 +122,31 @@ header{
 	}
 }
 @media (max-width: 750px) {
-    header { line-height: 0.7em; }
-    .logo{
-    	width: 25px;
-    	height: 25px;
-    	margin-top: -0.4em;
-    	margin-bottom: -0.2em;
-    	margin-left: -0.5em;
-    }
-    .name { margin-top: 0.4em; font-size: 50%; }
-    .signin-signup { font-size: 15px; }
-    .input-field {
-    	margin-left:12.5%;
-    	width: 75%;
-    	border-radius: 55px;
-    	transition: .4s;
-    }
-    .input-field:hover{
-    	width: 80%;
-    	margin-left:10%;
-    	transition: .4s;
-    }
-    .btn { font-size: 0.9rem; }
-    .input {
-    	height: 40px;
-    	width: 75%;
-    	font-size: 14px;
-    }
+	header { line-height: 0.7em; }
+	.logo{
+		width: 25px;
+		height: 25px;
+		margin-top: -0.4em;
+		margin-bottom: -0.2em;
+		margin-left: -0.5em;
+	}
+	.name { margin-top: 0.4em; font-size: 50%; }
+	.signin-signup { font-size: 15px; }
+	.input-field {
+		margin-left:12.5%;
+		width: 75%;
+		border-radius: 55px;
+		transition: .4s;
+	}
+	.input-field:hover{
+		width: 80%;
+		margin-left:10%;
+		transition: .4s;
+	}
+	.btn { font-size: 0.9rem; }
+	.input {
+		height: 40px;
+		width: 75%;
+		font-size: 14px;
+	}
 }
