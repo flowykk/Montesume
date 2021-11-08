@@ -76,31 +76,23 @@ header{
     cursor: pointer;
 }
 .overlay {
-    background-color: #000; /* Чёрный фон */
-    height: 100%; /* Высота максимальна */
-    left: 0; /* Нулевой отступ слева */
-    opacity: 0.50; /* Степень прозрачности */
-    position: fixed; /* Фиксированное положение */
-    top: 0; /* Нулевой отступ сверху */
-    width: 100%; /* Ширина максимальна */
-    z-index: 0; /* Заведомо быть НАД другими элементами */
+    background-color: #000;
+    height: 100%;
+    left: 0;
+    opacity: 0.50;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
     display: none;
 }
 .btn {
   	box-sizing: border-box;
-/*       -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none; */
    	background-color: transparent;
    	border: 4px solid;
 	border-radius: 0.6em;
   	cursor: pointer;
-/*       display: -webkit-box;
-display: -webkit-flex;
-display: -ms-flexbox; */
   	display: flex;
-/*       -webkit-align-self: center;
-    -ms-flex-item-align: center; */
 	align-self: center;
   	line-height: 0.8;
   	margin: 10px;
@@ -118,10 +110,10 @@ display: -ms-flexbox; */
 .delete_stopped, .delete_not_stopped, .delete_all, .button_search, .button_stop, .button_clear, .button_save {
 	border-color: #EC6408;
 	border-radius: 0;
-	color: #EC6408; /*#FFDF59*/
+	color: #EC6408;
 	position: relative;
 	overflow: hidden;
-	/* -webkit- */transition: color 150ms ease-in-out;
+	transition: color 150ms ease-in-out;
 	transition: color 150ms ease-in-out;
 }
 .delete_stopped:after, .delete_not_stopped:after, .delete_all:after, .button_search:after, .button_stop:after, .button_clear:after, .button_save:after {
@@ -130,12 +122,12 @@ display: -ms-flexbox; */
     display: block;
     top: 0;
     left: 50%;
-    /* -webkit- */transform: translateX(-50%); transform: translateX(-50%);
+    transform: translateX(-50%); transform: translateX(-50%);
     width: 0;
     height: 100%;
     background: #EC6408;
     z-index: -1;
-    /* -webkit- */transition: width 150ms ease-in-out;
+    transition: width 150ms ease-in-out;
     transition: width 150ms ease-in-out;
 }
 .delete_stopped { padding: 1em 3.5em; }
@@ -147,100 +139,6 @@ display: -ms-flexbox; */
 .button_save { padding: 1em 5.6em; }
 .button_save:hover,.button_clear:hover,.button_stop:hover,.button_search:hover,.delete_all:hover,.delete_not_stopped:hover,.delete_stopped:hover{ color: #fff;}
 .button_save:hover:after,.button_clear:hover:after,.button_stop:hover:after,.button_search:hover:after,.delete_all:hover:after,.delete_not_stopped:hover:after,.delete_stopped:hover:after{ width: 110%;}
-
-/* .section_futor{
-    background-color: black;
-    height: 20%;
-}
-.icons {
-    width:15%;
-    display: flex;
-    margin-left: 41.5%;
-}
-.icon{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 55px;
-    height: 55px;
-    border: 2px solid #fff;
-    margin-right: 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.1s linear;
-}
-.icon .fa{
-    color: #fff;
-    font-size: 25px;
-    transition: all 0.3s linear;
-}
-.FBbutton {
-      justify-content: space-around;
-    text-align: center;
-    background-color: #000;
-    color: #fff;
-    font-size: 25px;
-    transition: all 0.3s linear;
-    border: 2px solid #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.1s linear;
-    margin-left:42.5%;
-    width: 15%;
-    height: 2.5em;
-    font-family: "Montserrat";
-}
-.icon:hover, .FBbutton:hover{
-    background: #fff;
-    box-shadow: 0 0 30px 3px #fff;
-}
-.icon:hover .fa, .FBbutton:hover{ color: #FF914D; }
-.FBtext{ resize: none; }
-.contact_section {
-    margin: 0 0 40px 0;
-    text-align: center;
-}
-.contact_section h2{
-    font-size: 40px;
-    color: #ffffff;
-    margin: 0 0 20px 0;
-}
-.page_section.contact {
-    padding: 40px 0 2px;
-    color: #fff;
-}
-.footer_bottom {
-    border-top: 1px solid #171717;
-    padding: 25px 0;
-}
-.footer_bottom span {
-    display: block;
-    font-size: 14px;
-    color: #efefef;
-    text-align: center;
-}
-.form-inner input {
-    width: 50%;
-    outline:none;
-    margin-left: 25%;
-       margin-bottom: 10px;
-       background: #E9EFF6;
-       line-height: 50px;
-       border-width: 0;
-       border-radius: 5px;
-       font-family: 'Montserrat';
-}
-.form-inner textarea {
-       width: 50%;
-    outline:none;
-    margin-left: 25%;
-       margin-bottom: 10px;
-       background: #E9EFF6;
-       line-height: 20px;
-       border-width: 0;
-       border-radius: 5px;
-       font-family: 'Montserrat';
-} */
 @media (max-width: 1600px) {
     .logo{
     	width: 60px;
@@ -291,29 +189,6 @@ display: -ms-flexbox; */
     .buttons{ margin-top:20px; margin-left:-10px; }
     .btn { font-size: 1.4rem; }
     .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.1rem; }
-/*     .contact_section { margin: 0 0 20px 0; }
-.contact_section h2{
-    font-size: 30px;
-    margin: -20px 0 0 0;
-}
-.footer_bottom { padding: 25px 0; }
-.footer_bottom span { font-size: 20px; }
-.form-inner input {
-    width: 70%;
-    margin-left: 14.5%;
-       line-height: 50px;
-}
-.form-inner textarea {
-       width: 70%;
-    margin-left: 14.5%;
-}
-.FBbutton {
-    font-size: 20px;
-    border-radius: 15px;
-    margin-left: 40%;
-    width: 20%;
-    height: 2.3em;
-} */
 }
 @media (max-width: 1200px) {
 	.logo{ width: 45px; height: 45px; }
@@ -345,8 +220,6 @@ display: -ms-flexbox; */
     .spisok{ display: block; margin-top: -30px;}
     .buttons{ margin-left:-35px; }
     .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
-/*     .form-inner input { margin-left: 15%; }
-.form-inner textarea { margin-left: 15%; } */
     .vvod { font-size: 25px; }
 }
 @media (max-width: 750px) {
@@ -403,21 +276,4 @@ display: -ms-flexbox; */
     .buttons{ margin-left:-30px; }
     .btn { font-size: 1.1rem; margin-bottom:6px; }
     .delete_stopped, .delete_not_stopped, .delete_all { font-size: 0.9rem; }
-
-/*     .contact_section h2{ font-size: 20px;}
-.footer_bottom { padding: 15px 0; }
-.footer_bottom span { font-size: 12px; }
-.form-inner input {
-    width: 80%;
-    margin-left: 10%;
-       line-height: 40px;
-}
-.form-inner textarea {
-       width: 80%;
-    margin-left: 10%;
-}
-.FBbutton {
-    margin-left:20%;
-    width: 60%;
-} */
 }
