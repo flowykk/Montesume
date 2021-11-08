@@ -632,24 +632,24 @@ class MainPage(Resource):
         return Response(render_template("index.html"))
 
 #отправка файла с 1-ым способом поиска
-class Sposob1(Resource):
+class Met1(Resource):
     def get(self):
-        return Response(render_template("sposob1.html"))
+        return Response(render_template("met1.html"))
 
 #отправка файла с 2-ым способом поиска
-class Sposob2(Resource):
+class Met2(Resource):
     def get(self):
-        return Response(render_template("sposob2.html"))
+        return Response(render_template("met2.html"))
 
 #отправка файла с 3-им способом поиска
-class Sposob3(Resource):
+class Met3(Resource):
     def get(self):
-        return Response(render_template("sposob3.html"))
+        return Response(render_template("met3.html"))
 
 #отправка файла с 4-ым способом поиска
-class Sposob4(Resource):
+class Met4(Resource):
     def get(self):
-        return Response(render_template("sposob4.html"))
+        return Response(render_template("met4.html"))
 
 api.add_resource(UserRegistration, '/register')
 api.add_resource(UserLogin, '/enter')
@@ -666,10 +666,10 @@ api.add_resource(UserCheckConfirm, '/check-confirm')
 api.add_resource(UserSuccessConfirm, '/success-confirm')
 api.add_resource(UserConfirmEmail, '/confirm')
 api.add_resource(MainPage, '/')
-api.add_resource(Sposob1, '/sp1')
-api.add_resource(Sposob2, '/sp2')
-api.add_resource(Sposob3, '/sp3')
-api.add_resource(Sposob4, '/sp4')
+api.add_resource(Met1, '/sp1')
+api.add_resource(Met2, '/sp2')
+api.add_resource(Met3, '/sp3')
+api.add_resource(Met4, '/sp4')
 api.add_resource(UserChangeInformation, '/changing')
 
 if __name__ == '__main__':
