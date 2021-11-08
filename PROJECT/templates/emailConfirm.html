@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <title>Montesume - Подтверждение Почты</title>
+<meta charset="UTF-8">
 <link rel="icon" type="image" href="static/images/Montesume.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -21,39 +22,40 @@ class Response {
         this.body = body;
     }
 
+    //функция для создания запроса на отправку сообщений по футеру
     async SendMessage() { 
         let response = await fetch(this.url, {method: this.method, headers: this.headers, body: this.body}); 
     }
-    
+
+    //функция для создания запроса на получение информации профиля пользователя
     async UserInfo() {
         let response = await fetch(this.url, {method: this.method, headers: this.headers, body: this.body}); 
         let result = await response.json();
-        if (result == 'plsenter') window.location.href = '/enter'
-        else if (result['user_info']['isEmailConfirmed'] == '1') window.location.href = '/lk'
+        if (result == 'plsenter') window.location.href = '/enter';
+        else if (result['user_info']['isEmailConfirmed'] == '1') window.location.href = '/lk';
         else {
             if (result['access_token'] != 'null')
-                setCookie('montesume_access_token', result['access_token'])
+                setCookie('montesume_access_token', result['access_token']);
             let data = {
                 "name": result['user_info']['name'],
                 "email": result['user_info']['email'],
                 "access_token": get_cookie("montesume_access_token"),
                 "refresh_token": get_cookie("montesume_refresh_token")
-            }
+            };
             response = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-confirm');
             response.SendMessage();
         }
         
-        /*response = await fetch('/info-lk', {
-            method: "GET",
-            headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}
-        });*/
+        document.getElementById('message_text').innerHTML = 'Сообщение с кодом подтверждения было отправлено Вам на email.';
+        document.getElementById('message').style['background-color'] = '#00C147';
     }
-    
+
+    //функция для создания запроса на проверку кода подтверждения
     async CheckConfirm() {
         let response = await fetch(this.url, {method: this.method, headers: this.headers, body: this.body}); 
         let result = await response.json();
         if (result == "plsenter")
-            window.location.href = '/enter'
+            window.location.href = '/enter';
         else {
             if (document.getElementById('codeId').value == result['result']) {
                 let response = await fetch('/success-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("montesume_access_token"), "refresh_token": get_cookie("montesume_refresh_token")})});
@@ -61,7 +63,6 @@ class Response {
                 document.getElementById('message_text').innerHTML = 'Ваш email успешно подтверждён! Нажмите <a href = "lk">сюда</a>, чтобы вернуться в личный кабинет.';
                 document.getElementById('message').style['background-color'] = '#00C147';
             } else {
-        
                 document.getElementById('message_text').innerHTML = 'Вы ввели неверный код! Попробуйте ещё раз!';
                 document.getElementById('message').style['background-color'] = '#F86368';   
             }
@@ -70,45 +71,23 @@ class Response {
 }
 
 async function send() {
-    
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
+    };
     
     const response = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
     response.UserInfo();
-    
-    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
-    let result = await response.json();
-    if (result == 'plsenter') window.location.href = '/enter'
-    else if (result['user_info']['isEmailConfirmed'] == '1') window.location.href = '/lk'
-    else {
-        if (result['access_token'] != 'null')
-            setCookie('evrica_access_token', result['access_token'])
-    }
-    
-    let response = await fetch('/info-lk', {
-        method: "GET",
-        headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}
-    });
-    
-    data = {
-        "name": result['user_info']['name'],
-        "email": result['user_info']['email'],
-        "access_token": get_cookie("evrica_access_token"),
-        "refresh_token": get_cookie("evrica_refresh_token")
-    }
-    resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-confirm');
-    resp.SendMessage();*/
 }
-send()
+send();
 
-function setCookie(name, value, options = {}) {
+//функция для установки значения cookie по имени
+function setCookie(name, value) {
     let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
     document.cookie = updatedCookie;
 }
 
+//функция для получения куки по имени
 function get_cookie(cookie_name) {
     var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
     if (results) return ( unescape ( results[2] ) );
@@ -116,69 +95,30 @@ function get_cookie(cookie_name) {
 }
 
 async function CheckCode() {
-    
     let data = {
         "access_token": get_cookie("montesume_access_token"), 
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
+    };
     const response = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/check-confirm');
     response.CheckConfirm();
-    
-    /*response = await fetch('/check-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("evrica_access_token"), "refresh_token": get_cookie("evrica_refresh_token")})});
-    result = await response.json();
-    if (result == "plsenter")
-        window.location.href = '/enter'
-    else {
-        if (document.getElementById('codeId').value == result['result']) {
-            let response = await fetch('/success-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("evrica_access_token"), "refresh_token": get_cookie("evrica_refresh_token")})});
-            let result = await response.text();
-            document.getElementById('message_text').innerHTML = 'Ваш email успешно подтверждён! Нажмите <a href = "lk">сюда</a>, чтобы вернуться в личный кабинет.';
-            document.getElementById('message').style['background-color'] = '#00C147';
-        } else {
-    
-            document.getElementById('message_text').innerHTML = 'Вы ввели неверный код! Попробуйте ещё раз!';
-            document.getElementById('message').style['background-color'] = '#F86368';   
-        }
-    }
-    
-    let response = await fetch('/check-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("evrica_token")})});
-    let result = await response.json();
-    if (document.getElementById('codeId').value == result["result"]) {
-        let response = await fetch('/success-confirm', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify({"access_token": get_cookie("evrica_token")})});
-        let result = await response.text();
-        //document.getElementById('warning').innerHTML = "Ваш email успешно подтверждён! Нажмите <a href = 'lk'>сюда</a>, чтобы вернуться в личный кабинет."
-        //document.getElementById('warning').style['color'] = "green";
-        document.getElementById('message_text').innerHTML = 'Ваш email успешно подтверждён! Нажмите <a href = "lk">сюда</a>, чтобы вернуться в личный кабинет.';
-        document.getElementById('message').style['background-color'] = '#00C147';
-    } else {
-        //document.getElementById('warning').innerHTML = "Вы ввели неверный код! Попробуйте ещё раз!"
-        //document.getElementById('warning').style['color'] = "red";\
-        document.getElementById('message_text').innerHTML = 'Вы ввели неверный код! Попробуйте ещё раз!';
-        document.getElementById('message').style['background-color'] = '#F86368';
-    }*/
-
 }
 
 </script>
-
 </head>
-<body>
-    <header>
-	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
-    		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
-    		<div class="name"> <h1> Montesume </h1> </div>
-    	</a>
-    </header>
-    <div id = "message"><p id = "message_text"></p></div>
-
-    <div class="signin-signup">
-        <h3 class="titlee">Подтверждение почты</h3>
-
-        <div class="input-field"><input class = "input" type="text" name="name" placeholder="Код подтверждения" id = "codeId"></div>
-        <button name="resend" class="btn resend"  onclick="send()">Отправить код повторно</button>
-        <button name="change" class="btn change"  onclick="CheckCode()">Подтвердить</button>
-    </div>
-<!--     <div id = "warning" class = "warning" style="font-size: 80%; text-align: center; color: white; font-family: 'Montserrat'">.</div>
- -->    
-</body>
+    <body>
+        <header>
+            <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+                <p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+                <div class="name"> <h1> Montesume </h1> </div>
+            </a>
+        </header>
+        <div id = "message"><p id = "message_text"></p></div>
+    
+        <div class="signin-signup">
+            <h3 class="titlee">Подтверждение почты</h3>
+            <div class="input-field"><input class = "input" type="text" name="name" placeholder="Код подтверждения" id = "codeId"></div>
+            <button name="resend" class="btn resend"  onclick="send()">Отправить код повторно</button>
+            <button name="change" class="btn change"  onclick="CheckCode()">Подтвердить</button>
+        </div>
+    </body>
 </html>
