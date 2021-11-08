@@ -14,21 +14,6 @@ header{
 	font-size: 140%;
 	margin-left: 0.5em;
 }
-/* .signin-signup {
-    text-align: center;
-    font-family: "Montserrat";
-    font-size: 250%;
-}
-.userinfo {
-    font-family: "Montserrat";
-    font-size: 70%;
-}
-.email {
-    text-align: center;
-}
-.name {
-    text-align: center;
-} */
 .lk {
     margin-left: 30px;
     width: 62%;
@@ -124,7 +109,6 @@ header{
 }
 .btn:hover{ color: #fff; outline: 0; }
 .change, .exit, .download, .show_history, .clear_history {
-    /* -webkit- transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;*/
   	transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
 }
 .change { border: 2px solid #FF914D; color: #FF914D; }
@@ -134,9 +118,9 @@ header{
 .download { border: 2px solid #5BEB85; color: #5BEB85; }
 .download:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; }
 .show_history { border: 2px solid #5BEB85;color: #5BEB85; }
-.show_history:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; /*4D70FF*/ }
+.show_history:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; }
 .clear_history { border: 2px solid #F86368; color: #F86368; }
-.clear_history:hover { box-shadow: 0 0 40px 40px #F86368 inset; /*F16C74*/ }
+.clear_history:hover { box-shadow: 0 0 40px 40px #F86368 inset;}
 table{
     margin-top: -20px;
 	margin-bottom: 100px;
@@ -175,6 +159,17 @@ td { font-size: 18px; padding: 15px 35px; }
     .userinfo { font-size: 10px; }
     .request_history, .fast_menu_title { font-size: 28px; }
     .chooses_tip { font-size: 18px; margin-top: -18px; }
+    .informBlock {
+        margin-left:20%;
+    }
+    .mainText {
+        margin-top:27px;
+    	font-size: 14px;
+    }
+    .ThirdText {
+        margin-top:27px;
+    	font-size: 14px;
+    }
 }
 @media (max-width: 1200px) {
 	.logo{
