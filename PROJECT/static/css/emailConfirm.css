@@ -41,11 +41,6 @@ header{
 	align-self: center;
 	font-family: "Montserrat";
 }
-.enter_link{
-	font-family: "Montserrat";
-	padding-top: 20px;
-	font-size: 20px;
-}
 .message { font-family: "Montserrat"; }
 .btn {
     box-sizing: border-box;
@@ -69,7 +64,6 @@ header{
 .resend:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; }
 .change:hover { box-shadow: 0 0 40px 40px #FFDF59 inset; }
 .change, .resend {
-  	/* -webkit- transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;*/
   	transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   	left:0;
   	right:0;
