@@ -4,7 +4,7 @@
 header{
 	background-color: #FFDF59;
 	display: flex;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 }
 .logo{ padding-left: 1em; }
 .name {
@@ -19,12 +19,12 @@ header{
 	font-size: 40px;
 }
 .signin-signup h3 {
-    margin-top: 20px;
+   	margin-top: 20px;
 }
 .signin-signup h6 {
-    margin-top: -35px;
-    margin-bottom: 20px;
-    font-size: 20px;
+    	margin-top: -35px;
+    	margin-bottom: 20px;
+    	font-size: 20px;
 }
 .input-field {
 	margin-left:35.5%;
@@ -40,10 +40,10 @@ header{
 	transition: .4s;
 }
 .input-field button {
-    background-color: #E8E8E8;
-    outline: none;
-    border: 0;
-    margin-top: 10px;
+    	background-color: #E8E8E8;
+    	outline: none;
+    	border: 0;
+    	margin-top: 10px;
 }
 .input-field button i { font-size: 25px; }
 .fa-user, .fa-lock, .fa-envelope{
@@ -62,34 +62,34 @@ header{
 .input { width: 75%; }
 .input2 { width: 63.5%; }
 .btn {
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border-radius: 1.5em;
-    cursor: pointer;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox; 
-    display: flex;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    align-self: center;
-    font-size: 1.4rem;
-    line-height: 1;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: transparent;
+	border-radius: 1.5em;
+	cursor: pointer;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox; 
+	display: flex;
+	-webkit-align-self: center;
+	-ms-flex-item-align: center;
+	align-self: center;
+	font-size: 1.4rem;
+	line-height: 1;
 
-    padding: 1em 3em;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
+	padding: 1em 3em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
 	font-family: "Montserrat";
-    font-weight: 700;
+    	font-weight: 700;
 }
 .btn:hover { color: #fff; outline: 0; }
 .change, .resend, .back {
-    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
-    left:0;
+    	transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+    	left:0;
   	right:0;
   	margin:auto;
 }
@@ -101,18 +101,18 @@ header{
 .resend:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; }
 
 @media (max-width: 1600px) {
-    .logo{
-    	width: 60px;
-    	height: 60px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: 0.1em;
-    }
-    .name {
-    	padding-top:0.3em;
-    	font-size: 100%;
-    	margin-left: 0.3em;
-    }
+	.logo{
+		width: 60px;
+		height: 60px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: 0.1em;
+	}
+	.name {
+		padding-top:0.3em;
+		font-size: 100%;
+		margin-left: 0.3em;
+	}
 	.input-field {
 		margin-left:30%;
 		width: 40%;
@@ -126,18 +126,18 @@ header{
 }
 @media (max-width: 1200px) {
 	.logo{
-    	width: 45px;
-    	height: 45px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: -0.3em;
-    }
-    .name {
-    	padding-top:0.4em;
-    	font-size: 80%;
-    	margin-left: 0.5em;
-    }
-    .signin-signup { font-size: 25px; }
+		width: 45px;
+		height: 45px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: -0.3em;
+	}
+	.name {
+		padding-top:0.4em;
+		font-size: 80%;
+		margin-left: 0.5em;
+	}
+	.signin-signup { font-size: 25px; }
 	.input-field {
 		margin-left:20%;
 		width: 60%;
@@ -150,35 +150,35 @@ header{
 	}
 }
 @media (max-width: 750px) {
-    header { line-height: 0.7em; }
-    .logo{
-    	width: 25px;
-    	height: 25px;
-    	margin-top: -0.4em;
-    	margin-bottom: -0.2em;
-    	margin-left: -0.5em;
-    }
-    .name { margin-top: 0.4em; font-size: 50%; }
-    .signin-signup { font-size: 15px; }
-    .input-field {
-    	margin-left:12.5%;
-    	margin-bottom: 10px;
-    	width: 75%;
-    	border-radius: 55px;
-    	transition: .4s;
-    }
-    .input-field:hover{
-    	width: 80%;
-    	margin-left:10%;
-    	transition: .4s;
-    }
-    .btn { font-size: 0.9rem; }
-    .input-field button i, .fa-user, .fa-lock, .fa-envelope{ font-size: 14px; margin-bottom: 13px; }
-    .input, .input2 { height: 40px; font-size: 14px; }
-    .input2 { width: 57%; }
-    .input {
-    	height: 40px;
-    	width: 75%;
-    	font-size: 14px;
-    }
+	header { line-height: 0.7em; }
+	.logo{
+		width: 25px;
+		height: 25px;
+		margin-top: -0.4em;
+		margin-bottom: -0.2em;
+		margin-left: -0.5em;
+	}
+	.name { margin-top: 0.4em; font-size: 50%; }
+	.signin-signup { font-size: 15px; }
+	.input-field {
+		margin-left:12.5%;
+		margin-bottom: 10px;
+		width: 75%;
+		border-radius: 55px;
+		transition: .4s;
+	}
+	.input-field:hover{
+		width: 80%;
+		margin-left:10%;
+		transition: .4s;
+	}
+	.btn { font-size: 0.9rem; }
+	.input-field button i, .fa-user, .fa-lock, .fa-envelope{ font-size: 14px; margin-bottom: 13px; }
+	.input, .input2 { height: 40px; font-size: 14px; }
+	.input2 { width: 57%; }
+	.input {
+		height: 40px;
+		width: 75%;
+		font-size: 14px;
+	}
 }
