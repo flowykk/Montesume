@@ -18,17 +18,25 @@ header{
 	font-family: "Montserrat";
 	font-size: 40px;
 }
+.signin-signup h3 {
+    margin-top: 20px;
+}
+.signin-signup h6 {
+    margin-top: -35px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
 .input-field {
-	margin-left:37.5%;
+	margin-left:35.5%;
 	margin-bottom: 10px;
 	background-color: #E8E8E8;
-	width: 25%;
+	width: 29%;
 	border-radius: 55px;
 	transition: .4s;
 }
 .input-field:hover{
-	width: 27%;
-	margin-left:36.5%;
+	width: 32%;
+	margin-left:34%;
 	transition: .4s;
 }
 .input-field button {
@@ -53,19 +61,6 @@ header{
 }
 .input { width: 75%; }
 .input2 { width: 63.5%; }
-.enter_link{
-	font-family: "Montserrat";
-	padding-top: 20px;
-	font-size: 20px;
-}
-/* .warning {
-    margin-top:10px;
-    margin-bottom:10px;
-    font-size: 80%; 
-    text-align: center; 
-    color: white; 
-    font-family: 'Montserrat';
-} */
 .btn {
     box-sizing: border-box;
     -webkit-appearance: none;
@@ -105,6 +100,7 @@ header{
 .change:hover { box-shadow: 0 0 40px 40px #FFDF59 inset; }
 .resend { border: 2px solid #5BEB85; color: #5BEB85; margin-top: 10px;}
 .resend:hover { box-shadow: 0 0 40px 40px #5BEB85 inset; }
+
 @media (max-width: 1600px) {
     .logo{
     	width: 60px;
@@ -153,7 +149,6 @@ header{
 		margin-left:17.5%;
 		transition: .4s;
 	}
-
 }
 @media (max-width: 750px) {
     header { line-height: 0.7em; }
