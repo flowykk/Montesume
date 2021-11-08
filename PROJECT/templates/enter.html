@@ -32,7 +32,7 @@ class Response {
             document.getElementById('message_text').innerHTML = 'Вы ввели неправильный email или пароль! Повторите попытку!';
             document.getElementById('message').style['background-color'] = '#F86368';
         } else if (result["result"] == 'notallowed') {
-            document.getElementById('message_text').innerHTML = 'Нельзя оставлять ячейки пустыми! Повторите попытку!';
+            document.getElementById('message_text').innerHTML = 'Нельзя оставлять поля пустыми! Повторите попытку!';
             document.getElementById('message').style['background-color'] = '#F86368';
         }
         else {
