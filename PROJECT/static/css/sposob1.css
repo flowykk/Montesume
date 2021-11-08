@@ -4,24 +4,24 @@
 header{
 	background-color: #FFDF59;
 	display: flex;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 }
 #message {
-    margin-top:-16px;
-    height: 30px;
-    width: 100%;
-    text-align: center;
-    font-family: 'Montserrat'; 
-    font-weight: 700;
+	margin-top:-16px;
+	height: 30px;
+	width: 100%;
+	text-align: center;
+	font-family: 'Montserrat'; 
+	font-weight: 700;
 }
 #message_text {
-    font-size: 16px;
-    color: #fff; 
-    line-height: 30px;
+	font-size: 16px;
+	color: #fff; 
+	line-height: 30px;
 }
 .logo{ padding-left: 1em; }
 .enter{
-    text-decoration: none;
+    	text-decoration: none;
 	color: black;
 	font-size: 180%;
 }
@@ -32,59 +32,59 @@ header{
 	margin-left: 0.5em;
 }
 .div_enter{
-    width: 93%;
-    text-align: right;
+	width: 93%;
+	text-align: right;
 	margin-top: 2.2em;
 	padding-right: 2.2em;
 }
 .map{
-    width: 70%;
-    height: 800px;
-    margin-left:2%;
+	width: 70%;
+	height: 800px;
+	margin-left:2%;
 	margin-top: 40px;
 }
 .input,.input2 { width: 98%; height: 80px; }
 .spisok{
-    margin-top:-20px;
+	margin-top:-20px;
 	display: flex;
 	font-size: 20px;
 	margin-left: 35px;
-    font-family: "Montserrat";
+	font-family: "Montserrat";
 }
 .vvod{ padding-top: 3%; padding-left: 5px; }
 .buttons{ margin-top: 4%; }
 .block_popup{
 	font-size: 20px;
-    position: absolute;
-    background: #fff;
-    width: 420px;
-    height: 330px;
-    top: 600px;
-    left: 255px;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 12px 20px -10px;
-    text-align: center;
-    display: none;
+	position: absolute;
+	background: #fff;
+	width: 420px;
+	height: 330px;
+	top: 600px;
+	left: 255px;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	box-shadow: 0 12px 20px -10px;
+	text-align: center;
+	display: none;
 }
 .block_popup span{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	cursor: pointer;
 }
 .overlay {
-    background-color: #000;
-    height: 100%;
-    left: 0;
-    opacity: 0.50;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 0;
-    display: none;
+	background-color: #000;
+	height: 100%;
+	left: 0;
+	opacity: 0.50;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 0;
+	display: none;
 }
 .btn {
   	box-sizing: border-box;
@@ -99,7 +99,7 @@ header{
   	text-decoration: none;
   	text-align: center;
   	text-transform: uppercase;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 	font-weight: 700;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -117,18 +117,18 @@ header{
 	transition: color 150ms ease-in-out;
 }
 .delete_stopped:after, .delete_not_stopped:after, .delete_all:after, .button_search:after, .button_stop:after, .button_clear:after, .button_save:after {
-    content: '';
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); transform: translateX(-50%);
-    width: 0;
-    height: 100%;
-    background: #EC6408;
-    z-index: -1;
-    transition: width 150ms ease-in-out;
-    transition: width 150ms ease-in-out;
+	content: '';
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%); transform: translateX(-50%);
+	width: 0;
+	height: 100%;
+	background: #EC6408;
+	z-index: -1;
+	transition: width 150ms ease-in-out;
+	transition: width 150ms ease-in-out;
 }
 .delete_stopped { padding: 1em 3.5em; }
 .delete_not_stopped { padding: 1em 6.55em; }
@@ -140,140 +140,140 @@ header{
 .button_save:hover,.button_clear:hover,.button_stop:hover,.button_search:hover,.delete_all:hover,.delete_not_stopped:hover,.delete_stopped:hover{ color: #fff;}
 .button_save:hover:after,.button_clear:hover:after,.button_stop:hover:after,.button_search:hover:after,.delete_all:hover:after,.delete_not_stopped:hover:after,.delete_stopped:hover:after{ width: 110%;}
 @media (max-width: 1600px) {
-    .logo{
-    	width: 60px;
-    	height: 60px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: 0.1em;
-    }
-    .name {
-    	padding-top:0.3em;
-    	font-size: 100%;
-    	margin-left: 0.3em;
-    }
-    .enter{	font-size: 140%; }
-    .div_enter{
-        width: 93%;
-        text-align: right;
-    	margin-top: 1.8em;
-    	padding-right: 1em;
-    }
-    .map{
-        width: 65%;
-        height: 600px;
-        margin-left:2%;
-    	margin-top: 20px;
-    }
-    .block_popup{
-    	font-size: 16px;
-        width: 435px;
-        height: 290px;
-        top: 510px;
-        left: 250px;
-    }
-    .delete_stopped { padding: 1em 6em; }
-    .delete_not_stopped { padding: 1em 9em; }
-    .delete_all { padding: 1em 10.9em; }
-    .button_search { padding: 1em 8em; }
-    .button_clear { padding: 1em 7em; }
-    .button_stop { padding: 1em 5em; }
-    .button_save { padding: 1em 6.6em; }
-    .input,.input2{ width:100%; height: 60px; }
-    .vvod{
-    	font-size:19px;
-        margin-top: -2%;
-    	margin-left:-20px;
-    }
-    .spisok{ font-size: 23px; }
-    .buttons{ margin-top:20px; margin-left:-10px; }
-    .btn { font-size: 1.4rem; }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.1rem; }
+	.logo{
+		width: 60px;
+		height: 60px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: 0.1em;
+	}
+	.name {
+		padding-top:0.3em;
+		font-size: 100%;
+		margin-left: 0.3em;
+	}
+	.enter{	font-size: 140%; }
+	.div_enter{
+		width: 93%;
+		text-align: right;
+		margin-top: 1.8em;
+		padding-right: 1em;
+	}
+	.map{
+		width: 65%;
+		height: 600px;
+		margin-left:2%;
+		margin-top: 20px;
+	}
+	.block_popup{
+		font-size: 16px;
+		width: 435px;
+		height: 290px;
+		top: 510px;
+		left: 250px;
+	}
+	.delete_stopped { padding: 1em 6em; }
+	.delete_not_stopped { padding: 1em 9em; }
+	.delete_all { padding: 1em 10.9em; }
+	.button_search { padding: 1em 8em; }
+	.button_clear { padding: 1em 7em; }
+	.button_stop { padding: 1em 5em; }
+	.button_save { padding: 1em 6.6em; }
+	.input,.input2{ width:100%; height: 60px; }
+	.vvod{
+		font-size:19px;
+		margin-top: -2%;
+		margin-left:-20px;
+	}
+	.spisok{ font-size: 23px; }
+	.buttons{ margin-top:20px; margin-left:-10px; }
+	.btn { font-size: 1.4rem; }
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.1rem; }
 }
 @media (max-width: 1200px) {
 	.logo{ width: 45px; height: 45px; }
-    .name {
-    	padding-top:0.4em;
-    	font-size: 80%;
-    	margin-left: 0.5em;
-    }
-    .enter{	font-size: 120%; }
-    .div_enter{	margin-top: 1.5em; }
-    .map{
-        width: 101%;
-        height: 470px;
-        margin-left:-3%;
-    }
-    .block_popup{
-    	font-size: 18px;
-        width: 80%;
-        height: 300px;
-        top: 500px;
-        left: 50%;
-    }
-    .button_search { padding: 1em 14em; }
-    .button_clear { padding: 1em 13em; }
-    .button_stop { padding: 1em 11em; }
-    .button_save { padding: 1em 12.6em; }
-    .input{ width:96%; }
-    .input2 { width:96%; }
-    .spisok{ display: block; margin-top: -30px;}
-    .buttons{ margin-left:-35px; }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
-    .vvod { font-size: 25px; }
+	.name {
+		padding-top:0.4em;
+		font-size: 80%;
+		margin-left: 0.5em;
+	}
+	.enter{	font-size: 120%; }
+	.div_enter{	margin-top: 1.5em; }
+	.map{
+		width: 101%;
+		height: 470px;
+		margin-left:-3%;
+	}
+	.block_popup{
+		font-size: 18px;
+		width: 80%;
+		height: 300px;
+		top: 500px;
+		left: 50%;
+	}
+	.button_search { padding: 1em 14em; }
+	.button_clear { padding: 1em 13em; }
+	.button_stop { padding: 1em 11em; }
+	.button_save { padding: 1em 12.6em; }
+	.input{ width:96%; }
+	.input2 { width:96%; }
+	.spisok{ display: block; margin-top: -30px;}
+	.buttons{ margin-left:-35px; }
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 1.2rem; }
+	.vvod { font-size: 25px; }
 }
 @media (max-width: 750px) {
-    header { line-height: 0.7em; }
-    #message {
-        margin-top: -9px;
-        height: 18px;
-    }
-    #message_text {
-        font-size: 9px;
-        line-height: 18px;
-    }
-    .logo{
-    	width: 25px;
-    	height: 25px;
-    	margin-top: -0.4em;
-    	margin-bottom: -0.2em;
-    	margin-left: -0.5em;
-    }
-    .enter{ font-size: 80%; }
-    .div_enter{
-        width: 93%;
-        text-align: right;
-    	margin-top: 1.05em;
-    	padding-right: 0.3em;
-    }
-    .name { margin-top: 0.4em; font-size: 50%; }
-    .map{
-        width: 98%;
-        height: 400px;
-        margin-left:-4%;
-    }
-    .block_popup{
-    	font-size: 14px;
-        width: 80%;
-        height: 210px;
-        top: 390px;
-        left: 50%;
-    }
-    .delete_stopped { padding: 1em 3.7em; }
-    .delete_not_stopped { padding: 1em 6.7em; }
-    .delete_all { padding: 1em 8.6em; }
-    .button_search { padding: 1em 7em; }
-    .button_clear { padding: 1em 5.95em; }
-    .button_stop { padding: 1em 3.95em; }
-    .button_save { padding: 1em 5.6em; }
-    .input,.input2 { width:93%; height: 40px; }
-    .vvod{
-    	margin-top: -2%;
-    	margin-left:-20px;
-    	font-size:15px;
-    }
-    .spisok{ display: block; margin-top: -23px;}
-    .buttons{ margin-left:-30px; }
-    .btn { font-size: 1.1rem; margin-bottom:6px; }
-    .delete_stopped, .delete_not_stopped, .delete_all { font-size: 0.9rem; }
+	header { line-height: 0.7em; }
+	#message {
+		margin-top: -9px;
+		height: 18px;
+	}
+	#message_text {
+		font-size: 9px;
+		line-height: 18px;
+	}
+	.logo{
+		width: 25px;
+		height: 25px;
+		margin-top: -0.4em;
+		margin-bottom: -0.2em;
+		margin-left: -0.5em;
+	}
+	.enter{ font-size: 80%; }
+	.div_enter{
+		width: 93%;
+		text-align: right;
+		margin-top: 1.05em;
+		padding-right: 0.3em;
+	}
+	.name { margin-top: 0.4em; font-size: 50%; }
+	.map{
+		width: 98%;
+		height: 400px;
+		margin-left:-4%;
+	}
+	.block_popup{
+		font-size: 14px;
+		width: 80%;
+		height: 210px;
+		top: 390px;
+		left: 50%;
+	}
+	.delete_stopped { padding: 1em 3.7em; }
+	.delete_not_stopped { padding: 1em 6.7em; }
+	.delete_all { padding: 1em 8.6em; }
+	.button_search { padding: 1em 7em; }
+	.button_clear { padding: 1em 5.95em; }
+	.button_stop { padding: 1em 3.95em; }
+	.button_save { padding: 1em 5.6em; }
+	.input,.input2 { width:93%; height: 40px; }
+	.vvod{
+		margin-top: -2%;
+		margin-left:-20px;
+		font-size:15px;
+	}
+	.spisok{ display: block; margin-top: -23px;}
+	.buttons{ margin-left:-30px; }
+	.btn { font-size: 1.1rem; margin-bottom:6px; }
+	.delete_stopped, .delete_not_stopped, .delete_all { font-size: 0.9rem; }
 }
