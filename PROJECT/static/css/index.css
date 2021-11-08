@@ -87,38 +87,7 @@ header{
 	margin-top: 5%;
 	display: flex;
 	justify-content: space-around;
-}/* 
-.people{
-    height: 295px;
-    width: 400px;
 }
-.town{
-    height: 295px;
-    width: 293px;
-}
-.money{
-    height: 295px;
-    width: 324px;
-} */
-/* .step_name{
-    text-align: center;
-    font-family: "Montserrat";
-    font-weight: 700;
-    color: white;
-    font-size: 40px;
-    margin-top: 20px;
-} */
-
-
-
-
-
-
-
-
-
-
-
 .chooses_name_2 {
 	margin-top: 100px;
 	text-align: center;
@@ -128,8 +97,6 @@ header{
 	color: #FF914D;
 }
 .chooses_tip {
-	/*margin-top: 100px;*/
-	/*margin-bottom: -120px;*/
 	text-align: center;
     font-family: "Montserrat";
 	letter-spacing: 5px;
@@ -193,197 +160,6 @@ header{
 .levelimg { margin: 0 auto; }
 .informBlock:hover { background: #FFA46B; }
 .informBlock:hover .underlineBlock { border-color: #fff; }
-/* .step_text{
-    text-align: center;
-    font-family: "Montserrat";
-    color: white;
-    font-size: 23px;
-    margin-top: 20px;
-} 
-.section_choose{
-    margin-top: 7%;
-    background-color: #FF914D;
-    padding-top: 1%;
-    margin-bottom: 5%;
-} 
-.chooses{
-    margin-top: 10%px;
-    display: flex;
-    justify-content: space-around;
-    padding-bottom: 5%;
-}
-.buttons{
-	display: flex;
-	justify-content: space-around;
-}
-.chooses_name{
-	text-align: center;
-    font-family: "Montserrat";
-	letter-spacing: 5px;
-	font-size: 65px;
-	color: white;
-}
-.choose_name{
-	text-align: center;
-    font-family: "Montserrat";
-	font-weight: 700;
-	color: white;
-	font-size: 30px;
-	margin-top: 1%;
-}
-.choose_text{
-	text-align: center;
-    font-family: "Montserrat";
-	color: white;
-	font-size: 23px;
-	margin-top: 0.5%;
-}
-.btn {
-  box-sizing: border-box;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background-color: transparent;
-  border: 2px solid;
-  border-radius: 0.6em;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-self: center;
-      -ms-flex-item-align: center;
-          align-self: center;
-  font-size: 1.5rem;
-  line-height: 1;
-  margin: 20px;
-  padding: 1em 2.5em;
-  text-decoration: none;
-  text-align: center;
-  text-transform: uppercase;
-    font-family: "Montserrat";
-  font-weight: 700;
-}
-.btn:hover, .btn:focus {
-  color: #fff;
-  outline: 0;
-}
-.choose_button {
-	margin: 0 auto;
-  	border-color: #FFFFFF;
-  	color: #FFFFFF; #FFDF59
-  	position: relative;
-  	overflow: hidden;
-  	z-index: 1;
-  	-webkit-transition: color 150ms ease-in-out;
-  	transition: color 150ms ease-in-out;
-}
-.choose_button:after {
-  	content: '';
-  	position: absolute;
-  	display: block;
-  	top: 0;
-  	left: 50%;
-  	-webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  	width: 0;
-  	height: 100%;
-  	background: #FFDF59;
-  	z-index: -1;
-  	-webkit-transition: width 150ms ease-in-out;
-  	transition: width 150ms ease-in-out;
-}
-.choose_button:hover {
-  	color: #fff;
-}
-.choose_button:hover:after {
-  	width: 110%;
-}*/
-/* .section_futor{ background-color: black; height: 20%; }
-.FBbutton {
-      justify-content: space-around;
-    text-align: center;
-    background-color: #000;
-    color: #fff;
-    font-size: 25px;
-    transition: all 0.3s linear;
-    border: 2px solid #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.1s linear;
-    margin-left:42.5%;
-    width: 15%;
-    height: 2.5em;
-    font-family: "Montserrat";
-}
-.FBtext{ resize: none; }
-.icon_div { width: 100%; margin-left: -15px; }
-.icons { text-align: center; list-style: none
-}
-.icon {
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    line-height: 70px;
-    border: 2px solid #fff;
-    margin-right: 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s linear;
-}
-.icon .fa{
-    color: #fff;
-    font-size: 30px;
-    transition: all 0.3s linear;
-}
-.icon:hover, .FBbutton:hover{ background: #fff; box-shadow: 0 0 30px 3px #fff; }
-.icon:hover .fa, .FBbutton:hover{color: #FF914D }
-h2 {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat';
-
-}
-.contact_section { margin: 0 0 40px 0; text-align: center;
-}
-.contact_section h2{
-    font-size: 40px;
-    color: #ffffff;
-    margin: 0 0 20px 0;
-}
-.page_section.contact { padding: 40px 0 2px; color: #fff;
-}
-.footer_bottom { border-top: 1px solid #171717; padding: 25px 0; }
-.footer_bottom span {
-    display: block;
-    font-size: 14px;
-    color: #efefef;
-    text-align: center;
-}
-.form-inner input {
-    width: 50%;
-    outline:none;
-    margin-left: 25%;
-       margin-bottom: 10px;
-       background: #E9EFF6;
-       line-height: 50px;
-       border-width: 0;
-       border-radius: 5px;
-       font-family: 'Montserrat';
-}
-.form-inner textarea {
-       width: 50%;
-    outline:none;
-    margin-left: 25%;
-       margin-bottom: 10px;
-       background: #E9EFF6;
-       line-height: 20px;
-       border-width: 0;
-       border-radius: 5px;
-       font-family: 'Montserrat';
-} */
 @media (max-width: 1600px) {
     .logo{
     	width: 60px;
@@ -456,30 +232,6 @@ h2 {
     	margin-right: -5px;
     }
     .levelimg { width: 50px; height: 50px; }
-/*     .contact_section { margin: 0 0 20px 0; }
-.contact_section h2{ font-size: 30px; margin: -20px 0 0 0; }
-.footer_bottom { padding: 25px 0; }
-.footer_bottom span { font-size: 20px; }
-.form-inner input {
-    width: 70%;
-    margin-left: 14.5%;
-       line-height: 50px;
-}
-.form-inner textarea { width: 70%; margin-left: 14.5%; }
-.FBbutton {
-    font-size: 20px;
-    border-radius: 15px;
-    margin-left: 40%;
-    width: 20%;
-    height: 2.3em;
-}
-.icon {
-    width: 2.3em;
-    height: 2.3em;
-    line-height: 40px;
-    border-radius: 13px;
-}
-.icon .fa{ font-size: 20px; } */
 }
 @media (max-width: 1200px) {
 	.logo{
@@ -502,7 +254,7 @@ h2 {
     	padding-right: 1em;
     }
     .city{
-    	border-radius: 0%;
+    	border-radius: 0;
     	margin-top: -100px;
     	margin-left: 3.5%;
     }
@@ -538,8 +290,6 @@ h2 {
     	margin-right: -5px;
     }
     .levelimg { width: 50px; height: 50px; }
-/*     .form-inner input { margin-left: 14.5%; }
-.form-inner textarea { margin-left: 14.5%; } */
 }
 @media (max-width: 750px) {
     header { line-height: 0.7em; }
@@ -559,7 +309,7 @@ h2 {
     }
     .name { margin-top: 0.4em; font-size: 50%; }
     .city{
-    	border-radius: 0%;
+    	border-radius: 0;
     	margin-top: -90px;
     	margin-left: 9.5%;
     }
@@ -623,21 +373,4 @@ h2 {
     	margin-right: 5px;
     }
     .levelimg { width: 40px; height: 40px; }
-/*     .contact_section h2{ font-size: 20px;}
-.footer_bottom { padding: 15px 0; }
-.footer_bottom span { font-size: 12px; }
-.form-inner input {
-    width: 80%;
-    margin-left: 8%;
-       line-height: 40px;
-}
-.form-inner textarea { width: 80%; margin-left: 8%; }
-.FBbutton { margin-left:20%; width: 60%; }
-.icon {
-    width: 2.3em;
-    height: 2.3em;
-    line-height: 40px;
-    border-radius: 13px;
-}
-.icon .fa{ font-size: 20px; } */
 }
