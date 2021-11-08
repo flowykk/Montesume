@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang = "ru">
+<html lang="en">
 <head>
 <title>Montesume</title>
 <meta charset="UTF-8">
@@ -22,27 +22,34 @@ class Response {
 		this.data = data;
 		this.body = body;
 	}
+
+	//функция для создания запроса на отправу сообщения по футеру
 	async SendMessage() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
-        if (result["result"] == "success") {
+        if (result["result"] == "invname") {
+            document.getElementById('message_text2').innerHTML = 'Ваше ФИО введено неправильно!';
+            document.getElementById('message2').style['background-color'] = '#F86368';
+		} else if (result["result"] == "invemail") {
+            document.getElementById('message_text2').innerHTML = 'Ваш email введён неправильно!';
+            document.getElementById('message2').style['background-color'] = '#F86368';
+		} else if (result["result"] == "success") {
             document.getElementById('message_text2').innerHTML = 'Ваше сообщение успешно отправлено!';
             document.getElementById('message2').style['background-color'] = '#00C147';
-        	//document.getElementById('warning').innerHTML = "Ваше сообщение успешно отправлено!";
-          	//document.getElementById('warning').style['color'] = "green";
-          	//document.getElementById('warning').style['marginBottom'] = "1%";
           	document.getElementById('FBname').value = "";
 			document.getElementById('FBemail').value = "";
 			document.getElementById('FBtext').value = "";
 		}
     }
+
+    //функция для создания запроса на получении информации профиля пользователя
     async UserInfo() {
         let response = await fetch(this.url, { method: this.method, headers: this.headers,body: this.body});
         let result = await response.json();
         if (result == 'plsenter') 
             document.getElementById('name').innerHTML = "Вход";
         else {
-            setCookie('montesume_access_token', result['access_token'])
+            setCookie('montesume_access_token', result['access_token']);
             document.getElementById('name').innerHTML = result['user_info']['name'];
             document.getElementById('name').href = "lk";
         }
@@ -53,38 +60,19 @@ async function resp() {
     let data = {
         "access_token": get_cookie("montesume_access_token"),
         "refresh_token": get_cookie("montesume_refresh_token")
-    }
-    
+    };
     const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/info-lk');
     resp.UserInfo();
-    
-    /*let response = await fetch('info-lk', { method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(data)});
-    let result = await response.json();
-    if (result == 'plsenter') 
-        document.getElementById('name').innerHTML = "Вход";
-    else {
-        setCookie('evrica_access_token', result['access_token'])
-        document.getElementById('name').innerHTML = result['user_info']['name'];
-        document.getElementById('name').href = "lk";
-    }*/
-    
-    /*if (get_cookie("evrica_token").length > 300) {
-        let response = await fetch('/info-lk', {
-            method: "GET",
-            headers: {'Authorization': 'Bearer ' + get_cookie("evrica_token")}
-        });
-        let result = await response.json();
-        document.getElementById('name').innerHTML = result['name'];
-        document.getElementById('name').href = "/lk";
-    }*/
 }
-resp()
+resp();
 
+//функция для установки значения cookie по имени
 function setCookie(name, value, options = {}) {
     let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
     document.cookie = updatedCookie;
 }
 
+//функция для получения куки по имени
 function get_cookie(cookie_name) {
     var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
     if (results) return ( unescape ( results[2] ) );
@@ -95,15 +83,15 @@ async function SendMessage() {
     if (document.getElementById('FBname').value == '' ||
     document.getElementById('FBemail').value == '' ||
     document.getElementById('FBtext').value == '') {
-            document.getElementById('message_text2').innerHTML = 'Нельзя оставлять все поля пустыми!';
-            document.getElementById('message2').style['background-color'] = '#F86368';
+        document.getElementById('message_text2').innerHTML = 'Нельзя оставлять все поля пустыми!';
+        document.getElementById('message2').style['background-color'] = '#F86368';
     }
     else {
         let data = {
             "name": document.getElementById('FBname').value,
             "email": document.getElementById('FBemail').value,
             "text": document.getElementById('FBtext').value
-        }
+        };
         const resp = new Response('POST', '', {'Content-Type': 'application/json;charset=utf-8'}, data, JSON.stringify(data), '/send-message');
         resp.SendMessage();
     }
@@ -112,136 +100,139 @@ async function SendMessage() {
 </script>
 </head>
     <body>
-    	<header>
-    	    <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
-        		<p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
-        		<div class="name"> <h1> Montesume </h1> </div>
-        	</a>
-    		<div class = "div_enter"> <a id = "name" class="enter" href="enter" ></a> </div>		
-    	</header>
+        <header>
+            <a href="http://b92599ho.beget.tech/" style = "display: flex; text-decoration: none; color: black;">
+                <p><img class = "logo" src="static/images/Montesume.png" width="70" height="70" ></p>
+                <div class="name"> <h1> Montesume </h1> </div>
+            </a>
+            <div class = "div_enter"> <a id = "name" class="enter" href="enter" ></a> </div>		
+        </header>
     	
-    	<section class = "section_losung">
-    		<img class = "city" src = "static/images/city.jpg">
-    		<div class = "text_losung">
-    			<h1 class = "losung"> ПОИСК МЕСТА ДЛЯ БИЗНЕСА СТАЛ ПРОЩЕ </h1>
-    			<p class = "small_losung"> Находим конкурентов, определяем трафик, выявляем плотность населения </p>
-    		</div>
-    	</section>
+        <section class = "section_losung">
+            <img class = "city" src = "static/images/city.jpg">
+            <div class = "text_losung">
+                <h1 class = "losung"> ПОИСК МЕСТА ДЛЯ БИЗНЕСА СТАЛ ПРОЩЕ </h1>
+                <p class = "small_losung"> Находим конкурентов, определяем трафик, выявляем плотность населения </p>
+            </div>
+        </section>
     
+        <section class = "section_steps">
+            <h3 class = "steps_name"> КАК НАЙТИ МЕСТО </h3>
+            <div>
+                <p class="name_1">ШАГ 1</p>
+                <div class="description_1">
+                    <p class="text_1">Выберите алгоритм поиска</p>
+                </div>
+            </div>
+            <div>
+                <p class="name_2">ШАГ 2</p>
+                <div class="description_2">
+                    <p class="text_2">Введите нужные данные</p>
+                </div>
+            </div>
+            <div>
+                <p class="name_3">ШАГ 3</p>
+                <div class="description_3">
+                    <p class="text_3">Получите адрес нужного места</p>
+                </div>
+            </div>
+        </section>
     
-    	<section class = "section_steps">
-    		<h3 class = "steps_name"> КАК НАЙТИ МЕСТО </h3>
-    		<div>
-    		    <p class="name_1">ШАГ 1</p>
-    		    <div class="description_1">
-    		        <p class="text_1">Выберите алгоритм поиска</p>
-    		    </div>
-    		</div>
-    		<div>
-    		    <p class="name_2">ШАГ 2</p>
-    		    <div class="description_2">
-    		        <p class="text_2">Введите нужные данные</p>
-    		    </div>
-    		</div>
-    		<div>
-    		    <p class="name_3">ШАГ 3</p>
-    		    <div class="description_3">
-    		        <p class="text_3">Получите адрес нужного места</p>
-    		    </div>
-    		</div>
-    	</section>
-    
-    	<section>
-    		<p class = "chooses_name_2">ВЫБЕРИТЕ АЛГОРИТМ ПОИСКА</p>
-    		<p class = "chooses_tip">НАЖМИТЕ НА НУЖНУЮ КАРТОЧКУ</p>
-            
-            
+        <section>
+            <p class = "chooses_name_2">ВЫБЕРИТЕ АЛГОРИТМ ПОИСКА</p>
+            <p class = "chooses_tip">НАЖМИТЕ НА НУЖНУЮ КАРТОЧКУ</p>
             <div class="cards">
                 <div class="wrap">
                     <a class="informBlock" href="sp1">
                         <h5 class = "mainText"> СПОСОБ 1 </h5>
                         <div class="underlineBlock"></div>
-                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим трафик местам</p>
+                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим трафик местам.</p>
                         <div class="underlineBlock"></div>
                         <div class="searchLevel" style = "display: flex;">
                             <p class="thirdText">Уровень Поиска:</p>
                             <img class = "levelimg" src="static/images/sp1-level.png">
                         </div>
-    		        </a>
-    		    </div>
+                    </a>
+                </div>
     		    
                 <div class="wrap">
                     <a class="informBlock" href="sp2">
-        		        <h5 class = "mainText"> СПОСОБ 2 </h5>
-        		        <div class="underlineBlock"></div>
-        		        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим и отталкивающим трафик местам</p>
-        		        <div class="underlineBlock"></div>
-        		        <div class="searchLevel" style = "display: flex;">
-        		            <p class="thirdText">Уровень Поиска:</p>
-        		            <img class = "levelimg" src="static/images/sp2-level.png">
-        		        </div>
-    		        </a>
-    		    </div>
+                        <h5 class = "mainText"> СПОСОБ 2 </h5>
+                        <div class="underlineBlock"></div>
+                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим трафик местам и конкурентам.</p>
+                        <div class="underlineBlock"></div>
+                        <div class="searchLevel" style = "display: flex;">
+                            <p class="thirdText">Уровень Поиска:</p>
+                            <img class = "levelimg" src="static/images/sp2-level.png">
+                        </div>
+                    </a>
+                </div>
     		    
                 <div class="wrap">
                     <a class="informBlock" href="sp3">
-        		        <h5 class = "mainText"> СПОСОБ 3 </h5>
-        		        <div class="underlineBlock"></div>
-        		        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим и отталкивающим трафик местам. Также на карте отображаются администритывные округа Москвы</p>
-        		        <div class="underlineBlock"></div>
-        		        <div class="searchLevel" style = "display: flex;">
-        		            <p class="thirdText">Уровень Поиска:</p>
-        		            <img class = "levelimg" src="static/images/sp3-level.png">
-        		        </div>
-    		        </a>
-    		    </div>
+                        <h5 class = "mainText"> СПОСОБ 3 </h5>
+                        <div class="underlineBlock"></div>
+                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим трафик местам и конкурентам. Также на карте отображаются администритывные округа Москвы.</p>
+                        <div class="underlineBlock"></div>
+                        <div class="searchLevel" style = "display: flex;">
+                            <p class="thirdText">Уровень Поиска:</p>
+                            <img class = "levelimg" src="static/images/sp3-level.png">
+                        </div>
+                    </a>
+                </div>
     		    
                 <div class="wrap">
                     <a class="informBlock" href="sp4">
                         <h5 class = "mainText"> СПОСОБ 4 </h5>
                         <div class="underlineBlock"></div>
-                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим и отталкивающим трафик местам. Также на карте отображаются тепловые карты и проходимость людей в районах</p>
+                        <p class="secondText">Данный способ позволяет искать точку для открытия вашего бизнеса по привлекающим трафик местам и конкурентам. Также на карте отображаются тепловые карты и загруженность улиц.</p>
                         <div class="underlineBlock"></div>
                         <div class="searchLevel" style = "display: flex;">
                           <p class="thirdText">Уровень Поиска:</p>
                           <img class = "levelimg" src="static/images/sp4-level.png">
                         </div>
-    		        </a>
-    		    </div>
-    		</div>
-    	</section>
+                    </a>
+                </div>
+            </div>
+        </section>
     
         <div id = "message2"><p id = "message_text2"></p></div>
-    	<section class = "section_futor">
-    		<div class="container">
-    			<section class="page_section contact" id="contact">
-    				<div class="contact_section">
-    					<h2>Свяжитесь с нами!</h2>
-    				</div>
-    					<div class="form-inner">
-    						<input type="text" class = "FBname" Id = "FBname" placeholder="Username">
-    						<input type="email" class = "FBemail" Id = "FBemail" placeholder="Email">
-    						<textarea placeholder="Сообщение..." Id = "FBtext" class = "FBtext" rows="10"></textarea>
-    					</div>
-    					<button class="FBbutton" onclick="SendMessage()">Отправить</button>
-    					<div class = "icon_div">
-        					<ul class="icons">
+        <section class = "section_futor">
+            <div class="container">
+                <section class="page_section contact" id="contact">
+                    <div class="contact_section">
+                        <h2>Свяжитесь с нами!</h2>
+                    </div>
+					<div class="form-inner">
+						<input type="text" class = "FBname" Id = "FBname" placeholder="ФИО">
+						<input type="email" class = "FBemail" Id = "FBemail" placeholder="Email">
+						<textarea placeholder="Сообщение..." Id = "FBtext" class = "FBtext" rows="10"></textarea>
+					</div>
+					<button class="FBbutton" onclick="SendMessage()">Отправить</button>
+					<div class = "icon_div">
+                        <ul class="icons">
+                            <a href = "https://www.facebook.com/profile.php?id=100072329714850" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://www.facebook.com/profile.php?id=100072329714850" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    <i class="fa fa-facebook"></i>
                                 </li>
+                            </a>
+                            <a href = "https://www.twitter.com/montesume" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://twitter.com/montesume" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    <i class="fa fa-twitter"></i>
                                 </li>
+                            </a>
+                            <a href = "https://www.instagram.com/montesume" target="_blank">
                                 <li class="icon">
-                                    <a href = "https://www.instagram.com/montesume" target="_blank"><i class="fa fa-instagram"></i></a>
+                                    <i class="fa fa-instagram"></i>
                                 </li>
-                            </ul>
-                        </div>
-    			</section>
-    		</div>
-    		<div class="container">
-    			<div class="footer_bottom"><span>IVR 2020-2021. By flowykk</span> </div>
-    		</div>
-    	</section>
+                            </a>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div class="container">
+                <div class="footer_bottom"><span>IVR 2020-2022. Rakhmanov Danila</span></div>
+            </div>
+        </section>
     </body>
 </html>
