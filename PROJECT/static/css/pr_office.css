@@ -5,7 +5,7 @@
 header{
 	background-color: #FFDF59;
 	display: flex;
-    font-family: "Montserrat";
+    	font-family: "Montserrat";
 }
 .logo{ padding-left: 1em; }
 .SiteName {
@@ -15,20 +15,20 @@ header{
 	margin-left: 0.5em;
 }
 .lk {
-    margin-left: 30px;
-    width: 62%;
-    font-family: "Montserrat";
+	margin-left: 30px;
+	width: 62%;
+	font-family: "Montserrat";
 }
 .line {
-    margin-top: -25px;
-    width: 90%;
-    height: 2px;
-    background-color: #ACACAC;
+	margin-top: -25px;
+	width: 90%;
+	height: 2px;
+	background-color: #ACACAC;
 }
 .signin-signup {
-    line-height: 30px;
-    font-size: 60px;
-    font-weight:700;
+	line-height: 30px;
+	font-size: 60px;
+	font-weight:700;
 }
 .signin-signup.titlee { line-height: 30px; }
 .userinfo { margin-top:20px; font-size: 13px; }
@@ -39,14 +39,14 @@ header{
 .full_lk { display: flex; } 
 .fast_menu_title {
 	text-align: center;
-    font-family: "Montserrat";
-    font-weight:700;
+	font-family: "Montserrat";
+	font-weight:700;
 	font-size: 30px;  
 }
 .chooses_tip {
 	text-align: center;
-    font-family: "Montserrat";
-    font-weight:700;
+	font-family: "Montserrat";
+	font-weight:700;
 	font-size: 20px;
 	margin-top: -20px;
 }
@@ -59,53 +59,53 @@ header{
 	margin-top: 10px;
 }
 .informBlock {
-    display: flex;
+	display: flex;
 	height: 70px;
 	background: #FF914D;
 	box-sizing: border-box;
 	transition: .4s;
 }
 .mainText {
-    margin-top: 25px;
-    margin-left: 20px;
+	margin-top: 25px;
+	margin-left: 20px;
 	color: #fff;
 	font-size: 20px;
 }
 .line2 {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 15px;
-    height: 40px;
-    width: 2px;
-    background: #fff;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 15px;
+	height: 40px;
+	width: 2px;
+	background: #fff;
 }
 .informBlock:hover { background: #FFA46B; }
 .informBlock:hover .underlineBlock { border-color: #fff; }
 .ThirdText {
-    margin-top: 25px;
+    	margin-top: 25px;
 	color: #fff;
 	font-size: 20px;
 }
 .levelimg {
-    margin-left: 20px;
-    margin-top: 15px;
-    width: 40px;
-    height: 40px;
+	margin-left: 20px;
+	margin-top: 15px;
+	width: 40px;
+	height: 40px;
 }
 .btn {
-    box-sizing: border-box;
-    background-color: transparent;
-    border-radius: 2em;
-    cursor: pointer;
-    display: flex;
-    font-size: 1rem;
-    line-height: 1;
-    padding: 1.2em 2.8em;
-    margin-right: 10px;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 700;
+	box-sizing: border-box;
+	background-color: transparent;
+	border-radius: 2em;
+	cursor: pointer;
+	display: flex;
+	font-size: 1rem;
+	line-height: 1;
+	padding: 1.2em 2.8em;
+	margin-right: 10px;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 700;
 }
 .btn:hover{ color: #fff; outline: 0; }
 .change, .exit, .download, .show_history, .clear_history {
@@ -122,7 +122,7 @@ header{
 .clear_history { border: 2px solid #F86368; color: #F86368; }
 .clear_history:hover { box-shadow: 0 0 40px 40px #F86368 inset;}
 table{
-    margin-top: -20px;
+    	margin-top: -20px;
 	margin-bottom: 100px;
 	width: 100%;
 	font-family: "Montserrat";
@@ -140,95 +140,95 @@ th {
 td { font-size: 18px; padding: 15px 35px; }
 .str:hover { background-color: #FF914D; color: #fff; }
 @media (max-width: 1600px) {
-    .logo{
-    	width: 60px;
-    	height: 60px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: 0.1em;
-    }
-    .SiteName {
-    	padding-top:0.3em;
-    	font-size: 100%;
-    	margin-left: 0.3em;
-    }
-    .enter{ font-size: 140%; }
-    .signin-signup { font-size:50px; }
-    .lk { width: 58%; }
-    .line { width: 91%; }
-    .userinfo { font-size: 10px; }
-    .request_history, .fast_menu_title { font-size: 28px; }
-    .chooses_tip { font-size: 18px; margin-top: -18px; }
-    .informBlock {
-        margin-left:20%;
-    }
-    .mainText {
-        margin-top:27px;
-    	font-size: 14px;
-    }
-    .ThirdText {
-        margin-top:27px;
-    	font-size: 14px;
-    }
+	.logo{
+		width: 60px;
+		height: 60px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: 0.1em;
+	}
+	.SiteName {
+		padding-top:0.3em;
+		font-size: 100%;
+		margin-left: 0.3em;
+	}
+	.enter{ font-size: 140%; }
+	.signin-signup { font-size:50px; }
+	.lk { width: 58%; }
+	.line { width: 91%; }
+	.userinfo { font-size: 10px; }
+	.request_history, .fast_menu_title { font-size: 28px; }
+	.chooses_tip { font-size: 18px; margin-top: -18px; }
+	.informBlock {
+		margin-left:20%;
+	}
+	.mainText {
+		margin-top:27px;
+		font-size: 14px;
+	}
+	.ThirdText {
+		margin-top:27px;
+		font-size: 14px;
+	}
 }
 @media (max-width: 1200px) {
 	.logo{
-    	width: 45px;
-    	height: 45px;
-    	margin-top:-0.2em;
-    	margin-bottom:-0.5em;
-    	margin-left: -0.3em;
-    }
-    .SiteName {
-    	padding-top:0.4em;
-    	font-size: 80%;
-    	margin-left: 0.5em;
-    }
-    .signin-signup { font-size: 30px; }
-    .lk { margin-left: 10px; width: 65%; }
-    .line { width: 90%; margin-top: -22px;}
-    .userinfo { font-size: 10px; margin-top: 0px;}
-    .btn { font-size: 0.7rem; padding: 1.2em 2em; }
-    th, td { font-size:8px; }
-    .buttons { display: flex; margin-bottom: 35px; }
-    .fast_menu_title, .request_history { font-size: 18px;   }
-    .chooses_tip { font-size: 13px; margin-top: -15px; }
-    .wrap {	margin-bottom: 10px; }
-    .informBlock { width: 220px; height: 40px; }
-    .mainText {
-        margin-top: 13.5px;
-        margin-left: 10px;
-    	font-size: 13px;
-    }
-    .line2 {
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-top:5px;
-        height: 30px;
-    }
-    .ThirdText { margin-top: 14px; font-size: 12px; }
-    .levelimg {
-        margin-left: 15px;
-        margin-top: 5px;
-        width: 30px;
-        height: 30px;
-    }
+		width: 45px;
+		height: 45px;
+		margin-top:-0.2em;
+		margin-bottom:-0.5em;
+		margin-left: -0.3em;
+	}
+	.SiteName {
+		padding-top:0.4em;
+		font-size: 80%;
+		margin-left: 0.5em;
+	}
+	.signin-signup { font-size: 30px; }
+	.lk { margin-left: 10px; width: 65%; }
+	.line { width: 90%; margin-top: -22px;}
+	.userinfo { font-size: 10px; margin-top: 0px;}
+	.btn { font-size: 0.7rem; padding: 1.2em 2em; }
+	th, td { font-size:8px; }
+	.buttons { display: flex; margin-bottom: 35px; }
+	.fast_menu_title, .request_history { font-size: 18px;   }
+	.chooses_tip { font-size: 13px; margin-top: -15px; }
+	.wrap {	margin-bottom: 10px; }
+	.informBlock { width: 220px; height: 40px; }
+	.mainText {
+		margin-top: 13.5px;
+		margin-left: 10px;
+		font-size: 13px;
+	}
+	.line2 {
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top:5px;
+		height: 30px;
+	}
+	.ThirdText { margin-top: 14px; font-size: 12px; }
+	.levelimg {
+		margin-left: 15px;
+		margin-top: 5px;
+		width: 30px;
+		height: 30px;
+	}
 }
 @media (max-width: 750px) {
-    header { line-height: 0.7em; }
-    .logo{
-    	width: 25px;
-    	height: 25px;
-    	margin-top: -0.4em;
-    	margin-bottom: -0.2em;
-    	margin-left: -0.5em;
-    }
-    .SiteName { margin-top: 0.4em; font-size: 50%; }
-    .signin-signup { font-size: 23px; }
-    .request_history { font-size: 15px; }
-    .lk { margin-left: 10px; width: 100%; }
-    .line { width: 90%; }
-    .userinfo { font-size: 6.5px; }
-    .btn { font-size: 0.6rem; padding: 1.2em 1.5em; }
-    .fast_menu { display:none; }
+	header { line-height: 0.7em; }
+	.logo{
+		width: 25px;
+		height: 25px;
+		margin-top: -0.4em;
+		margin-bottom: -0.2em;
+		margin-left: -0.5em;
+	}
+	.SiteName { margin-top: 0.4em; font-size: 50%; }
+	.signin-signup { font-size: 23px; }
+	.request_history { font-size: 15px; }
+	.lk { margin-left: 10px; width: 100%; }
+	.line { width: 90%; }
+	.userinfo { font-size: 6.5px; }
+	.btn { font-size: 0.6rem; padding: 1.2em 1.5em; }
+	.fast_menu { display:none; }
 }
