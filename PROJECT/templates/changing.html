@@ -37,7 +37,7 @@ class Response {
             document.getElementById('message_text').innerHTML = 'Информация успешно изменена!';
             document.getElementById('message').style['background-color'] = '#00C147';
         } else if (result['result'] == "notchanged") {
-            document.getElementById('message_text').innerHTML = 'Нельзя оставлять все ячейки пустыми!';
+            document.getElementById('message_text').innerHTML = 'Нельзя оставлять все поля пустыми!';
             document.getElementById('message').style['background-color'] = '#F86368';
         } else if (result['result'] == "sameemail") {
             document.getElementById('message_text').innerHTML = 'Пользователь с таким email уже существует!';
